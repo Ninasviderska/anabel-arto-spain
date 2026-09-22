@@ -5,7 +5,11 @@ import { isVariantAvailable, type Category, type Product } from "@/lib/catalog.t
 import { ProductCard } from "./ProductCard";
 import { Breadcrumbs, type Crumb } from "./Breadcrumbs";
 
-export type CatalogFilters = { category?: string; color?: string; size?: string };
+export type CatalogFilters = {
+  category?: string | undefined;
+  color?: string | undefined;
+  size?: string | undefined;
+};
 
 type Props = {
   lang: string;

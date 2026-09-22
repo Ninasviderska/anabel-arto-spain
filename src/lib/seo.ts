@@ -7,7 +7,7 @@ export function pageMeta(opts: {
   title: string;
   description: string;
   path: string;
-  image?: string;
+  image?: string | undefined;
   type?: "website" | "product" | "article";
   noindex?: boolean;
 }): Meta[] {

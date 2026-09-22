@@ -10,33 +10,96 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LangRouteImport } from './routes/$lang'
+import { Route as LangIndexRouteImport } from './routes/$lang/index'
+import { Route as LangCatalogoRouteImport } from './routes/$lang/catalogo'
+import { Route as LangCategoryIndexRouteImport } from './routes/$lang/$category/index'
+import { Route as LangCategoryProductRouteImport } from './routes/$lang/$category/$product'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LangRoute = LangRouteImport.update({
+  id: '/$lang',
+  path: '/$lang',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LangIndexRoute = LangIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangCatalogoRoute = LangCatalogoRouteImport.update({
+  id: '/catalogo',
+  path: '/catalogo',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangCategoryIndexRoute = LangCategoryIndexRouteImport.update({
+  id: '/$category/',
+  path: '/$category/',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangCategoryProductRoute = LangCategoryProductRouteImport.update({
+  id: '/$category/$product',
+  path: '/$category/$product',
+  getParentRoute: () => LangRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$lang': typeof LangRouteWithChildren
+  '/$lang/catalogo': typeof LangCatalogoRoute
+  '/$lang/': typeof LangIndexRoute
+  '/$lang/$category/$product': typeof LangCategoryProductRoute
+  '/$lang/$category/': typeof LangCategoryIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$lang/catalogo': typeof LangCatalogoRoute
+  '/$lang': typeof LangIndexRoute
+  '/$lang/$category/$product': typeof LangCategoryProductRoute
+  '/$lang/$category': typeof LangCategoryIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/$lang': typeof LangRouteWithChildren
+  '/$lang/catalogo': typeof LangCatalogoRoute
+  '/$lang/': typeof LangIndexRoute
+  '/$lang/$category/$product': typeof LangCategoryProductRoute
+  '/$lang/$category/': typeof LangCategoryIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/$lang'
+    | '/$lang/catalogo'
+    | '/$lang/'
+    | '/$lang/$category/$product'
+    | '/$lang/$category/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/$lang/catalogo'
+    | '/$lang'
+    | '/$lang/$category/$product'
+    | '/$lang/$category'
+  id:
+    | '__root__'
+    | '/'
+    | '/$lang'
+    | '/$lang/catalogo'
+    | '/$lang/'
+    | '/$lang/$category/$product'
+    | '/$lang/$category/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LangRoute: typeof LangRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +111,63 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$lang': {
+      id: '/$lang'
+      path: '/$lang'
+      fullPath: '/$lang'
+      preLoaderRoute: typeof LangRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$lang/': {
+      id: '/$lang/'
+      path: '/'
+      fullPath: '/$lang/'
+      preLoaderRoute: typeof LangIndexRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/catalogo': {
+      id: '/$lang/catalogo'
+      path: '/catalogo'
+      fullPath: '/$lang/catalogo'
+      preLoaderRoute: typeof LangCatalogoRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/$category/': {
+      id: '/$lang/$category/'
+      path: '/$category'
+      fullPath: '/$lang/$category/'
+      preLoaderRoute: typeof LangCategoryIndexRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/$category/$product': {
+      id: '/$lang/$category/$product'
+      path: '/$category/$product'
+      fullPath: '/$lang/$category/$product'
+      preLoaderRoute: typeof LangCategoryProductRouteImport
+      parentRoute: typeof LangRoute
+    }
   }
 }
 
+interface LangRouteChildren {
+  LangCatalogoRoute: typeof LangCatalogoRoute
+  LangIndexRoute: typeof LangIndexRoute
+  LangCategoryProductRoute: typeof LangCategoryProductRoute
+  LangCategoryIndexRoute: typeof LangCategoryIndexRoute
+}
+
+const LangRouteChildren: LangRouteChildren = {
+  LangCatalogoRoute: LangCatalogoRoute,
+  LangIndexRoute: LangIndexRoute,
+  LangCategoryProductRoute: LangCategoryProductRoute,
+  LangCategoryIndexRoute: LangCategoryIndexRoute,
+}
+
+const LangRouteWithChildren = LangRoute._addFileChildren(LangRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LangRoute: LangRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
