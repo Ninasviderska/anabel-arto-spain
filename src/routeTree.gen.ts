@@ -10,33 +10,221 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LangRouteImport } from './routes/$lang'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as LangIndexRouteImport } from './routes/$lang/index'
+import { Route as LangAvisoLegalRouteImport } from './routes/$lang/aviso-legal'
+import { Route as LangCarritoRouteImport } from './routes/$lang/carrito'
+import { Route as LangCatalogoRouteImport } from './routes/$lang/catalogo'
+import { Route as LangPoliticaDeCookiesRouteImport } from './routes/$lang/politica-de-cookies'
+import { Route as LangPoliticaDeDevolucionesRouteImport } from './routes/$lang/politica-de-devoluciones'
+import { Route as LangPoliticaDePrivacidadRouteImport } from './routes/$lang/politica-de-privacidad'
+import { Route as LangTerminosYCondicionesRouteImport } from './routes/$lang/terminos-y-condiciones'
+import { Route as LangCategoryIndexRouteImport } from './routes/$lang/$category/index'
+import { Route as LangCategoryProductRouteImport } from './routes/$lang/$category/$product'
+import { Route as LangPedidoIndexRouteImport } from './routes/$lang/pedido/index'
+import { Route as LangPedidoGraciasRouteImport } from './routes/$lang/pedido/gracias'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LangRoute = LangRouteImport.update({
+  id: '/$lang',
+  path: '/$lang',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LangIndexRoute = LangIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangAvisoLegalRoute = LangAvisoLegalRouteImport.update({
+  id: '/aviso-legal',
+  path: '/aviso-legal',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangCarritoRoute = LangCarritoRouteImport.update({
+  id: '/carrito',
+  path: '/carrito',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangCatalogoRoute = LangCatalogoRouteImport.update({
+  id: '/catalogo',
+  path: '/catalogo',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangPoliticaDeCookiesRoute = LangPoliticaDeCookiesRouteImport.update({
+  id: '/politica-de-cookies',
+  path: '/politica-de-cookies',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangPoliticaDeDevolucionesRoute =
+  LangPoliticaDeDevolucionesRouteImport.update({
+    id: '/politica-de-devoluciones',
+    path: '/politica-de-devoluciones',
+    getParentRoute: () => LangRoute,
+  } as any)
+const LangPoliticaDePrivacidadRoute =
+  LangPoliticaDePrivacidadRouteImport.update({
+    id: '/politica-de-privacidad',
+    path: '/politica-de-privacidad',
+    getParentRoute: () => LangRoute,
+  } as any)
+const LangTerminosYCondicionesRoute =
+  LangTerminosYCondicionesRouteImport.update({
+    id: '/terminos-y-condiciones',
+    path: '/terminos-y-condiciones',
+    getParentRoute: () => LangRoute,
+  } as any)
+const LangCategoryIndexRoute = LangCategoryIndexRouteImport.update({
+  id: '/$category/',
+  path: '/$category/',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangCategoryProductRoute = LangCategoryProductRouteImport.update({
+  id: '/$category/$product',
+  path: '/$category/$product',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangPedidoIndexRoute = LangPedidoIndexRouteImport.update({
+  id: '/pedido/',
+  path: '/pedido/',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangPedidoGraciasRoute = LangPedidoGraciasRouteImport.update({
+  id: '/pedido/gracias',
+  path: '/pedido/gracias',
+  getParentRoute: () => LangRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$lang': typeof LangRouteWithChildren
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$lang/aviso-legal': typeof LangAvisoLegalRoute
+  '/$lang/carrito': typeof LangCarritoRoute
+  '/$lang/catalogo': typeof LangCatalogoRoute
+  '/$lang/politica-de-cookies': typeof LangPoliticaDeCookiesRoute
+  '/$lang/politica-de-devoluciones': typeof LangPoliticaDeDevolucionesRoute
+  '/$lang/politica-de-privacidad': typeof LangPoliticaDePrivacidadRoute
+  '/$lang/terminos-y-condiciones': typeof LangTerminosYCondicionesRoute
+  '/$lang/': typeof LangIndexRoute
+  '/$lang/$category/$product': typeof LangCategoryProductRoute
+  '/$lang/pedido/gracias': typeof LangPedidoGraciasRoute
+  '/$lang/$category/': typeof LangCategoryIndexRoute
+  '/$lang/pedido/': typeof LangPedidoIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$lang/aviso-legal': typeof LangAvisoLegalRoute
+  '/$lang/carrito': typeof LangCarritoRoute
+  '/$lang/catalogo': typeof LangCatalogoRoute
+  '/$lang/politica-de-cookies': typeof LangPoliticaDeCookiesRoute
+  '/$lang/politica-de-devoluciones': typeof LangPoliticaDeDevolucionesRoute
+  '/$lang/politica-de-privacidad': typeof LangPoliticaDePrivacidadRoute
+  '/$lang/terminos-y-condiciones': typeof LangTerminosYCondicionesRoute
+  '/$lang': typeof LangIndexRoute
+  '/$lang/$category/$product': typeof LangCategoryProductRoute
+  '/$lang/pedido/gracias': typeof LangPedidoGraciasRoute
+  '/$lang/$category': typeof LangCategoryIndexRoute
+  '/$lang/pedido': typeof LangPedidoIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/$lang': typeof LangRouteWithChildren
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$lang/aviso-legal': typeof LangAvisoLegalRoute
+  '/$lang/carrito': typeof LangCarritoRoute
+  '/$lang/catalogo': typeof LangCatalogoRoute
+  '/$lang/politica-de-cookies': typeof LangPoliticaDeCookiesRoute
+  '/$lang/politica-de-devoluciones': typeof LangPoliticaDeDevolucionesRoute
+  '/$lang/politica-de-privacidad': typeof LangPoliticaDePrivacidadRoute
+  '/$lang/terminos-y-condiciones': typeof LangTerminosYCondicionesRoute
+  '/$lang/': typeof LangIndexRoute
+  '/$lang/$category/$product': typeof LangCategoryProductRoute
+  '/$lang/pedido/gracias': typeof LangPedidoGraciasRoute
+  '/$lang/$category/': typeof LangCategoryIndexRoute
+  '/$lang/pedido/': typeof LangPedidoIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/$lang'
+    | '/robots.txt'
+    | '/sitemap.xml'
+    | '/$lang/aviso-legal'
+    | '/$lang/carrito'
+    | '/$lang/catalogo'
+    | '/$lang/politica-de-cookies'
+    | '/$lang/politica-de-devoluciones'
+    | '/$lang/politica-de-privacidad'
+    | '/$lang/terminos-y-condiciones'
+    | '/$lang/'
+    | '/$lang/$category/$product'
+    | '/$lang/pedido/gracias'
+    | '/$lang/$category/'
+    | '/$lang/pedido/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/robots.txt'
+    | '/sitemap.xml'
+    | '/$lang/aviso-legal'
+    | '/$lang/carrito'
+    | '/$lang/catalogo'
+    | '/$lang/politica-de-cookies'
+    | '/$lang/politica-de-devoluciones'
+    | '/$lang/politica-de-privacidad'
+    | '/$lang/terminos-y-condiciones'
+    | '/$lang'
+    | '/$lang/$category/$product'
+    | '/$lang/pedido/gracias'
+    | '/$lang/$category'
+    | '/$lang/pedido'
+  id:
+    | '__root__'
+    | '/'
+    | '/$lang'
+    | '/robots.txt'
+    | '/sitemap.xml'
+    | '/$lang/aviso-legal'
+    | '/$lang/carrito'
+    | '/$lang/catalogo'
+    | '/$lang/politica-de-cookies'
+    | '/$lang/politica-de-devoluciones'
+    | '/$lang/politica-de-privacidad'
+    | '/$lang/terminos-y-condiciones'
+    | '/$lang/'
+    | '/$lang/$category/$product'
+    | '/$lang/pedido/gracias'
+    | '/$lang/$category/'
+    | '/$lang/pedido/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LangRoute: typeof LangRouteWithChildren
+  RobotsDottxtRoute: typeof RobotsDottxtRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +236,151 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$lang': {
+      id: '/$lang'
+      path: '/$lang'
+      fullPath: '/$lang'
+      preLoaderRoute: typeof LangRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$lang/': {
+      id: '/$lang/'
+      path: '/'
+      fullPath: '/$lang/'
+      preLoaderRoute: typeof LangIndexRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/aviso-legal': {
+      id: '/$lang/aviso-legal'
+      path: '/aviso-legal'
+      fullPath: '/$lang/aviso-legal'
+      preLoaderRoute: typeof LangAvisoLegalRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/carrito': {
+      id: '/$lang/carrito'
+      path: '/carrito'
+      fullPath: '/$lang/carrito'
+      preLoaderRoute: typeof LangCarritoRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/catalogo': {
+      id: '/$lang/catalogo'
+      path: '/catalogo'
+      fullPath: '/$lang/catalogo'
+      preLoaderRoute: typeof LangCatalogoRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/politica-de-cookies': {
+      id: '/$lang/politica-de-cookies'
+      path: '/politica-de-cookies'
+      fullPath: '/$lang/politica-de-cookies'
+      preLoaderRoute: typeof LangPoliticaDeCookiesRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/politica-de-devoluciones': {
+      id: '/$lang/politica-de-devoluciones'
+      path: '/politica-de-devoluciones'
+      fullPath: '/$lang/politica-de-devoluciones'
+      preLoaderRoute: typeof LangPoliticaDeDevolucionesRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/politica-de-privacidad': {
+      id: '/$lang/politica-de-privacidad'
+      path: '/politica-de-privacidad'
+      fullPath: '/$lang/politica-de-privacidad'
+      preLoaderRoute: typeof LangPoliticaDePrivacidadRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/terminos-y-condiciones': {
+      id: '/$lang/terminos-y-condiciones'
+      path: '/terminos-y-condiciones'
+      fullPath: '/$lang/terminos-y-condiciones'
+      preLoaderRoute: typeof LangTerminosYCondicionesRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/$category/': {
+      id: '/$lang/$category/'
+      path: '/$category'
+      fullPath: '/$lang/$category/'
+      preLoaderRoute: typeof LangCategoryIndexRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/$category/$product': {
+      id: '/$lang/$category/$product'
+      path: '/$category/$product'
+      fullPath: '/$lang/$category/$product'
+      preLoaderRoute: typeof LangCategoryProductRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/pedido/': {
+      id: '/$lang/pedido/'
+      path: '/pedido'
+      fullPath: '/$lang/pedido/'
+      preLoaderRoute: typeof LangPedidoIndexRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/pedido/gracias': {
+      id: '/$lang/pedido/gracias'
+      path: '/pedido/gracias'
+      fullPath: '/$lang/pedido/gracias'
+      preLoaderRoute: typeof LangPedidoGraciasRouteImport
+      parentRoute: typeof LangRoute
+    }
   }
 }
 
+interface LangRouteChildren {
+  LangAvisoLegalRoute: typeof LangAvisoLegalRoute
+  LangCarritoRoute: typeof LangCarritoRoute
+  LangCatalogoRoute: typeof LangCatalogoRoute
+  LangPoliticaDeCookiesRoute: typeof LangPoliticaDeCookiesRoute
+  LangPoliticaDeDevolucionesRoute: typeof LangPoliticaDeDevolucionesRoute
+  LangPoliticaDePrivacidadRoute: typeof LangPoliticaDePrivacidadRoute
+  LangTerminosYCondicionesRoute: typeof LangTerminosYCondicionesRoute
+  LangIndexRoute: typeof LangIndexRoute
+  LangCategoryProductRoute: typeof LangCategoryProductRoute
+  LangPedidoGraciasRoute: typeof LangPedidoGraciasRoute
+  LangCategoryIndexRoute: typeof LangCategoryIndexRoute
+  LangPedidoIndexRoute: typeof LangPedidoIndexRoute
+}
+
+const LangRouteChildren: LangRouteChildren = {
+  LangAvisoLegalRoute: LangAvisoLegalRoute,
+  LangCarritoRoute: LangCarritoRoute,
+  LangCatalogoRoute: LangCatalogoRoute,
+  LangPoliticaDeCookiesRoute: LangPoliticaDeCookiesRoute,
+  LangPoliticaDeDevolucionesRoute: LangPoliticaDeDevolucionesRoute,
+  LangPoliticaDePrivacidadRoute: LangPoliticaDePrivacidadRoute,
+  LangTerminosYCondicionesRoute: LangTerminosYCondicionesRoute,
+  LangIndexRoute: LangIndexRoute,
+  LangCategoryProductRoute: LangCategoryProductRoute,
+  LangPedidoGraciasRoute: LangPedidoGraciasRoute,
+  LangCategoryIndexRoute: LangCategoryIndexRoute,
+  LangPedidoIndexRoute: LangPedidoIndexRoute,
+}
+
+const LangRouteWithChildren = LangRoute._addFileChildren(LangRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LangRoute: LangRouteWithChildren,
+  RobotsDottxtRoute: RobotsDottxtRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
