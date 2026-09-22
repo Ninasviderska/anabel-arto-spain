@@ -122,7 +122,7 @@ function ProductPage() {
 
       <div className="mt-6 grid gap-10 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
         {/* Gallery */}
-        <div className="grid gap-3 md:grid-cols-[4.5rem_1fr]">
+        <div className={`grid gap-3 ${images.length > 1 ? "md:grid-cols-[4.5rem_1fr]" : ""}`}>
           {images.length > 1 && (
             <ul className="order-2 flex gap-2 md:order-1 md:flex-col">
               {images.map((img, i) => (

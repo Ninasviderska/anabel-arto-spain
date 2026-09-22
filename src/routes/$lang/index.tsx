@@ -58,7 +58,7 @@ function HomePage() {
           className="absolute inset-0 h-full w-full object-cover object-right"
         />
         <div className="hero-veil absolute inset-0" aria-hidden />
-        <div className="container-shop relative flex min-h-[78vh] items-center py-24 md:min-h-[86vh]">
+        <div className="container-shop relative flex min-h-[32rem] items-center py-24 md:min-h-[40rem] lg:min-h-[44rem]">
           <div className="max-w-xl animate-fade-up">
             <p className="eyebrow mb-6">{d.home.heroEyebrow}</p>
             <h1 className="font-display text-5xl leading-[1.02] text-foreground md:text-7xl">
