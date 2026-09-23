@@ -24,7 +24,7 @@ export const Route = createFileRoute("/$lang/")({
     const origin = loaderData?.origin ?? shopConfig.siteUrl;
     return {
       meta: pageMeta({
-        title: `${d.brand.name} — ${d.brand.tagline} | Liquidación en España`,
+        title: "Anabel Arto España | Comprar Ropa Interior Femenina Online al Mejor Precio",
         description: d.brand.description,
         path: `/${params.lang}`,
         image: `${origin}/images/hero.jpg`,
@@ -74,7 +74,7 @@ function HomePage() {
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg">
-                <Link to="/$lang/$category" params={{ lang: locale, category: "sujetadores" }}>
+                <Link to="/$lang/ropa-interior/$category" params={{ lang: locale, category: "sujetadores" }}>
                   {d.home.heroSecondary}
                 </Link>
               </Button>
@@ -87,10 +87,10 @@ function HomePage() {
       <section className="container-shop py-20 md:py-28">
         <SectionHeading eyebrow={d.home.categoriesEyebrow} title={d.home.categoriesTitle} />
         <ul className="grid grid-cols-2 gap-4 md:grid-cols-5 md:gap-5">
-          {categories.map((c) => (
+          {categories.filter((c) => c.parent_id).map((c) => (
             <li key={c.id}>
               <Link
-                to="/$lang/$category"
+                to="/$lang/ropa-interior/$category"
                 params={{ lang: locale, category: c.slug }}
                 className="group block"
               >
@@ -115,6 +115,7 @@ function HomePage() {
                     strokeWidth={1.5}
                   />
                 </div>
+                <p className="mt-1 text-xs text-muted-foreground">{featured.filter((p) => p.category.id === c.id).length || "Ver"} modelos</p>
               </Link>
             </li>
           ))}

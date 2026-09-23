@@ -1,13 +1,14 @@
 export const es = {
   brand: {
     name: "Anabel Arto",
-    tagline: "Lencería nupcial y boudoir",
+    tagline: "Lencería femenina de calidad europea",
     description:
-      "Lencería de novia y boudoir de Anabel Arto. Encajes y satén de calidad premium, ahora en liquidación desde nuestro showroom en España. Envío a toda España.",
+      "Ropa interior femenina Anabel Arto de confección europea, ahora a precios de liquidación. Envío GLS a la España peninsular.",
   },
   nav: {
     home: "Inicio",
     catalog: "Colección",
+    underwear: "Ropa interior",
     cart: "Cesta",
     menu: "Menú",
     close: "Cerrar",
@@ -16,9 +17,9 @@ export const es = {
   },
   home: {
     heroEyebrow: "Liquidación de colección · Showroom España",
-    heroTitle: "Lencería de novia que se guarda para siempre",
+    heroTitle: "Ropa interior que realza tu confianza",
     heroText:
-      "Encaje bordado, tul y satén de la casa Anabel Arto. Últimas unidades de nuestra colección nupcial con hasta un 50 % de descuento.",
+      "Encaje, tul y satén Anabel Arto de confección europea. Últimas unidades de colección a precios de liquidación.",
     heroCta: "Ver la colección",
     heroSecondary: "Sujetadores",
     categoriesEyebrow: "Categorías",
@@ -29,8 +30,8 @@ export const es = {
     benefitsEyebrow: "Por qué Anabel Arto",
     benefits: [
       {
-        title: "Envío a toda España",
-        text: "Entrega en 2–4 días laborables. Gratis a partir de {threshold}.",
+        title: "Envío GLS peninsular",
+        text: "Entrega estimada en 3–5 días laborables. Gratis a partir de {threshold}.",
       },
       {
         title: "Calidad europea",
@@ -42,13 +43,13 @@ export const es = {
       },
       {
         title: "Devoluciones sencillas",
-        text: "14 días para cambios o devoluciones en prendas sin usar con su etiqueta.",
+        text: "14 días para devolver prendas sin usar y con la etiqueta higiénica intacta.",
       },
     ],
     storyEyebrow: "La casa",
-    storyTitle: "Diseñada para el día más íntimo",
+    storyTitle: "Diseñada para sentirte tú",
     storyText:
-      "Anabel Arto es una casa de lencería con más de veinte años de tradición. Cada pieza nace del encaje, la paciencia y la idea de que la belleza también se lleva por dentro. Hoy liquidamos nuestra última colección nupcial desde nuestro showroom en España.",
+      "Anabel Arto es una casa de lencería con más de veinte años de tradición. Cada pieza se confecciona en Ucrania con materiales seleccionados y acabados cuidados. Hoy liquidamos las últimas unidades de colección desde España.",
   },
   catalog: {
     title: "Colección",
@@ -63,7 +64,7 @@ export const es = {
     empty: "No hay prendas que coincidan con los filtros seleccionados.",
     all: "Todas",
     metaDescription:
-      "Descubre la colección de lencería nupcial Anabel Arto: sujetadores, braguitas, picardías, camisones y batas. Envío a toda España.",
+      "Compra ropa interior femenina Anabel Arto al mejor precio: sujetadores, braguitas, picardías, camisones y batas con envío GLS a la España peninsular.",
   },
   product: {
     color: "Color",
@@ -80,11 +81,15 @@ export const es = {
       "Lavar a mano en agua fría con jabón neutro. No usar secadora ni lejía. Secar en horizontal a la sombra.",
     shipping: "Envío y devoluciones",
     shippingText:
-      "Envío a toda España por {shipping}, gratis a partir de {threshold}. 14 días para devoluciones.",
+      "Envío GLS a la España peninsular por {shipping}, gratis a partir de {threshold}. Entrega estimada en 3–5 días laborables.",
     ivaIncluded: "IVA incluido",
     save: "Ahorras {percent} %",
     oneSize: "Talla única",
     sizeGuide: "Guía de tallas",
+    manufacturerSize: "Talla del fabricante",
+    cup: "Copa",
+    band: "Contorno FR/ES",
+    hygiene: "Por motivos de higiene, solo aceptamos devoluciones de ropa interior con la etiqueta higiénica intacta y sin usar.",
     related: "Completa el conjunto",
     breadcrumbHome: "Inicio",
   },
@@ -109,7 +114,7 @@ export const es = {
     title: "Finalizar pedido",
     contact: "Datos de contacto",
     shippingAddress: "Dirección de envío",
-    spainOnly: "Actualmente solo enviamos a España peninsular y Baleares.",
+    spainOnly: "Actualmente solo realizamos envíos a la España peninsular.",
     name: "Nombre y apellidos",
     email: "Correo electrónico",
     phone: "Teléfono",
@@ -131,6 +136,7 @@ export const es = {
       phone: "Introduce un teléfono válido",
       terms: "Debes aceptar las condiciones",
       generic: "No se ha podido crear el pedido. Inténtalo de nuevo.",
+      mainland: "Actualmente solo realizamos envíos a la España peninsular.",
     },
   },
   thanks: {
@@ -223,7 +229,7 @@ export const es = {
           },
           {
             heading: "2. Envío",
-            body: "Realizamos envíos únicamente dentro de España. El coste de envío se indica antes de finalizar la compra y es gratuito a partir del importe mínimo indicado. El plazo estimado de entrega es de 2 a 4 días laborables.",
+            body: "Realizamos envíos con GLS únicamente a la España peninsular. No enviamos a Baleares, Canarias, Ceuta ni Melilla. El coste provisional es de 4,95 €, gratis desde 60 €, y la entrega estimada es de 3 a 5 días laborables.",
           },
           {
             heading: "3. Disponibilidad",
@@ -241,7 +247,7 @@ export const es = {
           },
           {
             heading: "2. Condiciones",
-            body: "Por razones de higiene, las prendas deben devolverse sin usar, con el protector higiénico intacto y con todas sus etiquetas originales.",
+            body: "Por motivos de higiene, solo aceptamos devoluciones de ropa interior con la etiqueta higiénica intacta y sin usar. Conserva también todas las etiquetas originales hasta decidir que te quedas con la prenda.",
           },
           {
             heading: "3. Procedimiento",

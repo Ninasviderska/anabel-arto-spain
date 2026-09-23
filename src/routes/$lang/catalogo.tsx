@@ -43,7 +43,7 @@ function CatalogPage() {
   return (
     <CatalogView
       lang={lang}
-      categories={categories}
+       categories={categories.filter((c) => c.parent_id)}
       products={products}
       filters={{ category: search.categoria, color: search.color, size: search.talla }}
       onFiltersChange={(f) =>

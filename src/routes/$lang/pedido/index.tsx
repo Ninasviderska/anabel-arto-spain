@@ -10,7 +10,7 @@ import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/format";
 import { createOrder } from "@/lib/orders.functions";
 import { pageMeta } from "@/lib/seo";
-import { SPANISH_PROVINCES } from "@/lib/provinces";
+import { MAINLAND_PROVINCES, isMainlandShippingAddress } from "@/lib/shipping";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -51,7 +51,7 @@ function CheckoutPage() {
     province: z.string().min(2, e.required),
     notes: z.string().trim().max(500).optional(),
     terms: z.literal(true, { errorMap: () => ({ message: e.terms }) }),
-  });
+  }).refine((value) => isMainlandShippingAddress(value.province, value.postalCode), { message: e.mainland, path: ["postalCode"] });
   type FormValues = z.infer<typeof schema>;
 
   const form = useForm<FormValues>({
@@ -80,7 +80,7 @@ function CheckoutPage() {
       navigate({ to: "/$lang/pedido/gracias", params: { lang: locale }, search: { n: result.orderNumber } });
     } catch (err) {
       console.error(err);
-      setServerError(e.generic);
+      setServerError(err instanceof Error && err.message.includes("MAINLAND_ONLY") ? e.mainland : e.generic);
     }
   };
 
@@ -137,7 +137,7 @@ function CheckoutPage() {
                   className="flex h-10 w-full rounded-sm border border-input bg-background px-3 text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                 >
                   <option value="">—</option>
-                  {SPANISH_PROVINCES.map((p) => (
+                  {MAINLAND_PROVINCES.map((p) => (
                     <option key={p} value={p}>
                       {p}
                     </option>

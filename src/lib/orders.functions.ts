@@ -3,6 +3,7 @@ import { z } from "zod";
 import { getPublicClient } from "./supabase-public.server";
 import { shippingFor } from "./shop-config";
 import { isVariantAvailable } from "./catalog.types";
+import { isMainlandShippingAddress } from "./shipping";
 
 export const checkoutSchema = z.object({
   locale: z.string().default("es"),
@@ -37,6 +38,7 @@ export type CheckoutResult = {
 export const createOrder = createServerFn({ method: "POST" })
   .inputValidator((input: CheckoutInput) => checkoutSchema.parse(input))
   .handler(async ({ data }): Promise<CheckoutResult> => {
+    if (!isMainlandShippingAddress(data.customer.province, data.customer.postalCode)) throw new Error("MAINLAND_ONLY");
     const publicDb = getPublicClient();
     const variantIds = data.items.map((i) => i.variantId);
     const { data: variants, error } = await publicDb
@@ -47,7 +49,8 @@ export const createOrder = createServerFn({ method: "POST" })
     if (!variants || variants.length !== variantIds.length) throw new Error("VARIANT_NOT_FOUND");
 
     const lines = data.items.map((item) => {
-      const v = variants.find((x) => x.id === item.variantId)!;
+      const v = variants.find((x) => x.id === item.variantId);
+      if (!v) throw new Error("VARIANT_NOT_FOUND");
       if (!v.product?.is_active || !isVariantAvailable(v)) throw new Error("VARIANT_UNAVAILABLE");
       const unit = v.price_override_cents ?? v.product.price_cents;
       const image =
@@ -73,6 +76,15 @@ export const createOrder = createServerFn({ method: "POST" })
     // is the only writer and runs with the privileged server client.
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const c = data.customer;
+    const reserved: { id: string; quantity: number }[] = [];
+    for (const line of lines) {
+      const { data: ok, error: reserveError } = await supabaseAdmin.rpc("reserve_variant_stock", { _variant_id: line.variant_id, _qty: line.quantity });
+      if (reserveError || !ok) {
+        for (const previous of reserved) await supabaseAdmin.rpc("release_variant_stock", { _variant_id: previous.id, _qty: previous.quantity });
+        throw new Error("VARIANT_UNAVAILABLE");
+      }
+      reserved.push({ id: line.variant_id, quantity: line.quantity });
+    }
     const { data: order, error: orderError } = await supabaseAdmin
       .from("orders")
       .insert({
@@ -93,12 +105,19 @@ export const createOrder = createServerFn({ method: "POST" })
       })
       .select("id, order_number")
       .single();
-    if (orderError || !order) throw new Error(orderError?.message ?? "ORDER_FAILED");
+    if (orderError || !order) {
+      for (const previous of reserved) await supabaseAdmin.rpc("release_variant_stock", { _variant_id: previous.id, _qty: previous.quantity });
+      throw new Error(orderError?.message ?? "ORDER_FAILED");
+    }
 
     const { error: itemsError } = await supabaseAdmin
       .from("order_items")
       .insert(lines.map((l) => ({ ...l, order_id: order.id })));
-    if (itemsError) throw new Error(itemsError.message);
+    if (itemsError) {
+      for (const previous of reserved) await supabaseAdmin.rpc("release_variant_stock", { _variant_id: previous.id, _qty: previous.quantity });
+      await supabaseAdmin.from("orders").delete().eq("id", order.id);
+      throw new Error(itemsError.message);
+    }
 
     // TODO(stripe): once Lovable payments are enabled, create a Stripe Checkout Session here
     // with `lines`, store its id in orders.stripe_session_id and return session.url.

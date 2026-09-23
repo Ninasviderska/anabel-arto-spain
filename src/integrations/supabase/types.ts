@@ -22,7 +22,9 @@ export type Database = {
           image_url: string | null
           is_active: boolean
           name: string
+          parent_id: string | null
           seo_description: string | null
+          seo_text: string | null
           seo_title: string | null
           size_type: Database["public"]["Enums"]["size_type"]
           slug: string
@@ -35,7 +37,9 @@ export type Database = {
           image_url?: string | null
           is_active?: boolean
           name: string
+          parent_id?: string | null
           seo_description?: string | null
+          seo_text?: string | null
           seo_title?: string | null
           size_type?: Database["public"]["Enums"]["size_type"]
           slug: string
@@ -48,13 +52,23 @@ export type Database = {
           image_url?: string | null
           is_active?: boolean
           name?: string
+          parent_id?: string | null
           seo_description?: string | null
+          seo_text?: string | null
           seo_title?: string | null
           size_type?: Database["public"]["Enums"]["size_type"]
           slug?: string
           sort_order?: number
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "categories_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       order_items: {
         Row: {
@@ -370,6 +384,7 @@ export type Database = {
           name: string
           price_cents: number
           seo_description: string | null
+          seo_text: string | null
           seo_title: string | null
           short_description: string | null
           sku: string
@@ -388,6 +403,7 @@ export type Database = {
           name: string
           price_cents: number
           seo_description?: string | null
+          seo_text?: string | null
           seo_title?: string | null
           short_description?: string | null
           sku: string
@@ -406,6 +422,7 @@ export type Database = {
           name?: string
           price_cents?: number
           seo_description?: string | null
+          seo_text?: string | null
           seo_title?: string | null
           short_description?: string | null
           sku?: string

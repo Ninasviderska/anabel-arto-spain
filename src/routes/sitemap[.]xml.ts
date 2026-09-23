@@ -27,10 +27,11 @@ export const Route = createFileRoute("/sitemap.xml")({
         for (const lang of locales) {
           urls.push({ loc: `${origin}/${lang}`, priority: "1.0" });
           urls.push({ loc: `${origin}/${lang}/catalogo`, priority: "0.9" });
-          for (const c of categories ?? []) urls.push({ loc: `${origin}/${lang}/${c.slug}`, priority: "0.8" });
+          urls.push({ loc: `${origin}/${lang}/ropa-interior`, priority: "0.9" });
+          for (const c of categories ?? []) if (c.slug !== "ropa-interior") urls.push({ loc: `${origin}/${lang}/ropa-interior/${c.slug}`, priority: "0.8" });
           for (const p of products ?? []) {
             const cat = (p.category as { slug: string } | null)?.slug;
-            if (cat) urls.push({ loc: `${origin}/${lang}/${cat}/${p.slug}`, lastmod: p.updated_at, priority: "0.7" });
+            if (cat) urls.push({ loc: `${origin}/${lang}/ropa-interior/${cat}/${p.slug}`, lastmod: p.updated_at, priority: "0.7" });
           }
           for (const slug of legalSlugs) urls.push({ loc: `${origin}/${lang}/${slug}`, priority: "0.3" });
         }

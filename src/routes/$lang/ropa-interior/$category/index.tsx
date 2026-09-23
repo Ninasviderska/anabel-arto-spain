@@ -9,7 +9,7 @@ import { CatalogView } from "@/components/shop/CatalogView";
 
 const searchSchema = z.object({ color: z.string().optional(), talla: z.string().optional() });
 
-export const Route = createFileRoute("/$lang/$category/")({
+export const Route = createFileRoute("/$lang/ropa-interior/$category/")({
   validateSearch: (s) => searchSchema.parse(s),
   loader: async ({ context, params }) => {
     const [categories, origin] = await Promise.all([
@@ -27,7 +27,7 @@ export const Route = createFileRoute("/$lang/$category/")({
       return { meta: [{ title: d.common.notFoundTitle }, { name: "robots", content: "noindex" }] };
     }
     const { category, origin } = loaderData;
-    const path = `/${params.lang}/${category.slug}`;
+    const path = `/${params.lang}/ropa-interior/${category.slug}`;
     return {
       meta: pageMeta({
         title: category.seo_title ?? `${category.name} — ${d.brand.name}`,
@@ -40,7 +40,7 @@ export const Route = createFileRoute("/$lang/$category/")({
         jsonLdScript(
           breadcrumbJsonLd(origin ?? shopConfig.siteUrl, [
             { name: d.product.breadcrumbHome, path: `/${params.lang}` },
-            { name: d.catalog.title, path: `/${params.lang}/catalogo` },
+            { name: "Ropa interior", path: `/${params.lang}/ropa-interior` },
             { name: category.name, path },
           ]),
         ),
@@ -62,14 +62,15 @@ function CategoryPage() {
   return (
     <CatalogView
       lang={lang}
-      categories={categories}
+      categories={categories.filter((c) => c.parent_id)}
       products={products}
       title={category.name}
       description={category.description}
+      seoText={category.seo_text}
       crumbs={[
         { name: d.product.breadcrumbHome, path: `/${lang}` },
-        { name: d.catalog.title, path: `/${lang}/catalogo` },
-        { name: category.name, path: `/${lang}/${slug}` },
+        { name: "Ropa interior", path: `/${lang}/ropa-interior` },
+        { name: category.name, path: `/${lang}/ropa-interior/${slug}` },
       ]}
       filters={{ category: slug, color: search.color, size: search.talla }}
       onFiltersChange={(f) =>

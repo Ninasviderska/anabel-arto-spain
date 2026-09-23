@@ -1,10 +1,12 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, ShoppingBag, X } from "lucide-react";
+import { ChevronDown, Menu, ShoppingBag, X } from "lucide-react";
 import { useState } from "react";
 import { Logo } from "@/components/Logo";
 import { useI18n } from "@/i18n";
 import { useCart } from "@/lib/cart";
 import type { Category } from "@/lib/catalog.types";
+import { Button } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 export function Header({ categories }: { categories: Category[] }) {
   const { locale, d } = useI18n();
@@ -43,17 +45,19 @@ export function Header({ categories }: { categories: Category[] }) {
           >
             {d.nav.catalog}
           </Link>
-          {categories.map((c) => (
-            <Link
-              key={c.id}
-              to="/$lang/$category"
-              params={{ lang: locale, category: c.slug }}
-              className="link-underline text-[0.72rem] tracking-[0.22em] uppercase text-foreground/80 hover:text-foreground"
-              activeProps={{ className: "text-foreground" }}
-            >
-              {c.name}
-            </Link>
-          ))}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="sm" className="gap-1 px-0 text-[0.72rem] font-normal tracking-[0.22em] uppercase text-foreground/80">
+                {d.nav.underwear}<ChevronDown className="size-3" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="min-w-52">
+              <DropdownMenuItem asChild><Link to="/$lang/ropa-interior" params={{ lang: locale }}>{d.nav.underwear}</Link></DropdownMenuItem>
+              {categories.filter((c) => c.parent_id).map((c) => (
+                <DropdownMenuItem key={c.id} asChild><Link to="/$lang/ropa-interior/$category" params={{ lang: locale, category: c.slug }}>{c.name}</Link></DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </nav>
 
         <Link
@@ -85,13 +89,14 @@ export function Header({ categories }: { categories: Category[] }) {
                 {d.nav.catalog}
               </Link>
             </li>
-            {categories.map((c) => (
+            <li><Link to="/$lang/ropa-interior" params={{ lang: locale }} onClick={() => setOpen(false)} className="block py-3 text-sm tracking-[0.18em] uppercase">{d.nav.underwear}</Link></li>
+            {categories.filter((c) => c.parent_id).map((c) => (
               <li key={c.id}>
                 <Link
-                  to="/$lang/$category"
+                  to="/$lang/ropa-interior/$category"
                   params={{ lang: locale, category: c.slug }}
                   onClick={() => setOpen(false)}
-                  className="block py-3 text-sm tracking-[0.18em] uppercase"
+                  className="block py-2 pl-4 text-sm text-muted-foreground"
                 >
                   {c.name}
                 </Link>

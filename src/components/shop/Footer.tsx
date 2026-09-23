@@ -25,9 +25,10 @@ export function Footer({ categories }: { categories: Category[] }) {
                 {d.catalog.allProducts}
               </Link>
             </li>
-            {categories.map((c) => (
+            <li><Link to="/$lang/ropa-interior" params={{ lang: locale }} className="link-underline font-medium">{d.nav.underwear}</Link></li>
+            {categories.filter((c) => c.parent_id).map((c) => (
               <li key={c.id}>
-                <Link to="/$lang/$category" params={{ lang: locale, category: c.slug }} className="link-underline">
+                <Link to="/$lang/ropa-interior/$category" params={{ lang: locale, category: c.slug }} className="link-underline pl-3 text-muted-foreground">
                   {c.name}
                 </Link>
               </li>
