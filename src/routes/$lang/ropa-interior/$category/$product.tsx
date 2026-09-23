@@ -14,6 +14,8 @@ import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Breadcrumbs } from "@/components/shop/Breadcrumbs";
 import { ProductCard } from "@/components/shop/ProductCard";
+import { SizeGuide } from "@/components/shop/SizeGuide";
+import { displaySize, manufacturerSizeLabel, parseBraSize } from "@/lib/sizes";
 
 export const Route = createFileRoute("/$lang/ropa-interior/$category/$product")({
   loader: async ({ context, params }) => {
@@ -77,6 +79,8 @@ function ProductPage() {
 
   const [colorId, setColorId] = useState(product.colors[0]?.id ?? "");
   const [size, setSize] = useState<string | null>(null);
+  const [cup, setCup] = useState<string | null>(null);
+  const [band, setBand] = useState<string | null>(null);
 
   const color = product.colors.find((c) => c.id === colorId) ?? product.colors[0];
   const images = useMemo(() => {
@@ -87,9 +91,12 @@ function ProductPage() {
 
   const sizes = product.variants.filter((v) => v.color_id === colorId);
   const isOneSize = product.category.size_type === "one_size";
+  const isBra = product.category.size_type === "bra";
   const selectedVariant = isOneSize
     ? sizes[0]
-    : sizes.find((v) => v.size === size);
+    : isBra
+      ? sizes.find((v) => { const parsed = parseBraSize(v.size); return parsed?.cup === cup && displaySize(v.size, "bra").endsWith(` ${band}`); })
+      : sizes.find((v) => v.size === size);
   const canAdd = Boolean(selectedVariant && isVariantAvailable(selectedVariant));
   const discount = discountPercent(product.price_cents, product.compare_at_price_cents);
   const related = all.filter((p) => p.id !== product.id && p.category.id !== product.category.id).slice(0, 4);
@@ -103,12 +110,12 @@ function ProductPage() {
       categorySlug: product.category.slug,
       name: product.name,
       colorName: color.name,
-      size: selectedVariant.size,
+      size: displaySize(selectedVariant.size, product.category.size_type),
       sku: selectedVariant.variant_sku,
       unitPriceCents: selectedVariant.price_override_cents ?? product.price_cents,
       imageUrl: primaryImage(product, color.id)?.url ?? null,
     });
-    toast.success(d.product.added, { description: `${product.name} · ${color.name} · ${selectedVariant.size}` });
+    toast.success(d.product.added, { description: `${product.name} · ${color.name} · ${displaySize(selectedVariant.size, product.category.size_type)}` });
   };
 
   const crumbs = [
@@ -202,6 +209,8 @@ function ProductPage() {
                       setColorId(c.id);
                       setActiveImage(0);
                       setSize(null);
+                      setCup(null);
+                      setBand(null);
                     }}
                     className={`flex h-9 w-9 items-center justify-center rounded-full border-2 transition-colors ${
                       active ? "border-primary" : "border-transparent hover:border-border"
@@ -221,8 +230,15 @@ function ProductPage() {
                 {d.product.size}
                 {isOneSize && <span className="normal-case tracking-normal text-muted-foreground">: {d.product.oneSize}</span>}
               </span>
+              {!isOneSize && <SizeGuide bra={isBra} />}
             </legend>
-            {!isOneSize && (
+            {isBra && (
+              <div className="space-y-4">
+                <div><p className="mb-2 text-xs text-muted-foreground">{d.product.cup}</p><div className="flex gap-2">{[...new Set(sizes.map((v)=>parseBraSize(v.size)?.cup).filter(Boolean))].map((value)=><Button key={value} type="button" variant={cup===value?"default":"outline"} size="sm" onClick={()=>{setCup(value ?? null);setBand(null)}}>{value}</Button>)}</div></div>
+                <div><p className="mb-2 text-xs text-muted-foreground">{d.product.band}</p><div className="flex flex-wrap gap-2">{[...new Set(sizes.filter((v)=>parseBraSize(v.size)?.cup===cup).map((v)=>displaySize(v.size,"bra").split(" ")[1]).filter(Boolean))].map((value)=>{const variant=sizes.find((v)=>parseBraSize(v.size)?.cup===cup&&displaySize(v.size,"bra").endsWith(` ${value}`));const available=variant?isVariantAvailable(variant):false;return <Button key={value} type="button" variant={band===value?"default":"outline"} size="sm" disabled={!available} onClick={()=>setBand(value ?? null)}>{value}</Button>})}</div></div>
+              </div>
+            )}
+            {!isOneSize && !isBra && (
               <div className="flex flex-wrap gap-2">
                 {sizes.map((v) => {
                   const available = isVariantAvailable(v);
@@ -238,7 +254,7 @@ function ProductPage() {
                         active ? "border-primary bg-primary text-primary-foreground" : "border-border hover:border-primary"
                       }`}
                     >
-                      {v.size}
+                      {displaySize(v.size, product.category.size_type)}
                     </button>
                   );
                 })}
@@ -248,13 +264,14 @@ function ProductPage() {
 
           <div className="mt-8 flex flex-col gap-3">
             <Button size="lg" variant="hero" disabled={!canAdd} onClick={onAdd} className="w-full">
-              {!isOneSize && !size ? d.product.selectSize : d.product.addToCart}
+              {!isOneSize && !(isBra ? cup && band : size) ? d.product.selectSize : d.product.addToCart}
             </Button>
             <p className="flex items-center gap-2 text-xs text-muted-foreground">
               <Check className="size-3.5 text-primary" />
               {canAdd || (!size && !isOneSize) ? d.product.inStock : d.product.outOfStock} · {d.product.sku}:{" "}
               {selectedVariant?.variant_sku ?? product.sku}
             </p>
+            {selectedVariant && <p className="text-xs text-muted-foreground">{d.product.manufacturerSize}: {manufacturerSizeLabel(selectedVariant.size).replace("Fabricante: ", "")}</p>}
           </div>
 
           <Accordion type="single" collapsible className="mt-10 border-t">
@@ -277,6 +294,7 @@ function ProductPage() {
                   shipping: formatPrice(shopConfig.shippingCents, locale),
                   threshold: formatPrice(shopConfig.freeShippingThresholdCents, locale),
                 })}{" "}
+                <span className="mt-2 block">{d.product.hygiene}</span>{" "}
                 <Link to={`/$lang/politica-de-devoluciones`} params={{ lang: locale }} className="underline underline-offset-4">
                   {d.legal.pages["politica-de-devoluciones"].title}
                 </Link>
@@ -296,6 +314,7 @@ function ProductPage() {
           </div>
         </section>
       )}
+      {product.seo_text && <section className="mt-16 max-w-3xl border-t pt-10 text-sm leading-relaxed text-muted-foreground"><p>{product.seo_text}</p></section>}
     </div>
   );
 }
