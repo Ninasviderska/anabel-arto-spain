@@ -41,6 +41,7 @@
   --color-plum: var(--plum);
   --color-plum-soft: var(--plum-soft);
   --color-cream-deep: var(--cream-deep);
+  --color-logo-light: var(--logo-light);
   --font-display: "Cormorant Garamond", "Times New Roman", serif;
   --font-sans: "Jost", "Helvetica Neue", Arial, sans-serif;
   --shadow-soft: 0 12px 40px -18px color-mix(in oklab, var(--plum) 28%, transparent);
@@ -56,7 +57,7 @@
   --card-foreground: oklch(0.26 0.03 30);
   --popover: oklch(0.99 0.006 85);
   --popover-foreground: oklch(0.26 0.03 30);
-  --primary: oklch(0.33 0.09 355);
+  --primary: oklch(0.3062 0.0933 334.48);
   --primary-foreground: oklch(0.98 0.008 85);
   --secondary: oklch(0.935 0.022 30);
   --secondary-foreground: oklch(0.3 0.05 350);
@@ -68,12 +69,13 @@
   --destructive-foreground: oklch(0.98 0.008 85);
   --border: oklch(0.905 0.015 70);
   --input: oklch(0.88 0.015 70);
-  --ring: oklch(0.45 0.09 355);
+  --ring: oklch(0.42 0.0933 334.48);
   --gold: oklch(0.74 0.08 80);
   --blush: oklch(0.92 0.04 20);
-  --plum: oklch(0.33 0.09 355);
-  --plum-soft: oklch(0.55 0.08 355);
+  --plum: oklch(0.3062 0.0933 334.48);
+  --plum-soft: oklch(0.5 0.08 334.48);
   --cream-deep: oklch(0.955 0.02 80);
+  --logo-light: oklch(0.997 0 0);
 }
 
 @keyframes fade-up {
