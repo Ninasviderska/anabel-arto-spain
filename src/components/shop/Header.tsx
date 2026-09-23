@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Menu, ShoppingBag, X } from "lucide-react";
 import { useState } from "react";
+import { Logo } from "@/components/Logo";
 import { useI18n } from "@/i18n";
 import { useCart } from "@/lib/cart";
 import type { Category } from "@/lib/catalog.types";
@@ -26,10 +27,10 @@ export function Header({ categories }: { categories: Category[] }) {
         <Link
           to="/$lang"
           params={{ lang: locale }}
-          className="font-display text-2xl tracking-[0.18em] uppercase text-primary md:text-[1.7rem]"
+          className="block shrink-0"
           aria-label={d.brand.name}
         >
-          {d.brand.name}
+          <Logo variant="dark" className="h-7 w-auto md:h-8" />
         </Link>
 
         <nav aria-label="Principal" className="hidden items-center gap-8 md:flex">

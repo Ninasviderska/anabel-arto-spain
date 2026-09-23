@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { legalSlugs, useI18n } from "@/i18n";
 import { shopConfig } from "@/lib/shop-config";
 import type { Category } from "@/lib/catalog.types";
+import { Logo } from "@/components/Logo";
 
 export function Footer({ categories }: { categories: Category[] }) {
   const { locale, d } = useI18n();
@@ -11,7 +12,7 @@ export function Footer({ categories }: { categories: Category[] }) {
     <footer className="mt-24 border-t border-border bg-cream-deep">
       <div className="container-shop grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
-          <p className="font-display text-2xl tracking-[0.18em] uppercase text-primary">{d.brand.name}</p>
+          <Logo variant="dark" className="h-8 w-auto" />
           <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">{d.brand.tagline}</p>
           <p className="mt-6 text-xs tracking-wide text-muted-foreground">{d.footer.madeIn}</p>
         </div>
