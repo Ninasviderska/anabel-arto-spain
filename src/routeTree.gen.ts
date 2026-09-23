@@ -23,6 +23,7 @@ import { Route as LangPoliticaDePrivacidadRouteImport } from './routes/$lang/pol
 import { Route as LangTerminosYCondicionesRouteImport } from './routes/$lang/terminos-y-condiciones'
 import { Route as LangPedidoIndexRouteImport } from './routes/$lang/pedido/index'
 import { Route as LangPedidoGraciasRouteImport } from './routes/$lang/pedido/gracias'
+import { Route as LangRopaInteriorIndexRouteImport } from './routes/$lang/ropa-interior/index'
 import { Route as LangRopaInteriorCategoryIndexRouteImport } from './routes/$lang/ropa-interior/$category/index'
 import { Route as LangRopaInteriorCategoryProductRouteImport } from './routes/$lang/ropa-interior/$category/$product'
 
@@ -99,6 +100,11 @@ const LangPedidoGraciasRoute = LangPedidoGraciasRouteImport.update({
   path: '/pedido/gracias',
   getParentRoute: () => LangRoute,
 } as any)
+const LangRopaInteriorIndexRoute = LangRopaInteriorIndexRouteImport.update({
+  id: '/ropa-interior/',
+  path: '/ropa-interior/',
+  getParentRoute: () => LangRoute,
+} as any)
 const LangRopaInteriorCategoryIndexRoute =
   LangRopaInteriorCategoryIndexRouteImport.update({
     id: '/ropa-interior/$category/',
@@ -127,6 +133,7 @@ export interface FileRoutesByFullPath {
   '/$lang/': typeof LangIndexRoute
   '/$lang/pedido/gracias': typeof LangPedidoGraciasRoute
   '/$lang/pedido/': typeof LangPedidoIndexRoute
+  '/$lang/ropa-interior/': typeof LangRopaInteriorIndexRoute
   '/$lang/ropa-interior/$category/$product': typeof LangRopaInteriorCategoryProductRoute
   '/$lang/ropa-interior/$category/': typeof LangRopaInteriorCategoryIndexRoute
 }
@@ -144,6 +151,7 @@ export interface FileRoutesByTo {
   '/$lang': typeof LangIndexRoute
   '/$lang/pedido/gracias': typeof LangPedidoGraciasRoute
   '/$lang/pedido': typeof LangPedidoIndexRoute
+  '/$lang/ropa-interior': typeof LangRopaInteriorIndexRoute
   '/$lang/ropa-interior/$category/$product': typeof LangRopaInteriorCategoryProductRoute
   '/$lang/ropa-interior/$category': typeof LangRopaInteriorCategoryIndexRoute
 }
@@ -163,6 +171,7 @@ export interface FileRoutesById {
   '/$lang/': typeof LangIndexRoute
   '/$lang/pedido/gracias': typeof LangPedidoGraciasRoute
   '/$lang/pedido/': typeof LangPedidoIndexRoute
+  '/$lang/ropa-interior/': typeof LangRopaInteriorIndexRoute
   '/$lang/ropa-interior/$category/$product': typeof LangRopaInteriorCategoryProductRoute
   '/$lang/ropa-interior/$category/': typeof LangRopaInteriorCategoryIndexRoute
 }
@@ -183,6 +192,7 @@ export interface FileRouteTypes {
     | '/$lang/'
     | '/$lang/pedido/gracias'
     | '/$lang/pedido/'
+    | '/$lang/ropa-interior/'
     | '/$lang/ropa-interior/$category/$product'
     | '/$lang/ropa-interior/$category/'
   fileRoutesByTo: FileRoutesByTo
@@ -200,6 +210,7 @@ export interface FileRouteTypes {
     | '/$lang'
     | '/$lang/pedido/gracias'
     | '/$lang/pedido'
+    | '/$lang/ropa-interior'
     | '/$lang/ropa-interior/$category/$product'
     | '/$lang/ropa-interior/$category'
   id:
@@ -218,6 +229,7 @@ export interface FileRouteTypes {
     | '/$lang/'
     | '/$lang/pedido/gracias'
     | '/$lang/pedido/'
+    | '/$lang/ropa-interior/'
     | '/$lang/ropa-interior/$category/$product'
     | '/$lang/ropa-interior/$category/'
   fileRoutesById: FileRoutesById
@@ -329,6 +341,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangPedidoGraciasRouteImport
       parentRoute: typeof LangRoute
     }
+    '/$lang/ropa-interior/': {
+      id: '/$lang/ropa-interior/'
+      path: '/ropa-interior'
+      fullPath: '/$lang/ropa-interior/'
+      preLoaderRoute: typeof LangRopaInteriorIndexRouteImport
+      parentRoute: typeof LangRoute
+    }
     '/$lang/ropa-interior/$category/': {
       id: '/$lang/ropa-interior/$category/'
       path: '/ropa-interior/$category'
@@ -357,6 +376,7 @@ interface LangRouteChildren {
   LangIndexRoute: typeof LangIndexRoute
   LangPedidoGraciasRoute: typeof LangPedidoGraciasRoute
   LangPedidoIndexRoute: typeof LangPedidoIndexRoute
+  LangRopaInteriorIndexRoute: typeof LangRopaInteriorIndexRoute
   LangRopaInteriorCategoryProductRoute: typeof LangRopaInteriorCategoryProductRoute
   LangRopaInteriorCategoryIndexRoute: typeof LangRopaInteriorCategoryIndexRoute
 }
@@ -372,6 +392,7 @@ const LangRouteChildren: LangRouteChildren = {
   LangIndexRoute: LangIndexRoute,
   LangPedidoGraciasRoute: LangPedidoGraciasRoute,
   LangPedidoIndexRoute: LangPedidoIndexRoute,
+  LangRopaInteriorIndexRoute: LangRopaInteriorIndexRoute,
   LangRopaInteriorCategoryProductRoute: LangRopaInteriorCategoryProductRoute,
   LangRopaInteriorCategoryIndexRoute: LangRopaInteriorCategoryIndexRoute,
 }
