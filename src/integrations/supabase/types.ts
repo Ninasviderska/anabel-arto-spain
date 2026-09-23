@@ -230,6 +230,35 @@ export type Database = {
           },
         ]
       }
+      product_costs: {
+        Row: {
+          cost_cents: number
+          created_at: string
+          product_id: string
+          updated_at: string
+        }
+        Insert: {
+          cost_cents: number
+          created_at?: string
+          product_id: string
+          updated_at?: string
+        }
+        Update: {
+          cost_cents?: number
+          created_at?: string
+          product_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_costs_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: true
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       product_images: {
         Row: {
           alt: string | null
@@ -433,7 +462,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      release_variant_stock: {
+        Args: { _qty: number; _variant_id: string }
+        Returns: undefined
+      }
+      reserve_variant_stock: {
+        Args: { _qty: number; _variant_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       order_status:
