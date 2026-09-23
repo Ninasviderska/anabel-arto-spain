@@ -9,7 +9,7 @@ import { CatalogView } from "@/components/shop/CatalogView";
 
 const searchSchema = z.object({ color: z.string().optional(), talla: z.string().optional() });
 
-export const Route = createFileRoute("/$lang/$category/")({
+export const Route = createFileRoute("/$lang/ropa-interior/$category/")({
   validateSearch: (s) => searchSchema.parse(s),
   loader: async ({ context, params }) => {
     const [categories, origin] = await Promise.all([

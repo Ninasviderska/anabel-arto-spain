@@ -15,7 +15,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Breadcrumbs } from "@/components/shop/Breadcrumbs";
 import { ProductCard } from "@/components/shop/ProductCard";
 
-export const Route = createFileRoute("/$lang/$category/$product")({
+export const Route = createFileRoute("/$lang/ropa-interior/$category/$product")({
   loader: async ({ context, params }) => {
     const [product, origin] = await Promise.all([
       context.queryClient.ensureQueryData(productQuery(params.product)),
