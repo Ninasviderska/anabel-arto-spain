@@ -6,3 +6,5 @@
 - [ ] Show FR/ES sizes with conversion guide and manufacturer-size mapping
 - [ ] Restrict checkout to mainland Spain via GLS and update return hygiene messaging
 - [ ] Add unique route, category, and 21-product SEO metadata/text
+
+- [ ] Complete all six approved items in order (plan approved)
