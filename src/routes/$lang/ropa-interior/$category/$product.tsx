@@ -46,7 +46,7 @@ export const Route = createFileRoute("/$lang/ropa-interior/$category/$product")(
             `${product.name}. ${d.brand.tagline}. ${formatPrice(product.price_cents)} IVA incluido.`,
           path,
           type: "product",
-          image: image ? `${base}${image.url}` : undefined,
+          image: image ? (image.url.startsWith("https://") ? image.url : `${base}${image.url}`) : undefined,
         }),
         { property: "product:price:amount", content: (product.price_cents / 100).toFixed(2) },
         { property: "product:price:currency", content: "EUR" },

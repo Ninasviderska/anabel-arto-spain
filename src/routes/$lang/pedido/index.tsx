@@ -80,7 +80,7 @@ function CheckoutPage() {
       navigate({ to: "/$lang/pedido/gracias", params: { lang: locale }, search: { n: result.orderNumber } });
     } catch (err) {
       console.error(err);
-      setServerError(e.generic);
+      setServerError(err instanceof Error && err.message.includes("MAINLAND_ONLY") ? e.mainland : e.generic);
     }
   };
 
