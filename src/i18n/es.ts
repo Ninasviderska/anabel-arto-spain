@@ -81,11 +81,15 @@ export const es = {
       "Lavar a mano en agua fría con jabón neutro. No usar secadora ni lejía. Secar en horizontal a la sombra.",
     shipping: "Envío y devoluciones",
     shippingText:
-      "Envío a toda España por {shipping}, gratis a partir de {threshold}. 14 días para devoluciones.",
+      "Envío GLS a la España peninsular por {shipping}, gratis a partir de {threshold}. Entrega estimada en 3–5 días laborables.",
     ivaIncluded: "IVA incluido",
     save: "Ahorras {percent} %",
     oneSize: "Talla única",
     sizeGuide: "Guía de tallas",
+    manufacturerSize: "Talla del fabricante",
+    cup: "Copa",
+    band: "Contorno FR/ES",
+    hygiene: "Por motivos de higiene, solo aceptamos devoluciones de ropa interior con la etiqueta higiénica intacta y sin usar.",
     related: "Completa el conjunto",
     breadcrumbHome: "Inicio",
   },
@@ -110,7 +114,7 @@ export const es = {
     title: "Finalizar pedido",
     contact: "Datos de contacto",
     shippingAddress: "Dirección de envío",
-    spainOnly: "Actualmente solo enviamos a España peninsular y Baleares.",
+    spainOnly: "Actualmente solo realizamos envíos a la España peninsular.",
     name: "Nombre y apellidos",
     email: "Correo electrónico",
     phone: "Teléfono",
@@ -132,6 +136,7 @@ export const es = {
       phone: "Introduce un teléfono válido",
       terms: "Debes aceptar las condiciones",
       generic: "No se ha podido crear el pedido. Inténtalo de nuevo.",
+      mainland: "Actualmente solo realizamos envíos a la España peninsular.",
     },
   },
   thanks: {
@@ -224,7 +229,7 @@ export const es = {
           },
           {
             heading: "2. Envío",
-            body: "Realizamos envíos únicamente dentro de España. El coste de envío se indica antes de finalizar la compra y es gratuito a partir del importe mínimo indicado. El plazo estimado de entrega es de 2 a 4 días laborables.",
+            body: "Realizamos envíos con GLS únicamente a la España peninsular. No enviamos a Baleares, Canarias, Ceuta ni Melilla. El coste provisional es de 4,95 €, gratis desde 60 €, y la entrega estimada es de 3 a 5 días laborables.",
           },
           {
             heading: "3. Disponibilidad",
@@ -242,7 +247,7 @@ export const es = {
           },
           {
             heading: "2. Condiciones",
-            body: "Por razones de higiene, las prendas deben devolverse sin usar, con el protector higiénico intacto y con todas sus etiquetas originales.",
+            body: "Por motivos de higiene, solo aceptamos devoluciones de ropa interior con la etiqueta higiénica intacta y sin usar. Conserva también todas las etiquetas originales hasta decidir que te quedas con la prenda.",
           },
           {
             heading: "3. Procedimiento",
