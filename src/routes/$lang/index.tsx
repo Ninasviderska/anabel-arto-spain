@@ -24,7 +24,7 @@ export const Route = createFileRoute("/$lang/")({
     const origin = loaderData?.origin ?? shopConfig.siteUrl;
     return {
       meta: pageMeta({
-        title: `${d.brand.name} — ${d.brand.tagline} | Liquidación en España`,
+        title: "Anabel Arto España | Comprar Ropa Interior Femenina Online al Mejor Precio",
         description: d.brand.description,
         path: `/${params.lang}`,
         image: `${origin}/images/hero.jpg`,
@@ -115,6 +115,7 @@ function HomePage() {
                     strokeWidth={1.5}
                   />
                 </div>
+                <p className="mt-1 text-xs text-muted-foreground">{featured.filter((p) => p.category.id === c.id).length || "Ver"} modelos</p>
               </Link>
             </li>
           ))}

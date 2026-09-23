@@ -62,10 +62,11 @@ function CategoryPage() {
   return (
     <CatalogView
       lang={lang}
-      categories={categories}
+      categories={categories.filter((c) => c.parent_id)}
       products={products}
       title={category.name}
       description={category.description}
+      seoText={category.seo_text}
       crumbs={[
         { name: d.product.breadcrumbHome, path: `/${lang}` },
         { name: "Ropa interior", path: `/${lang}/ropa-interior` },

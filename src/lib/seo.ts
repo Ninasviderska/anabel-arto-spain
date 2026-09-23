@@ -38,7 +38,7 @@ export function organizationJsonLd(origin: string) {
     name: shopConfig.brandName,
     url: origin,
     email: shopConfig.contactEmail,
-    logo: `${origin}/favicon.ico`,
+    logo: `${origin}/favicon.svg`,
   };
 }
 
@@ -63,7 +63,7 @@ export function productJsonLd(origin: string, product: Product, path: string) {
     name: product.name,
     sku: product.sku,
     description: product.short_description ?? product.description ?? undefined,
-    image: product.images.map((i) => `${origin}${i.url}`),
+    image: product.images.map((i) => i.url.startsWith("https://") ? i.url : `${origin}${i.url}`),
     brand: { "@type": "Brand", name: shopConfig.brandName },
     category: product.category.name,
     color: product.colors.map((c) => c.name).join(", "),

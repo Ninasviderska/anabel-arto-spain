@@ -4,6 +4,7 @@ import { fmt, useI18n } from "@/i18n";
 import { isVariantAvailable, type Category, type Product } from "@/lib/catalog.types";
 import { ProductCard } from "./ProductCard";
 import { Breadcrumbs, type Crumb } from "./Breadcrumbs";
+import { displaySize } from "@/lib/sizes";
 
 export type CatalogFilters = {
   category?: string | undefined;
@@ -20,6 +21,7 @@ type Props = {
   showCategoryFilter?: boolean;
   title?: string;
   description?: string | null;
+  seoText?: string | null;
   crumbs?: Crumb[];
 };
 
@@ -41,6 +43,7 @@ export function CatalogView({
   showCategoryFilter = false,
   title,
   description,
+  seoText,
   crumbs,
 }: Props) {
   const { d } = useI18n();
@@ -58,7 +61,7 @@ export function CatalogView({
 
   const sizeOptions = useMemo(() => {
     const set = new Set<string>();
-    for (const p of scoped) for (const v of p.variants) if (isVariantAvailable(v)) set.add(v.size);
+    for (const p of scoped) for (const v of p.variants) if (isVariantAvailable(v)) set.add(displaySize(v.size, p.category.size_type));
     return sortSizes([...set]);
   }, [scoped]);
 
@@ -72,7 +75,7 @@ export function CatalogView({
             : null;
           const ok = p.variants.some(
             (v) =>
-              v.size === filters.size &&
+              displaySize(v.size, p.category.size_type) === filters.size &&
               isVariantAvailable(v) &&
               (colorIds === null || colorIds.includes(v.color_id)),
           );
@@ -198,6 +201,7 @@ export function CatalogView({
           )}
         </section>
       </div>
+      {seoText && <div className="mt-16 max-w-3xl border-t pt-10 text-sm leading-relaxed text-muted-foreground"><p>{seoText}</p></div>}
     </div>
   );
 }
