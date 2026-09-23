@@ -11,7 +11,7 @@ export function ProductCard({ product, priority = false }: { product: Product; p
   return (
     <article className="group">
       <Link
-        to="/$lang/$category/$product"
+        to="/$lang/ropa-interior/$category/$product"
         params={{ lang: locale, category: product.category.slug, product: product.slug }}
         className="block"
       >

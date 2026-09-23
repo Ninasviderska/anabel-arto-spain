@@ -45,7 +45,7 @@ function CartPage() {
             {cart.items.map((item) => (
               <li key={item.variantId} className="flex gap-5 py-6">
                 <Link
-                  to="/$lang/$category/$product"
+                  to="/$lang/ropa-interior/$category/$product"
                   params={{ lang: locale, category: item.categorySlug, product: item.productSlug }}
                   className="block w-24 shrink-0 overflow-hidden rounded-sm bg-cream-deep sm:w-28"
                 >

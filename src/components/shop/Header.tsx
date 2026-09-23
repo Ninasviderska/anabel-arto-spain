@@ -43,10 +43,10 @@ export function Header({ categories }: { categories: Category[] }) {
           >
             {d.nav.catalog}
           </Link>
-          {categories.map((c) => (
+          {categories.filter((c) => c.parent_id).map((c) => (
             <Link
               key={c.id}
-              to="/$lang/$category"
+              to="/$lang/ropa-interior/$category"
               params={{ lang: locale, category: c.slug }}
               className="link-underline text-[0.72rem] tracking-[0.22em] uppercase text-foreground/80 hover:text-foreground"
               activeProps={{ className: "text-foreground" }}
@@ -85,10 +85,10 @@ export function Header({ categories }: { categories: Category[] }) {
                 {d.nav.catalog}
               </Link>
             </li>
-            {categories.map((c) => (
+            {categories.filter((c) => c.parent_id).map((c) => (
               <li key={c.id}>
                 <Link
-                  to="/$lang/$category"
+                  to="/$lang/ropa-interior/$category"
                   params={{ lang: locale, category: c.slug }}
                   onClick={() => setOpen(false)}
                   className="block py-3 text-sm tracking-[0.18em] uppercase"

@@ -74,7 +74,7 @@ function HomePage() {
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg">
-                <Link to="/$lang/$category" params={{ lang: locale, category: "sujetadores" }}>
+                <Link to="/$lang/ropa-interior/$category" params={{ lang: locale, category: "sujetadores" }}>
                   {d.home.heroSecondary}
                 </Link>
               </Button>
@@ -87,10 +87,10 @@ function HomePage() {
       <section className="container-shop py-20 md:py-28">
         <SectionHeading eyebrow={d.home.categoriesEyebrow} title={d.home.categoriesTitle} />
         <ul className="grid grid-cols-2 gap-4 md:grid-cols-5 md:gap-5">
-          {categories.map((c) => (
+          {categories.filter((c) => c.parent_id).map((c) => (
             <li key={c.id}>
               <Link
-                to="/$lang/$category"
+                to="/$lang/ropa-interior/$category"
                 params={{ lang: locale, category: c.slug }}
                 className="group block"
               >

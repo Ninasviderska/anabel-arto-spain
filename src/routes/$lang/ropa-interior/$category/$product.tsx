@@ -32,7 +32,7 @@ export const Route = createFileRoute("/$lang/ropa-interior/$category/$product")(
     }
     const { product, origin } = loaderData;
     const base = origin ?? shopConfig.siteUrl;
-    const path = `/${params.lang}/${product.category.slug}/${product.slug}`;
+    const path = `/${params.lang}/ropa-interior/${product.category.slug}/${product.slug}`;
     const image = primaryImage(product);
     return {
       meta: [
@@ -55,7 +55,8 @@ export const Route = createFileRoute("/$lang/ropa-interior/$category/$product")(
         jsonLdScript(
           breadcrumbJsonLd(base, [
             { name: d.product.breadcrumbHome, path: `/${params.lang}` },
-            { name: product.category.name, path: `/${params.lang}/${product.category.slug}` },
+            { name: "Ropa interior", path: `/${params.lang}/ropa-interior` },
+            { name: product.category.name, path: `/${params.lang}/ropa-interior/${product.category.slug}` },
             { name: product.name, path },
           ]),
         ),
@@ -112,8 +113,9 @@ function ProductPage() {
 
   const crumbs = [
     { name: d.product.breadcrumbHome, path: `/${lang}` },
-    { name: product.category.name, path: `/${lang}/${product.category.slug}` },
-    { name: product.name, path: `/${lang}/${product.category.slug}/${product.slug}` },
+    { name: "Ropa interior", path: `/${lang}/ropa-interior` },
+    { name: product.category.name, path: `/${lang}/ropa-interior/${product.category.slug}` },
+    { name: product.name, path: `/${lang}/ropa-interior/${product.category.slug}/${product.slug}` },
   ];
 
   return (
