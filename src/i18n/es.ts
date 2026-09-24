@@ -49,9 +49,8 @@ export const es = {
     storyEyebrow: "La casa",
     storyTitle: "Diseñada para sentirte tú",
     storyText:
-      "Anabel Arto nace del deseo de ofrecer ropa interior femenina bonita, cómoda y bien hecha, al alcance de todas.",
-    seoEyebrow: "Sobre nosotros",
       "Anabel Arto es una casa de lencería con más de veinte años de tradición. Cada pieza se confecciona en Ucrania con materiales seleccionados y acabados cuidados. Hoy liquidamos las últimas unidades de colección desde España.",
+    seoEyebrow: "Sobre nosotros",
   },
   catalog: {
     title: "Colección",
