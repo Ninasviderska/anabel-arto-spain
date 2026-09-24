@@ -12,12 +12,12 @@ import bPic from "@/assets/banners/categoria-picardias_8057-6732.jpg.asset.json"
 import bCam from "@/assets/banners/categoria-camisones_8122-6033.jpg.asset.json";
 import bBat from "@/assets/banners/categoria-batas_8122-6748.jpg.asset.json";
 
-const BANNERS: Record<string, string> = {
-  sujetadores: bSuj.url,
-  braguitas: bBrag.url,
-  picardias: bPic.url,
-  camisones: bCam.url,
-  batas: bBat.url,
+const BANNERS: Record<string, { url: string; position: string }> = {
+  sujetadores: { url: bSuj.url, position: "center 22%" },
+  braguitas: { url: bBrag.url, position: "center 12%" },
+  picardias: { url: bPic.url, position: "center 12%" },
+  camisones: { url: bCam.url, position: "center 5%" },
+  batas: { url: bBat.url, position: "center 0%" },
 };
 
 const searchSchema = z.object({ color: z.string().optional(), talla: z.string().optional() });
@@ -80,7 +80,8 @@ function CategoryPage() {
       title={category.name}
       description={category.description}
       seoText={category.seo_text}
-      bannerImage={BANNERS[slug] ?? ""}
+      bannerImage={BANNERS[slug]?.url ?? ""}
+      bannerPosition={BANNERS[slug]?.position ?? "center 30%"}
       crumbs={[
         { name: d.product.breadcrumbHome, path: `/${lang}` },
         { name: "Ropa interior", path: `/${lang}/ropa-interior` },
