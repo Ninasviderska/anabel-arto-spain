@@ -24,6 +24,7 @@ type Props = {
   seoText?: string | null;
   bannerImage?: string;
   bannerPosition?: string;
+  bannerZoom?: boolean;
   crumbs?: Crumb[];
 };
 
@@ -48,6 +49,7 @@ export function CatalogView({
   seoText,
   bannerImage,
   bannerPosition = "center 30%",
+  bannerZoom = false,
   crumbs,
 }: Props) {
   const { d } = useI18n();
@@ -113,7 +115,7 @@ export function CatalogView({
             alt={title ?? ""}
             fetchPriority="high"
             decoding="async"
-            className="absolute inset-0 h-full w-full object-cover"
+            className={`absolute inset-0 h-full w-full object-cover ${bannerZoom ? "scale-[1.12]" : ""}`}
             style={{ objectPosition: bannerPosition }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-foreground/20 to-transparent" aria-hidden />

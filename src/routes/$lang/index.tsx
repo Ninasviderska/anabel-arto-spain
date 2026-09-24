@@ -107,7 +107,7 @@ function HomePage() {
                       loading="lazy"
                       decoding="async"
                       sizes="(min-width: 768px) 20vw, 50vw"
-                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
+                      className={`h-full w-full object-cover transition-transform duration-700 ${CATEGORY_IMAGES[c.slug]?.zoom ? "scale-[1.12] group-hover:scale-[1.17]" : "group-hover:scale-[1.05]"}`}
                       style={{ objectPosition: CATEGORY_IMAGES[c.slug]?.position ?? "center" }}
                     />
                   )}
@@ -175,15 +175,15 @@ function HomePage() {
       {/* Story */}
       <section className="container-shop pb-8">
         <div className="grid overflow-hidden rounded-sm bg-primary text-primary-foreground md:grid-cols-[2fr_3fr]">
-          <img
-            src={storyAsset.url}
-            alt="Sujetador 7017-010 de Anabel Arto"
-            loading="lazy"
-            decoding="async"
-            width={1317}
-            height={1920}
-            className="h-72 w-full object-cover object-[center_25%] md:h-full md:min-h-[28rem]"
-          />
+          <div className="relative h-72 overflow-hidden md:h-full md:min-h-[28rem]">
+            <img
+              src={storyAsset.url}
+              alt="Sujetador 7017-010 de Anabel Arto"
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 h-full w-full object-cover object-[center_25%]"
+            />
+          </div>
           <div className="flex flex-col justify-center gap-8 px-8 py-14 md:px-14 md:py-20">
           <div>
             <p className="eyebrow mb-4 text-primary-foreground/70">{d.home.storyEyebrow}</p>
