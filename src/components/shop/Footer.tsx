@@ -37,7 +37,15 @@ export function Footer({ categories }: { categories: Category[] }) {
         </div>
 
         <div>
-          <h2 className="eyebrow mb-5 text-foreground">{d.footer.legal}</h2>
+          <h2 className="eyebrow mb-5 text-foreground">Empresa</h2>
+          <ul className="space-y-3 text-sm">
+            <li>
+              <Link to="/$lang/sobre-nosotros" params={{ lang: locale }} className="link-underline">
+                Sobre nosotros
+              </Link>
+            </li>
+          </ul>
+          <h2 className="eyebrow mt-10 mb-5 text-foreground">{d.footer.legal}</h2>
           <ul className="space-y-3 text-sm">
             <li>
               <Link to="/$lang/guia-de-tallas" params={{ lang: locale }} className="link-underline">
