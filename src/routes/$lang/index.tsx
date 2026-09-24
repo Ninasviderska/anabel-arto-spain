@@ -178,6 +178,28 @@ function HomePage() {
           <p className="text-base leading-relaxed text-primary-foreground/85 md:text-lg">{d.home.storyText}</p>
         </div>
       </section>
+
+      {/* SEO text */}
+      <section className="bg-cream-deep/70 py-16 md:py-20">
+        <div className="mx-auto max-w-[72ch] px-6">
+          <p className="eyebrow mb-5 text-center">{d.home.seoEyebrow}</p>
+          <div className="space-y-4 text-sm leading-relaxed text-muted-foreground md:text-[0.95rem]">
+            <p>
+              Anabel Arto es una marca de ropa interior femenina de confección europea que llega a España
+              con sus últimas unidades de colección a precios de liquidación. Aquí encontrarás lencería
+              femenina de calidad —sujetadores, braguitas, picardías, camisones y batas— cuidada en cada
+              detalle, desde el encaje hasta el acabado, con la comodidad de comprar online y recibir tu
+              pedido en casa con envío GLS por toda la España peninsular.
+            </p>
+            <p>
+              Cada prenda se produce en talleres europeos con materiales seleccionados, y ahora puedes
+              comprar ropa interior bonita para mujer al mejor precio: se trata de los últimos lotes de
+              temporada, con unidades limitadas por talla y color. Si tienes dudas sobre tu talla, consulta
+              nuestra guía de tallas o escríbenos: te asesoramos como lo haríamos en una tienda física.
+            </p>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

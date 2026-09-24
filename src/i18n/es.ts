@@ -50,6 +50,7 @@ export const es = {
     storyTitle: "Diseñada para sentirte tú",
     storyText:
       "Anabel Arto es una casa de lencería con más de veinte años de tradición. Cada pieza se confecciona en Ucrania con materiales seleccionados y acabados cuidados. Hoy liquidamos las últimas unidades de colección desde España.",
+    seoEyebrow: "Sobre nosotros",
   },
   catalog: {
     title: "Colección",
