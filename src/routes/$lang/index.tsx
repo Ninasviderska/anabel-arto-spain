@@ -97,9 +97,9 @@ function HomePage() {
                 className="group block"
               >
                 <div className="aspect-[3/4] overflow-hidden rounded-sm bg-cream-deep">
-                  {c.image_url && (
+                  {(CATEGORY_IMAGES[c.slug]?.url ?? c.image_url) && (
                     <img
-                      src={c.image_url}
+                      src={CATEGORY_IMAGES[c.slug]?.url ?? c.image_url ?? ""}
                       alt={c.name}
                       width={1024}
                       height={1280}
@@ -107,6 +107,7 @@ function HomePage() {
                       decoding="async"
                       sizes="(min-width: 768px) 20vw, 50vw"
                       className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
+                      style={CATEGORY_IMAGES[c.slug] ? { objectPosition: CATEGORY_IMAGES[c.slug].position } : undefined}
                     />
                   )}
                 </div>
