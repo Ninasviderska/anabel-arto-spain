@@ -10,7 +10,9 @@ export const shopConfig = {
   shippingCents: 495,
   freeShippingThresholdCents: 6000,
   shippingCountries: ["ES"] as const,
-  contactEmail: "hola@anabelarto.es",
+  contactEmail: "info@anabelarto.es",
+  /** Escalation address used by the shopping assistant for order questions. */
+  ordersEmail: "orders@anabelarto.es",
   /** Placeholder stock behaviour: variants with stock === null are considered in stock. */
   treatNullStockAsAvailable: true,
 } as const;
