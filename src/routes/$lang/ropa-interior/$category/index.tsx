@@ -72,6 +72,7 @@ function CategoryPage() {
       seoText={category.seo_text}
       bannerImage={BANNERS[slug]?.url ?? ""}
       bannerPosition={BANNERS[slug]?.position ?? "center 30%"}
+      bannerZoom={BANNERS[slug]?.zoom ?? false}
       crumbs={[
         { name: d.product.breadcrumbHome, path: `/${lang}` },
         { name: "Ropa interior", path: `/${lang}/ropa-interior` },

@@ -11,7 +11,7 @@ export const Route = createFileRoute("/$lang/ropa-interior/")({
   component: RopaInteriorPage,
 });
 
-function RopaInteriorPage() {
+ function RopaInteriorPage() {
   const { lang } = Route.useParams();
   const { data: categories } = useSuspenseQuery(categoriesQuery());
   const { data: products } = useSuspenseQuery(productsQuery());
