@@ -181,7 +181,7 @@ function HomePage() {
               alt="Sujetador 7017-010 de Anabel Arto"
               loading="lazy"
               decoding="async"
-              className="absolute inset-0 h-full w-full object-cover object-[center_25%]"
+              className="absolute inset-0 h-full w-full object-cover object-[center_top]"
             />
           </div>
           <div className="flex flex-col justify-center gap-8 px-8 py-14 md:px-14 md:py-20">
