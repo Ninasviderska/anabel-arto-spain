@@ -1,3 +1,5 @@
+import heroAsset from "@/assets/banners/hero_camisones-8057-6097.jpg.asset.json";
+import storyAsset from "@/assets/banners/story-la-casa_sujetadores-7017-010.jpg.asset.json";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowRight, Gem, Package, RotateCcw, ShieldCheck } from "lucide-react";
@@ -27,7 +29,7 @@ export const Route = createFileRoute("/$lang/")({
         title: "Anabel Arto España | Comprar Ropa Interior Femenina Online al Mejor Precio",
         description: d.brand.description,
         path: `/${params.lang}`,
-        image: `${origin}/images/hero.jpg`,
+        image: `${origin}${heroAsset.url}`,
       }),
       links: [{ rel: "canonical", href: `/${params.lang}` }],
       scripts: [jsonLdScript(organizationJsonLd(origin))],
@@ -49,13 +51,13 @@ function HomePage() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-cream-deep">
         <img
-          src="/images/hero.jpg"
-          alt=""
-          width={1920}
-          height={1088}
+          src={heroAsset.url}
+          alt="Camisón 8057-6097 de Anabel Arto"
+          width={1317}
+          height={1920}
           fetchPriority="high"
           decoding="async"
-          className="absolute inset-0 h-full w-full object-cover object-right"
+          className="absolute inset-0 h-full w-full object-cover object-[right_20%] md:object-[80%_20%]"
         />
         <div className="hero-veil absolute inset-0" aria-hidden />
         <div className="container-shop relative flex min-h-[32rem] items-center py-24 md:min-h-[40rem] lg:min-h-[44rem]">
@@ -170,12 +172,23 @@ function HomePage() {
 
       {/* Story */}
       <section className="container-shop pb-8">
-        <div className="grid items-center gap-10 rounded-sm bg-primary px-8 py-16 text-primary-foreground md:grid-cols-2 md:px-16 md:py-24">
+        <div className="grid overflow-hidden rounded-sm bg-primary text-primary-foreground md:grid-cols-[2fr_3fr]">
+          <img
+            src={storyAsset.url}
+            alt="Sujetador 7017-010 de Anabel Arto"
+            loading="lazy"
+            decoding="async"
+            width={1317}
+            height={1920}
+            className="h-72 w-full object-cover object-[center_25%] md:h-full md:min-h-[28rem]"
+          />
+          <div className="flex flex-col justify-center gap-8 px-8 py-14 md:px-14 md:py-20">
           <div>
             <p className="eyebrow mb-4 text-primary-foreground/70">{d.home.storyEyebrow}</p>
             <h2 className="font-display text-4xl leading-tight md:text-5xl">{d.home.storyTitle}</h2>
           </div>
           <p className="text-base leading-relaxed text-primary-foreground/85 md:text-lg">{d.home.storyText}</p>
+          </div>
         </div>
       </section>
 
