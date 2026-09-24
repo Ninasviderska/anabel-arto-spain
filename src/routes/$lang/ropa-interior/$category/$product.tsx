@@ -232,6 +232,14 @@ function ProductPage() {
               </span>
               {!isOneSize && <SizeGuide bra={isBra} />}
             </legend>
+            {!isOneSize && (
+              <p className="-mt-1 mb-3 text-xs text-muted-foreground">
+                ¿No sabes tu talla?{" "}
+                <Link to="/$lang/guia-de-tallas" params={{ lang: locale }} className="link-underline text-primary">
+                  Consulta la guía de tallas →
+                </Link>
+              </p>
+            )}
             {isBra && (
               <div className="space-y-4">
                 <div><p className="mb-2 text-xs text-muted-foreground">{d.product.cup}</p><div className="flex gap-2">{[...new Set(sizes.map((v)=>parseBraSize(v.size)?.cup).filter(Boolean))].map((value)=><Button key={value} type="button" variant={cup===value?"default":"outline"} size="sm" onClick={()=>{setCup(value ?? null);setBand(null)}}>{value}</Button>)}</div></div>
