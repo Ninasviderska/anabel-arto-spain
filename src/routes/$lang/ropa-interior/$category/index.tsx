@@ -80,7 +80,8 @@ function CategoryPage() {
       title={category.name}
       description={category.description}
       seoText={category.seo_text}
-      bannerImage={BANNERS[slug] ?? ""}
+      bannerImage={BANNERS[slug]?.url ?? ""}
+      bannerPosition={BANNERS[slug]?.position ?? "center 30%"}
       crumbs={[
         { name: d.product.breadcrumbHome, path: `/${lang}` },
         { name: "Ropa interior", path: `/${lang}/ropa-interior` },
