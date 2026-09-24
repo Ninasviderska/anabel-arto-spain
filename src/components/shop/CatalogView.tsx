@@ -23,6 +23,7 @@ type Props = {
   description?: string | null;
   seoText?: string | null;
   bannerImage?: string;
+  bannerPosition?: string;
   crumbs?: Crumb[];
 };
 
@@ -46,6 +47,7 @@ export function CatalogView({
   description,
   seoText,
   bannerImage,
+  bannerPosition = "center 30%",
   crumbs,
 }: Props) {
   const { d } = useI18n();
@@ -111,10 +113,11 @@ export function CatalogView({
             alt={title ?? ""}
             fetchPriority="high"
             decoding="async"
-            className="absolute inset-0 h-full w-full object-cover object-[center_30%]"
+            className="absolute inset-0 h-full w-full object-cover"
+            style={{ objectPosition: bannerPosition }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-foreground/75 via-foreground/25 to-transparent" aria-hidden />
-          <div className="relative flex min-h-[16rem] max-w-2xl flex-col justify-end p-6 text-background md:min-h-[22rem] md:p-10">
+          <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-foreground/20 to-transparent" aria-hidden />
+          <div className="relative flex min-h-[22rem] max-w-2xl flex-col justify-end p-6 text-background md:min-h-[30rem] md:p-10 lg:min-h-[34rem]">
             <h1 className="font-display text-4xl leading-tight md:text-5xl">{title ?? d.catalog.title}</h1>
             {description && <p className="mt-3 text-base text-background/90">{description}</p>}
           </div>
