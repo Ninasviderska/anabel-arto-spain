@@ -6,6 +6,19 @@ import { categoriesQuery, originQuery, productsQuery } from "@/lib/catalog.queri
 import { shopConfig } from "@/lib/shop-config";
 import { breadcrumbJsonLd, jsonLdScript, pageMeta } from "@/lib/seo";
 import { CatalogView } from "@/components/shop/CatalogView";
+import bSuj from "@/assets/banners/categoria-sujetadores_8122-003.jpg.asset.json";
+import bBrag from "@/assets/banners/categoria-braguitas_7017-011-022.jpg.asset.json";
+import bPic from "@/assets/banners/categoria-picardias_8057-6732.jpg.asset.json";
+import bCam from "@/assets/banners/categoria-camisones_8122-6033.jpg.asset.json";
+import bBat from "@/assets/banners/categoria-batas_8122-6748.jpg.asset.json";
+
+const BANNERS: Record<string, string> = {
+  sujetadores: bSuj.url,
+  braguitas: bBrag.url,
+  picardias: bPic.url,
+  camisones: bCam.url,
+  batas: bBat.url,
+};
 
 const searchSchema = z.object({ color: z.string().optional(), talla: z.string().optional() });
 
@@ -67,6 +80,7 @@ function CategoryPage() {
       title={category.name}
       description={category.description}
       seoText={category.seo_text}
+      bannerImage={BANNERS[slug]}
       crumbs={[
         { name: d.product.breadcrumbHome, path: `/${lang}` },
         { name: "Ropa interior", path: `/${lang}/ropa-interior` },

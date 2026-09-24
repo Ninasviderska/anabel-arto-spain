@@ -22,6 +22,7 @@ type Props = {
   title?: string;
   description?: string | null;
   seoText?: string | null;
+  bannerImage?: string;
   crumbs?: Crumb[];
 };
 
@@ -44,6 +45,7 @@ export function CatalogView({
   title,
   description,
   seoText,
+  bannerImage,
   crumbs,
 }: Props) {
   const { d } = useI18n();
@@ -102,10 +104,27 @@ export function CatalogView({
   return (
     <div className="container-shop py-10 md:py-14">
       <Breadcrumbs crumbs={allCrumbs} />
-      <header className="mt-6 max-w-2xl">
-        <h1 className="font-display text-4xl leading-tight md:text-5xl">{title ?? d.catalog.title}</h1>
-        {description && <p className="mt-3 text-base text-muted-foreground">{description}</p>}
-      </header>
+      {bannerImage ? (
+        <header className="relative mt-6 overflow-hidden rounded-sm bg-cream-deep">
+          <img
+            src={bannerImage}
+            alt={title ?? ""}
+            fetchPriority="high"
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover object-[center_30%]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-foreground/75 via-foreground/25 to-transparent" aria-hidden />
+          <div className="relative flex min-h-[16rem] max-w-2xl flex-col justify-end p-6 text-background md:min-h-[22rem] md:p-10">
+            <h1 className="font-display text-4xl leading-tight md:text-5xl">{title ?? d.catalog.title}</h1>
+            {description && <p className="mt-3 text-base text-background/90">{description}</p>}
+          </div>
+        </header>
+      ) : (
+        <header className="mt-6 max-w-2xl">
+          <h1 className="font-display text-4xl leading-tight md:text-5xl">{title ?? d.catalog.title}</h1>
+          {description && <p className="mt-3 text-base text-muted-foreground">{description}</p>}
+        </header>
+      )}
 
       <div className="mt-10 grid gap-10 lg:grid-cols-[15rem_1fr]">
         <aside aria-label={d.catalog.filters} className="space-y-8 lg:sticky lg:top-24 lg:self-start">
