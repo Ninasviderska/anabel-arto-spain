@@ -196,9 +196,9 @@ function HomePage() {
 
       {/* SEO text */}
       <section className="bg-cream-deep/70 py-16 md:py-20">
-        <div className="mx-auto max-w-[72ch] px-6">
-          <p className="eyebrow mb-5 text-center">{d.home.seoEyebrow}</p>
-          <div className="space-y-4 text-sm leading-relaxed text-muted-foreground md:text-[0.95rem]">
+        <div className="container-shop px-6">
+          <p className="eyebrow mb-8 text-center md:mb-10">{d.home.seoEyebrow}</p>
+          <div className="grid gap-6 text-sm leading-relaxed text-muted-foreground md:grid-cols-2 md:gap-12 lg:gap-16 md:text-[0.95rem]">
             {d.home.seoText.map((paragraph, i) => (
               <p key={i}>{paragraph}</p>
             ))}
