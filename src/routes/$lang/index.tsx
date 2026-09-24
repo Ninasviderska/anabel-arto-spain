@@ -108,7 +108,7 @@ function HomePage() {
                       decoding="async"
                       sizes="(min-width: 768px) 20vw, 50vw"
                       className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
-                      style={CATEGORY_IMAGES[c.slug] ? { objectPosition: CATEGORY_IMAGES[c.slug].position } : undefined}
+                      style={{ objectPosition: CATEGORY_IMAGES[c.slug]?.position ?? "center" }}
                     />
                   )}
                 </div>
