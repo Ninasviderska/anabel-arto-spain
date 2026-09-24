@@ -5,6 +5,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowRight, Gem, Package, RotateCcw, ShieldCheck } from "lucide-react";
 import { fmt, getDictionary, useI18n } from "@/i18n";
 import { categoriesQuery, originQuery, productsQuery } from "@/lib/catalog.queries";
+import { CATEGORY_IMAGES } from "@/lib/category-images";
 import { formatPrice } from "@/lib/format";
 import { shopConfig } from "@/lib/shop-config";
 import { jsonLdScript, organizationJsonLd, pageMeta } from "@/lib/seo";
