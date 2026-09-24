@@ -199,9 +199,13 @@ export function CatalogView({
               ))}
             </div>
           )}
+          {seoText && (
+            <div className="mt-12 max-w-3xl border-t pt-8 text-sm leading-relaxed text-muted-foreground lg:mt-16 lg:pt-10">
+              <p>{seoText}</p>
+            </div>
+          )}
         </section>
       </div>
-      {seoText && <div className="mt-16 max-w-3xl border-t pt-10 text-sm leading-relaxed text-muted-foreground"><p>{seoText}</p></div>}
     </div>
   );
 }
