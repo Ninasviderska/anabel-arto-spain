@@ -13,11 +13,11 @@ import bCam from "@/assets/banners/categoria-camisones_8122-6033.jpg.asset.json"
 import bBat from "@/assets/banners/categoria-batas_8122-6748.jpg.asset.json";
 
 const BANNERS: Record<string, { url: string; position: string }> = {
-  sujetadores: { url: bSuj.url, position: "center 30%" },
-  braguitas: { url: bBrag.url, position: "center 30%" },
-  picardias: { url: bPic.url, position: "center 30%" },
-  camisones: { url: bCam.url, position: "center 30%" },
-  batas: { url: bBat.url, position: "center 30%" },
+  sujetadores: { url: bSuj.url, position: "center 22%" },
+  braguitas: { url: bBrag.url, position: "center 12%" },
+  picardias: { url: bPic.url, position: "center 12%" },
+  camisones: { url: bCam.url, position: "center 5%" },
+  batas: { url: bBat.url, position: "center 0%" },
 };
 
 const searchSchema = z.object({ color: z.string().optional(), talla: z.string().optional() });
