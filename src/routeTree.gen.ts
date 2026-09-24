@@ -17,6 +17,7 @@ import { Route as LangIndexRouteImport } from './routes/$lang/index'
 import { Route as LangAvisoLegalRouteImport } from './routes/$lang/aviso-legal'
 import { Route as LangCarritoRouteImport } from './routes/$lang/carrito'
 import { Route as LangCatalogoRouteImport } from './routes/$lang/catalogo'
+import { Route as LangGuiaDeTallasRouteImport } from './routes/$lang/guia-de-tallas'
 import { Route as LangPoliticaDeCookiesRouteImport } from './routes/$lang/politica-de-cookies'
 import { Route as LangPoliticaDeDevolucionesRouteImport } from './routes/$lang/politica-de-devoluciones'
 import { Route as LangPoliticaDePrivacidadRouteImport } from './routes/$lang/politica-de-privacidad'
@@ -24,6 +25,7 @@ import { Route as LangTerminosYCondicionesRouteImport } from './routes/$lang/ter
 import { Route as LangPedidoIndexRouteImport } from './routes/$lang/pedido/index'
 import { Route as LangPedidoGraciasRouteImport } from './routes/$lang/pedido/gracias'
 import { Route as LangRopaInteriorIndexRouteImport } from './routes/$lang/ropa-interior/index'
+import { Route as ApiPublicAssistantRouteImport } from './routes/api/public/assistant'
 import { Route as LangRopaInteriorCategoryIndexRouteImport } from './routes/$lang/ropa-interior/$category/index'
 import { Route as LangRopaInteriorCategoryProductRouteImport } from './routes/$lang/ropa-interior/$category/$product'
 
@@ -67,6 +69,11 @@ const LangCatalogoRoute = LangCatalogoRouteImport.update({
   path: '/catalogo',
   getParentRoute: () => LangRoute,
 } as any)
+const LangGuiaDeTallasRoute = LangGuiaDeTallasRouteImport.update({
+  id: '/guia-de-tallas',
+  path: '/guia-de-tallas',
+  getParentRoute: () => LangRoute,
+} as any)
 const LangPoliticaDeCookiesRoute = LangPoliticaDeCookiesRouteImport.update({
   id: '/politica-de-cookies',
   path: '/politica-de-cookies',
@@ -105,6 +112,11 @@ const LangRopaInteriorIndexRoute = LangRopaInteriorIndexRouteImport.update({
   path: '/ropa-interior/',
   getParentRoute: () => LangRoute,
 } as any)
+const ApiPublicAssistantRoute = ApiPublicAssistantRouteImport.update({
+  id: '/api/public/assistant',
+  path: '/api/public/assistant',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LangRopaInteriorCategoryIndexRoute =
   LangRopaInteriorCategoryIndexRouteImport.update({
     id: '/ropa-interior/$category/',
@@ -126,12 +138,14 @@ export interface FileRoutesByFullPath {
   '/$lang/aviso-legal': typeof LangAvisoLegalRoute
   '/$lang/carrito': typeof LangCarritoRoute
   '/$lang/catalogo': typeof LangCatalogoRoute
+  '/$lang/guia-de-tallas': typeof LangGuiaDeTallasRoute
   '/$lang/politica-de-cookies': typeof LangPoliticaDeCookiesRoute
   '/$lang/politica-de-devoluciones': typeof LangPoliticaDeDevolucionesRoute
   '/$lang/politica-de-privacidad': typeof LangPoliticaDePrivacidadRoute
   '/$lang/terminos-y-condiciones': typeof LangTerminosYCondicionesRoute
   '/$lang/': typeof LangIndexRoute
   '/$lang/pedido/gracias': typeof LangPedidoGraciasRoute
+  '/api/public/assistant': typeof ApiPublicAssistantRoute
   '/$lang/pedido/': typeof LangPedidoIndexRoute
   '/$lang/ropa-interior/': typeof LangRopaInteriorIndexRoute
   '/$lang/ropa-interior/$category/$product': typeof LangRopaInteriorCategoryProductRoute
@@ -144,12 +158,14 @@ export interface FileRoutesByTo {
   '/$lang/aviso-legal': typeof LangAvisoLegalRoute
   '/$lang/carrito': typeof LangCarritoRoute
   '/$lang/catalogo': typeof LangCatalogoRoute
+  '/$lang/guia-de-tallas': typeof LangGuiaDeTallasRoute
   '/$lang/politica-de-cookies': typeof LangPoliticaDeCookiesRoute
   '/$lang/politica-de-devoluciones': typeof LangPoliticaDeDevolucionesRoute
   '/$lang/politica-de-privacidad': typeof LangPoliticaDePrivacidadRoute
   '/$lang/terminos-y-condiciones': typeof LangTerminosYCondicionesRoute
   '/$lang': typeof LangIndexRoute
   '/$lang/pedido/gracias': typeof LangPedidoGraciasRoute
+  '/api/public/assistant': typeof ApiPublicAssistantRoute
   '/$lang/pedido': typeof LangPedidoIndexRoute
   '/$lang/ropa-interior': typeof LangRopaInteriorIndexRoute
   '/$lang/ropa-interior/$category/$product': typeof LangRopaInteriorCategoryProductRoute
@@ -164,12 +180,14 @@ export interface FileRoutesById {
   '/$lang/aviso-legal': typeof LangAvisoLegalRoute
   '/$lang/carrito': typeof LangCarritoRoute
   '/$lang/catalogo': typeof LangCatalogoRoute
+  '/$lang/guia-de-tallas': typeof LangGuiaDeTallasRoute
   '/$lang/politica-de-cookies': typeof LangPoliticaDeCookiesRoute
   '/$lang/politica-de-devoluciones': typeof LangPoliticaDeDevolucionesRoute
   '/$lang/politica-de-privacidad': typeof LangPoliticaDePrivacidadRoute
   '/$lang/terminos-y-condiciones': typeof LangTerminosYCondicionesRoute
   '/$lang/': typeof LangIndexRoute
   '/$lang/pedido/gracias': typeof LangPedidoGraciasRoute
+  '/api/public/assistant': typeof ApiPublicAssistantRoute
   '/$lang/pedido/': typeof LangPedidoIndexRoute
   '/$lang/ropa-interior/': typeof LangRopaInteriorIndexRoute
   '/$lang/ropa-interior/$category/$product': typeof LangRopaInteriorCategoryProductRoute
@@ -185,12 +203,14 @@ export interface FileRouteTypes {
     | '/$lang/aviso-legal'
     | '/$lang/carrito'
     | '/$lang/catalogo'
+    | '/$lang/guia-de-tallas'
     | '/$lang/politica-de-cookies'
     | '/$lang/politica-de-devoluciones'
     | '/$lang/politica-de-privacidad'
     | '/$lang/terminos-y-condiciones'
     | '/$lang/'
     | '/$lang/pedido/gracias'
+    | '/api/public/assistant'
     | '/$lang/pedido/'
     | '/$lang/ropa-interior/'
     | '/$lang/ropa-interior/$category/$product'
@@ -203,12 +223,14 @@ export interface FileRouteTypes {
     | '/$lang/aviso-legal'
     | '/$lang/carrito'
     | '/$lang/catalogo'
+    | '/$lang/guia-de-tallas'
     | '/$lang/politica-de-cookies'
     | '/$lang/politica-de-devoluciones'
     | '/$lang/politica-de-privacidad'
     | '/$lang/terminos-y-condiciones'
     | '/$lang'
     | '/$lang/pedido/gracias'
+    | '/api/public/assistant'
     | '/$lang/pedido'
     | '/$lang/ropa-interior'
     | '/$lang/ropa-interior/$category/$product'
@@ -222,12 +244,14 @@ export interface FileRouteTypes {
     | '/$lang/aviso-legal'
     | '/$lang/carrito'
     | '/$lang/catalogo'
+    | '/$lang/guia-de-tallas'
     | '/$lang/politica-de-cookies'
     | '/$lang/politica-de-devoluciones'
     | '/$lang/politica-de-privacidad'
     | '/$lang/terminos-y-condiciones'
     | '/$lang/'
     | '/$lang/pedido/gracias'
+    | '/api/public/assistant'
     | '/$lang/pedido/'
     | '/$lang/ropa-interior/'
     | '/$lang/ropa-interior/$category/$product'
@@ -239,6 +263,7 @@ export interface RootRouteChildren {
   LangRoute: typeof LangRouteWithChildren
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ApiPublicAssistantRoute: typeof ApiPublicAssistantRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -299,6 +324,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangCatalogoRouteImport
       parentRoute: typeof LangRoute
     }
+    '/$lang/guia-de-tallas': {
+      id: '/$lang/guia-de-tallas'
+      path: '/guia-de-tallas'
+      fullPath: '/$lang/guia-de-tallas'
+      preLoaderRoute: typeof LangGuiaDeTallasRouteImport
+      parentRoute: typeof LangRoute
+    }
     '/$lang/politica-de-cookies': {
       id: '/$lang/politica-de-cookies'
       path: '/politica-de-cookies'
@@ -348,6 +380,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangRopaInteriorIndexRouteImport
       parentRoute: typeof LangRoute
     }
+    '/api/public/assistant': {
+      id: '/api/public/assistant'
+      path: '/api/public/assistant'
+      fullPath: '/api/public/assistant'
+      preLoaderRoute: typeof ApiPublicAssistantRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/$lang/ropa-interior/$category/': {
       id: '/$lang/ropa-interior/$category/'
       path: '/ropa-interior/$category'
@@ -369,6 +408,7 @@ interface LangRouteChildren {
   LangAvisoLegalRoute: typeof LangAvisoLegalRoute
   LangCarritoRoute: typeof LangCarritoRoute
   LangCatalogoRoute: typeof LangCatalogoRoute
+  LangGuiaDeTallasRoute: typeof LangGuiaDeTallasRoute
   LangPoliticaDeCookiesRoute: typeof LangPoliticaDeCookiesRoute
   LangPoliticaDeDevolucionesRoute: typeof LangPoliticaDeDevolucionesRoute
   LangPoliticaDePrivacidadRoute: typeof LangPoliticaDePrivacidadRoute
@@ -385,6 +425,7 @@ const LangRouteChildren: LangRouteChildren = {
   LangAvisoLegalRoute: LangAvisoLegalRoute,
   LangCarritoRoute: LangCarritoRoute,
   LangCatalogoRoute: LangCatalogoRoute,
+  LangGuiaDeTallasRoute: LangGuiaDeTallasRoute,
   LangPoliticaDeCookiesRoute: LangPoliticaDeCookiesRoute,
   LangPoliticaDeDevolucionesRoute: LangPoliticaDeDevolucionesRoute,
   LangPoliticaDePrivacidadRoute: LangPoliticaDePrivacidadRoute,
@@ -404,6 +445,7 @@ const rootRouteChildren: RootRouteChildren = {
   LangRoute: LangRouteWithChildren,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ApiPublicAssistantRoute: ApiPublicAssistantRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

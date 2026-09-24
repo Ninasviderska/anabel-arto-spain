@@ -39,6 +39,11 @@ export function Footer({ categories }: { categories: Category[] }) {
         <div>
           <h2 className="eyebrow mb-5 text-foreground">{d.footer.legal}</h2>
           <ul className="space-y-3 text-sm">
+            <li>
+              <Link to="/$lang/guia-de-tallas" params={{ lang: locale }} className="link-underline">
+                Guía de tallas
+              </Link>
+            </li>
             {legalSlugs.map((slug) => (
               <li key={slug}>
                 <Link to={`/$lang/${slug}`} params={{ lang: locale }} className="link-underline">
