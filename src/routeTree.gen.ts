@@ -21,6 +21,7 @@ import { Route as LangGuiaDeTallasRouteImport } from './routes/$lang/guia-de-tal
 import { Route as LangPoliticaDeCookiesRouteImport } from './routes/$lang/politica-de-cookies'
 import { Route as LangPoliticaDeDevolucionesRouteImport } from './routes/$lang/politica-de-devoluciones'
 import { Route as LangPoliticaDePrivacidadRouteImport } from './routes/$lang/politica-de-privacidad'
+import { Route as LangSobreNosotrosRouteImport } from './routes/$lang/sobre-nosotros'
 import { Route as LangTerminosYCondicionesRouteImport } from './routes/$lang/terminos-y-condiciones'
 import { Route as LangPedidoIndexRouteImport } from './routes/$lang/pedido/index'
 import { Route as LangPedidoGraciasRouteImport } from './routes/$lang/pedido/gracias'
@@ -91,6 +92,11 @@ const LangPoliticaDePrivacidadRoute =
     path: '/politica-de-privacidad',
     getParentRoute: () => LangRoute,
   } as any)
+const LangSobreNosotrosRoute = LangSobreNosotrosRouteImport.update({
+  id: '/sobre-nosotros',
+  path: '/sobre-nosotros',
+  getParentRoute: () => LangRoute,
+} as any)
 const LangTerminosYCondicionesRoute =
   LangTerminosYCondicionesRouteImport.update({
     id: '/terminos-y-condiciones',
@@ -142,6 +148,7 @@ export interface FileRoutesByFullPath {
   '/$lang/politica-de-cookies': typeof LangPoliticaDeCookiesRoute
   '/$lang/politica-de-devoluciones': typeof LangPoliticaDeDevolucionesRoute
   '/$lang/politica-de-privacidad': typeof LangPoliticaDePrivacidadRoute
+  '/$lang/sobre-nosotros': typeof LangSobreNosotrosRoute
   '/$lang/terminos-y-condiciones': typeof LangTerminosYCondicionesRoute
   '/$lang/': typeof LangIndexRoute
   '/$lang/pedido/gracias': typeof LangPedidoGraciasRoute
@@ -162,6 +169,7 @@ export interface FileRoutesByTo {
   '/$lang/politica-de-cookies': typeof LangPoliticaDeCookiesRoute
   '/$lang/politica-de-devoluciones': typeof LangPoliticaDeDevolucionesRoute
   '/$lang/politica-de-privacidad': typeof LangPoliticaDePrivacidadRoute
+  '/$lang/sobre-nosotros': typeof LangSobreNosotrosRoute
   '/$lang/terminos-y-condiciones': typeof LangTerminosYCondicionesRoute
   '/$lang': typeof LangIndexRoute
   '/$lang/pedido/gracias': typeof LangPedidoGraciasRoute
@@ -184,6 +192,7 @@ export interface FileRoutesById {
   '/$lang/politica-de-cookies': typeof LangPoliticaDeCookiesRoute
   '/$lang/politica-de-devoluciones': typeof LangPoliticaDeDevolucionesRoute
   '/$lang/politica-de-privacidad': typeof LangPoliticaDePrivacidadRoute
+  '/$lang/sobre-nosotros': typeof LangSobreNosotrosRoute
   '/$lang/terminos-y-condiciones': typeof LangTerminosYCondicionesRoute
   '/$lang/': typeof LangIndexRoute
   '/$lang/pedido/gracias': typeof LangPedidoGraciasRoute
@@ -207,6 +216,7 @@ export interface FileRouteTypes {
     | '/$lang/politica-de-cookies'
     | '/$lang/politica-de-devoluciones'
     | '/$lang/politica-de-privacidad'
+    | '/$lang/sobre-nosotros'
     | '/$lang/terminos-y-condiciones'
     | '/$lang/'
     | '/$lang/pedido/gracias'
@@ -227,6 +237,7 @@ export interface FileRouteTypes {
     | '/$lang/politica-de-cookies'
     | '/$lang/politica-de-devoluciones'
     | '/$lang/politica-de-privacidad'
+    | '/$lang/sobre-nosotros'
     | '/$lang/terminos-y-condiciones'
     | '/$lang'
     | '/$lang/pedido/gracias'
@@ -248,6 +259,7 @@ export interface FileRouteTypes {
     | '/$lang/politica-de-cookies'
     | '/$lang/politica-de-devoluciones'
     | '/$lang/politica-de-privacidad'
+    | '/$lang/sobre-nosotros'
     | '/$lang/terminos-y-condiciones'
     | '/$lang/'
     | '/$lang/pedido/gracias'
@@ -352,6 +364,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangPoliticaDePrivacidadRouteImport
       parentRoute: typeof LangRoute
     }
+    '/$lang/sobre-nosotros': {
+      id: '/$lang/sobre-nosotros'
+      path: '/sobre-nosotros'
+      fullPath: '/$lang/sobre-nosotros'
+      preLoaderRoute: typeof LangSobreNosotrosRouteImport
+      parentRoute: typeof LangRoute
+    }
     '/$lang/terminos-y-condiciones': {
       id: '/$lang/terminos-y-condiciones'
       path: '/terminos-y-condiciones'
@@ -412,6 +431,7 @@ interface LangRouteChildren {
   LangPoliticaDeCookiesRoute: typeof LangPoliticaDeCookiesRoute
   LangPoliticaDeDevolucionesRoute: typeof LangPoliticaDeDevolucionesRoute
   LangPoliticaDePrivacidadRoute: typeof LangPoliticaDePrivacidadRoute
+  LangSobreNosotrosRoute: typeof LangSobreNosotrosRoute
   LangTerminosYCondicionesRoute: typeof LangTerminosYCondicionesRoute
   LangIndexRoute: typeof LangIndexRoute
   LangPedidoGraciasRoute: typeof LangPedidoGraciasRoute
@@ -429,6 +449,7 @@ const LangRouteChildren: LangRouteChildren = {
   LangPoliticaDeCookiesRoute: LangPoliticaDeCookiesRoute,
   LangPoliticaDeDevolucionesRoute: LangPoliticaDeDevolucionesRoute,
   LangPoliticaDePrivacidadRoute: LangPoliticaDePrivacidadRoute,
+  LangSobreNosotrosRoute: LangSobreNosotrosRoute,
   LangTerminosYCondicionesRoute: LangTerminosYCondicionesRoute,
   LangIndexRoute: LangIndexRoute,
   LangPedidoGraciasRoute: LangPedidoGraciasRoute,
