@@ -25,6 +25,7 @@ import { Route as LangTerminosYCondicionesRouteImport } from './routes/$lang/ter
 import { Route as LangPedidoIndexRouteImport } from './routes/$lang/pedido/index'
 import { Route as LangPedidoGraciasRouteImport } from './routes/$lang/pedido/gracias'
 import { Route as LangRopaInteriorIndexRouteImport } from './routes/$lang/ropa-interior/index'
+import { Route as ApiPublicAssistantRouteImport } from './routes/api/public/assistant'
 import { Route as LangRopaInteriorCategoryIndexRouteImport } from './routes/$lang/ropa-interior/$category/index'
 import { Route as LangRopaInteriorCategoryProductRouteImport } from './routes/$lang/ropa-interior/$category/$product'
 
@@ -111,6 +112,11 @@ const LangRopaInteriorIndexRoute = LangRopaInteriorIndexRouteImport.update({
   path: '/ropa-interior/',
   getParentRoute: () => LangRoute,
 } as any)
+const ApiPublicAssistantRoute = ApiPublicAssistantRouteImport.update({
+  id: '/api/public/assistant',
+  path: '/api/public/assistant',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LangRopaInteriorCategoryIndexRoute =
   LangRopaInteriorCategoryIndexRouteImport.update({
     id: '/ropa-interior/$category/',
@@ -139,6 +145,7 @@ export interface FileRoutesByFullPath {
   '/$lang/terminos-y-condiciones': typeof LangTerminosYCondicionesRoute
   '/$lang/': typeof LangIndexRoute
   '/$lang/pedido/gracias': typeof LangPedidoGraciasRoute
+  '/api/public/assistant': typeof ApiPublicAssistantRoute
   '/$lang/pedido/': typeof LangPedidoIndexRoute
   '/$lang/ropa-interior/': typeof LangRopaInteriorIndexRoute
   '/$lang/ropa-interior/$category/$product': typeof LangRopaInteriorCategoryProductRoute
@@ -158,6 +165,7 @@ export interface FileRoutesByTo {
   '/$lang/terminos-y-condiciones': typeof LangTerminosYCondicionesRoute
   '/$lang': typeof LangIndexRoute
   '/$lang/pedido/gracias': typeof LangPedidoGraciasRoute
+  '/api/public/assistant': typeof ApiPublicAssistantRoute
   '/$lang/pedido': typeof LangPedidoIndexRoute
   '/$lang/ropa-interior': typeof LangRopaInteriorIndexRoute
   '/$lang/ropa-interior/$category/$product': typeof LangRopaInteriorCategoryProductRoute
@@ -179,6 +187,7 @@ export interface FileRoutesById {
   '/$lang/terminos-y-condiciones': typeof LangTerminosYCondicionesRoute
   '/$lang/': typeof LangIndexRoute
   '/$lang/pedido/gracias': typeof LangPedidoGraciasRoute
+  '/api/public/assistant': typeof ApiPublicAssistantRoute
   '/$lang/pedido/': typeof LangPedidoIndexRoute
   '/$lang/ropa-interior/': typeof LangRopaInteriorIndexRoute
   '/$lang/ropa-interior/$category/$product': typeof LangRopaInteriorCategoryProductRoute
@@ -201,6 +210,7 @@ export interface FileRouteTypes {
     | '/$lang/terminos-y-condiciones'
     | '/$lang/'
     | '/$lang/pedido/gracias'
+    | '/api/public/assistant'
     | '/$lang/pedido/'
     | '/$lang/ropa-interior/'
     | '/$lang/ropa-interior/$category/$product'
@@ -220,6 +230,7 @@ export interface FileRouteTypes {
     | '/$lang/terminos-y-condiciones'
     | '/$lang'
     | '/$lang/pedido/gracias'
+    | '/api/public/assistant'
     | '/$lang/pedido'
     | '/$lang/ropa-interior'
     | '/$lang/ropa-interior/$category/$product'
@@ -240,6 +251,7 @@ export interface FileRouteTypes {
     | '/$lang/terminos-y-condiciones'
     | '/$lang/'
     | '/$lang/pedido/gracias'
+    | '/api/public/assistant'
     | '/$lang/pedido/'
     | '/$lang/ropa-interior/'
     | '/$lang/ropa-interior/$category/$product'
@@ -251,6 +263,7 @@ export interface RootRouteChildren {
   LangRoute: typeof LangRouteWithChildren
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ApiPublicAssistantRoute: typeof ApiPublicAssistantRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -367,6 +380,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangRopaInteriorIndexRouteImport
       parentRoute: typeof LangRoute
     }
+    '/api/public/assistant': {
+      id: '/api/public/assistant'
+      path: '/api/public/assistant'
+      fullPath: '/api/public/assistant'
+      preLoaderRoute: typeof ApiPublicAssistantRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/$lang/ropa-interior/$category/': {
       id: '/$lang/ropa-interior/$category/'
       path: '/ropa-interior/$category'
@@ -425,6 +445,7 @@ const rootRouteChildren: RootRouteChildren = {
   LangRoute: LangRouteWithChildren,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ApiPublicAssistantRoute: ApiPublicAssistantRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

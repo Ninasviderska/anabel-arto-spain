@@ -6,6 +6,7 @@ import { CartProvider } from "@/lib/cart";
 import { categoriesQuery } from "@/lib/catalog.queries";
 import { Header } from "@/components/shop/Header";
 import { Footer } from "@/components/shop/Footer";
+import { AssistantWidget } from "@/components/shop/AssistantWidget";
 
 export const Route = createFileRoute("/$lang")({
   beforeLoad: ({ params }) => {
@@ -31,6 +32,7 @@ function LangLayout() {
           </main>
           <Footer categories={categories} />
         </div>
+        <AssistantWidget />
       </CartProvider>
     </I18nContext.Provider>
   );

@@ -37,7 +37,7 @@ export const Route = createFileRoute("/api/public/assistant")({
           }
           const json = (await res.json()) as { choices: { message: Msg & { tool_calls?: { id: string; function: { name: string; arguments: string } }[] } }[] };
           const msg = json.choices[0]!.message;
-          if (!msg.tool_calls?.length) return Response.json({ reply: String(msg.content ?? "") });
+          if (!msg.tool_calls?.length) return Response.json({ reply: String(msg["content"] ?? "") });
           messages.push(msg);
           for (const call of msg.tool_calls) {
             let result: unknown;
