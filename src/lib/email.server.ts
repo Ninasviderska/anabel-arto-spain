@@ -43,30 +43,35 @@ function renderConfirmation(o: OrderEmailData): { subject: string; html: string;
   return { subject: `Pedido ${o.order_number} confirmado — Anabel Arto`, html, text };
 }
 
-/** Sends the order confirmation via Resend. Never throws: a failed email must not break the webhook. */
+/** Sends the order confirmation via SMTP (nodemailer). Never throws: a failed email must not break the webhook. */
 export async function sendOrderConfirmationEmail(orderId: string): Promise<void> {
-  const apiKey = process.env["RESEND_API_KEY"];
-  if (!apiKey) {
-    console.warn("[email] RESEND_API_KEY not configured; skipping confirmation for", orderId);
+  const host = process.env["SMTP_HOST"];
+  const user = process.env["SMTP_USER"];
+  const pass = process.env["SMTP_PASSWORD"];
+  if (!host || !user || !pass) {
+    console.warn("[email] SMTP not configured (SMTP_HOST/SMTP_USER/SMTP_PASSWORD); skipping confirmation for", orderId);
     return;
   }
   try {
     const order = await rpc<OrderEmailData | null>("get_order_for_email", { _secret: rpcSecret(), _order_id: orderId });
     if (!order) return;
     const { subject, html, text } = renderConfirmation(order);
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json", "Idempotency-Key": `order-confirmed-${orderId}` },
-      body: JSON.stringify({
-        from: process.env["EMAIL_FROM"] || "Anabel Arto <orders@anabelarto.es>",
-        to: [order.customer_email],
-        reply_to: "orders@anabelarto.es",
-        subject,
-        html,
-        text,
-      }),
+    const { default: nodemailer } = await import("nodemailer");
+    const port = Number(process.env["SMTP_PORT"] || 465);
+    const transporter = nodemailer.createTransport({
+      host,
+      port,
+      secure: process.env["SMTP_SECURE"] !== "false",
+      auth: { user, pass },
     });
-    if (!res.ok) console.error(`[email] Resend failed [${res.status}]: ${await res.text()}`);
+    await transporter.sendMail({
+      from: process.env["EMAIL_FROM"] || `Anabel Arto <${user}>`,
+      to: order.customer_email,
+      replyTo: "info@anabelarto.es",
+      subject,
+      html,
+      text,
+    });
   } catch (err) {
     console.error("[email] confirmation failed", orderId, err);
   }
