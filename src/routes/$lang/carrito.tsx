@@ -1,7 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Minus, Plus, Trash2 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { AlertCircle, Clock, Minus, Plus, Trash2 } from "lucide-react";
 import { fmt, getDictionary, useI18n } from "@/i18n";
 import { useCart } from "@/lib/cart";
+import { checkCartAvailability } from "@/lib/catalog.functions";
 import { formatPrice } from "@/lib/format";
 import { shopConfig } from "@/lib/shop-config";
 import { pageMeta } from "@/lib/seo";
@@ -25,10 +28,28 @@ export const Route = createFileRoute("/$lang/carrito")({
 function CartPage() {
   const { locale, d } = useI18n();
   const cart = useCart();
+  const check = useServerFn(checkCartAvailability);
+  const variantIds = cart.items.map((i) => i.variantId).sort();
+  const availability = useQuery({
+    queryKey: ["cart-availability", variantIds],
+    queryFn: () => check({ data: { variantIds } }),
+    enabled: cart.hydrated && variantIds.length > 0,
+    refetchOnWindowFocus: true,
+    staleTime: 0,
+  });
+  const unavailable = (variantId: string, qty: number) =>
+    availability.data ? (availability.data[variantId] ?? 0) < qty : false;
+  const blocked =
+    !availability.data || cart.items.some((i) => unavailable(i.variantId, i.quantity));
 
   return (
     <div className="container-shop py-10 md:py-16">
       <h1 className="font-display text-4xl md:text-5xl">{d.cart.title}</h1>
+      {cart.items.length > 0 && (
+        <p className="mt-4 inline-flex items-center gap-2 rounded-sm bg-accent px-3 py-2 text-xs text-accent-foreground">
+          <Clock className="size-3.5" /> {d.cart.expiryNotice}
+        </p>
+      )}
 
       {cart.hydrated && cart.items.length === 0 ? (
         <div className="mt-12 rounded-sm bg-cream-deep px-6 py-20 text-center">
@@ -63,6 +84,23 @@ function CartPage() {
                     </div>
                     <p className="text-sm">{formatPrice(item.unitPriceCents * item.quantity, locale)}</p>
                   </div>
+                  {unavailable(item.variantId, item.quantity) && (
+                    <div className="flex items-start gap-2 rounded-sm border border-destructive/40 bg-destructive/5 px-3 py-2 text-xs text-destructive">
+                      <AlertCircle className="mt-0.5 size-3.5 shrink-0" />
+                      <p>
+                        {(availability.data?.[item.variantId] ?? 0) > 0
+                          ? fmt(d.cart.onlyLeft, { count: availability.data?.[item.variantId] ?? 0 })
+                          : d.cart.unavailable}{" "}
+                        <Link
+                          to="/$lang/ropa-interior/$category"
+                          params={{ lang: locale, category: item.categorySlug }}
+                          className="underline underline-offset-4"
+                        >
+                          {d.cart.seeSimilar}
+                        </Link>
+                      </p>
+                    </div>
+                  )}
                   <div className="mt-auto flex items-center justify-between">
                     <div className="inline-flex items-center rounded-sm border" aria-label={d.cart.quantity}>
                       <button
@@ -119,11 +157,21 @@ function CartPage() {
                     amount: formatPrice(shopConfig.freeShippingThresholdCents - cart.subtotalCents, locale),
                   })}
             </p>
-            <Button asChild variant="hero" size="lg" className="mt-6 w-full">
-              <Link to="/$lang/pedido" params={{ lang: locale }}>
-                {d.cart.checkout}
-              </Link>
-            </Button>
+            {blocked ? (
+              <>
+                <Button variant="hero" size="lg" className="mt-6 w-full" disabled>
+                  {availability.isFetching || !availability.data ? d.cart.checking : d.cart.checkout}
+                </Button>
+                {availability.data && <p className="mt-3 text-xs text-destructive">{d.cart.fixUnavailable}</p>}
+                {availability.isError && <p className="mt-3 text-xs text-destructive">{d.cart.checkError}</p>}
+              </>
+            ) : (
+              <Button asChild variant="hero" size="lg" className="mt-6 w-full">
+                <Link to="/$lang/pedido" params={{ lang: locale }}>
+                  {d.cart.checkout}
+                </Link>
+              </Button>
+            )}
             <Link
               to="/$lang/catalogo"
               params={{ lang: locale }}
