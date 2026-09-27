@@ -42,7 +42,7 @@ function CatalogTab() {
   const renderCat = (c: Cat, depth: number): React.ReactNode => (
     <li key={c.id}>
       <button type="button" className={item(sel?.kind === "cat" && sel.id === c.id)} style={{ paddingLeft: 8 + depth * 14 }} onClick={() => setSel({ kind: "cat", id: c.id })}>
-        📁 {c.name}
+        ▸ {c.name}
       </button>
       <ul>
         {cats.filter((s) => s.parent_id === c.id).map((s) => renderCat(s, depth + 1))}
