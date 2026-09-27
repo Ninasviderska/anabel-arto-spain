@@ -19,7 +19,7 @@ export const verifyCheckoutSession = createServerFn({ method: "POST" })
         "GET",
         `/checkout/sessions/${encodeURIComponent(data.sessionId)}`,
       );
-      const orderId = s.metadata?.order_id;
+      const orderId = s.metadata?.['order_id'];
       if (!orderId) return { status: "invalid", orderNumber: null };
       const { data: order } = await supabaseAdmin
         .from("orders")
