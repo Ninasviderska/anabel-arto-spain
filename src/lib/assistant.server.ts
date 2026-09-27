@@ -123,14 +123,13 @@ const STATUS: Record<string, string> = {
 };
 
 export async function lookupOrder(orderNumber: string, email: string) {
-  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-  const { data } = await supabaseAdmin
-    .from("orders")
-    .select("order_number, status, customer_email, created_at, total_cents, tracking_number, tracking_url")
-    .eq("order_number", orderNumber.trim().toUpperCase())
-    .maybeSingle();
-  const row = data as null | { order_number: string; status: string; customer_email: string; created_at: string; total_cents: number; tracking_number: string | null; tracking_url: string | null };
-  if (!row || row.customer_email.toLowerCase() !== email.trim().toLowerCase()) return { found: false };
+  const { rpc } = await import("./order-payments.server");
+  const rows = await rpc<{ order_number: string; status: string; created_at: string; total_cents: number; tracking_number: string | null; tracking_url: string | null }[]>(
+    "lookup_order_status",
+    { _order_number: orderNumber, _email: email },
+  );
+  const row = rows?.[0];
+  if (!row) return { found: false };
   return {
     found: true,
     numero: row.order_number,

@@ -12,8 +12,7 @@ export const verifyCheckoutSession = createServerFn({ method: "POST" })
   )
   .handler(async ({ data }): Promise<PaymentVerification> => {
     const { stripeRequest } = await import("./stripe.server");
-    const { markOrderPaid } = await import("./order-payments.server");
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { markOrderPaid, getOrderPaymentRef } = await import("./order-payments.server");
     try {
       const s = await stripeRequest<{ id: string; payment_status: string; status: string; payment_intent: string | null; metadata: Record<string, string> }>(
         "GET",
@@ -21,11 +20,7 @@ export const verifyCheckoutSession = createServerFn({ method: "POST" })
       );
       const orderId = s.metadata?.['order_id'];
       if (!orderId) return { status: "invalid", orderNumber: null };
-      const { data: order } = await supabaseAdmin
-        .from("orders")
-        .select("order_number, stripe_session_id")
-        .eq("id", orderId)
-        .maybeSingle();
+      const order = await getOrderPaymentRef(orderId);
       if (!order || order.stripe_session_id !== s.id) return { status: "invalid", orderNumber: null };
       if (s.payment_status === "paid") {
         await markOrderPaid(orderId, s.id, s.payment_intent);

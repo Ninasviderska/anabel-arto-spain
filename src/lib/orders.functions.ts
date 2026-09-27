@@ -104,11 +104,10 @@ export const createOrder = createServerFn({ method: "POST" })
         success_url: `${origin}/${lang}/pedido/gracias?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${origin}/${lang}/pedido`,
       });
-      await supabaseAdmin.from("orders").update({ stripe_session_id: session.id }).eq("id", order.id);
+      await attachOrderSession(order.id, session.id);
       return { orderId: order.id, orderNumber: order.order_number, totalCents: total, paymentUrl: session.url };
     } catch (err) {
-      for (const previous of reserved) await supabaseAdmin.rpc("release_variant_stock", { _variant_id: previous.id, _qty: previous.quantity });
-      await supabaseAdmin.from("orders").update({ status: "cancelled" }).eq("id", order.id);
+      await cancelPendingOrder(order.id).catch((e) => console.error("[createOrder] rollback failed", e));
       throw err;
     }
   });
