@@ -29,16 +29,29 @@ type CartContextValue = {
 };
 
 const STORAGE_KEY = "anabelarto:cart:v1";
+export const CART_TTL_MS = 24 * 60 * 60 * 1000;
 const CartContext = createContext<CartContextValue | null>(null);
+
+type Stored = { createdAt: number; items: CartItem[] };
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
+  const [createdAt, setCreatedAt] = useState<number | null>(null);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
-      if (raw) setItems(JSON.parse(raw) as CartItem[]);
+      if (raw) {
+        const parsed = JSON.parse(raw) as Stored | CartItem[];
+        const stored: Stored = Array.isArray(parsed) ? { createdAt: Date.now(), items: parsed } : parsed;
+        if (Date.now() - stored.createdAt < CART_TTL_MS && stored.items.length) {
+          setItems(stored.items);
+          setCreatedAt(stored.createdAt);
+        } else {
+          window.localStorage.removeItem(STORAGE_KEY);
+        }
+      }
     } catch {
       /* ignore corrupt storage */
     }
@@ -47,8 +60,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!hydrated) return;
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-  }, [items, hydrated]);
+    if (items.length === 0) {
+      setCreatedAt(null);
+      window.localStorage.removeItem(STORAGE_KEY);
+      return;
+    }
+    const ts = createdAt ?? Date.now();
+    if (createdAt === null) setCreatedAt(ts);
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ createdAt: ts, items } satisfies Stored));
+  }, [items, hydrated, createdAt]);
 
   const add = useCallback((item: Omit<CartItem, "quantity">, quantity = 1) => {
     setItems((prev) => {
