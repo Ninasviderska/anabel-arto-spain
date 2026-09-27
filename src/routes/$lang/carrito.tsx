@@ -79,7 +79,7 @@ function CartPage() {
                     <div>
                       <h2 className="font-display text-xl leading-tight">{item.name}</h2>
                       <p className="mt-1 text-xs text-muted-foreground">
-                        {item.colorName} · {item.size} · {item.sku}
+                        {item.colorName} · {item.size}
                       </p>
                     </div>
                     <p className="text-sm">{formatPrice(item.unitPriceCents * item.quantity, locale)}</p>

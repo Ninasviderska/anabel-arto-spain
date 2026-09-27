@@ -15,7 +15,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Breadcrumbs } from "@/components/shop/Breadcrumbs";
 import { ProductCard } from "@/components/shop/ProductCard";
 import { SizeGuide } from "@/components/shop/SizeGuide";
-import { displaySize, manufacturerSizeLabel, parseBraSize } from "@/lib/sizes";
+import { displaySize, parseBraSize } from "@/lib/sizes";
 
 export const Route = createFileRoute("/$lang/ropa-interior/$category/$product")({
   loader: async ({ context, params }) => {
@@ -277,9 +277,8 @@ function ProductPage() {
             <p className="flex items-center gap-2 text-xs text-muted-foreground">
               <Check className="size-3.5 text-primary" />
               {canAdd || (!size && !isOneSize) ? d.product.inStock : d.product.outOfStock} · {d.product.sku}:{" "}
-              {selectedVariant?.variant_sku ?? product.sku}
+              {product.sku}
             </p>
-            {selectedVariant && <p className="text-xs text-muted-foreground">{d.product.manufacturerSize}: {manufacturerSizeLabel(selectedVariant.size).replace("Fabricante: ", "")}</p>}
           </div>
 
           <Accordion type="single" collapsible className="mt-10 border-t">

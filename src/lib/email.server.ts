@@ -1,3 +1,4 @@
+import { formatSizeEs } from "./sizes";
 import { rpc, rpcSecret } from "./order-payments.server";
 
 type OrderEmailData = {
@@ -16,7 +17,7 @@ const esc = (s: string) => s.replace(/[&<>"']/g, (ch) => `&#${ch.charCodeAt(0)};
 function renderConfirmation(o: OrderEmailData): { subject: string; html: string; text: string } {
   const rows = o.items
     .map(
-      (i) => `<tr><td style="padding:8px 0;border-bottom:1px solid #eee4dc">${esc(i.product_name)}<br><span style="color:#8a7a80;font-size:13px">${esc(i.color_name)} · ${esc(i.size)} · x${i.quantity}</span></td><td style="padding:8px 0;border-bottom:1px solid #eee4dc;text-align:right;white-space:nowrap">${eur(i.unit_price_cents * i.quantity)}</td></tr>`,
+      (i) => `<tr><td style="padding:8px 0;border-bottom:1px solid #eee4dc">${esc(i.product_name)}<br><span style="color:#8a7a80;font-size:13px">${esc(i.color_name)} · ${esc(formatSizeEs(i.size))} · x${i.quantity}</span></td><td style="padding:8px 0;border-bottom:1px solid #eee4dc;text-align:right;white-space:nowrap">${eur(i.unit_price_cents * i.quantity)}</td></tr>`,
     )
     .join("");
   const html = `<!doctype html><html lang="es"><body style="margin:0;background:#ffffff;font-family:Helvetica,Arial,sans-serif;color:#2b1f26">
@@ -34,7 +35,7 @@ function renderConfirmation(o: OrderEmailData): { subject: string; html: string;
   const text = [
     `Hola ${o.customer_name},`,
     `¡Gracias por tu compra! Tu pedido ${o.order_number} está confirmado.`,
-    ...o.items.map((i) => `- ${i.product_name} (${i.color_name} · ${i.size}) x${i.quantity}: ${eur(i.unit_price_cents * i.quantity)}`),
+    ...o.items.map((i) => `- ${i.product_name} (${i.color_name} · ${formatSizeEs(i.size)}) x${i.quantity}: ${eur(i.unit_price_cents * i.quantity)}`),
     `Envío: ${o.shipping_cents === 0 ? "Gratis" : eur(o.shipping_cents)}`,
     `Total: ${eur(o.total_cents)}`,
     "Te enviaremos un segundo correo cuando tu pedido esté preparado para el envío.",
