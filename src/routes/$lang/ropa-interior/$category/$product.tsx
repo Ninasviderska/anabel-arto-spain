@@ -176,7 +176,7 @@ function ProductPage() {
           )}
 
           <div className="mt-6 flex flex-wrap items-baseline gap-3">
-            <span className="text-2xl font-normal">{formatPrice(product.price_cents, locale)}</span>
+            <span className="text-2xl font-normal">{formatPrice(selectedVariant?.price_override_cents ?? product.price_cents, locale)}</span>
             {product.compare_at_price_cents && (
               <span className="text-base text-muted-foreground line-through">
                 {formatPrice(product.compare_at_price_cents, locale)}
