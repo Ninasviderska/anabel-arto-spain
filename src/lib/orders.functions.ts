@@ -1,8 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
-import { getPublicClient } from "./supabase-public.server";
-import { shippingFor } from "./shop-config";
-import { isVariantAvailable } from "./catalog.types";
 import { isMainlandShippingAddress } from "./shipping";
 
 export const checkoutSchema = z.object({
