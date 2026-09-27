@@ -44,6 +44,11 @@ export function Footer({ categories }: { categories: Category[] }) {
                 Sobre nosotros
               </Link>
             </li>
+            <li>
+              <Link to="/$lang/estado-pedido" params={{ lang: locale }} className="link-underline">
+                Estado de tu pedido
+              </Link>
+            </li>
           </ul>
           <h2 className="eyebrow mt-10 mb-5 text-foreground">{d.footer.legal}</h2>
           <ul className="space-y-3 text-sm">
