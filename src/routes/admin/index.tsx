@@ -27,6 +27,7 @@ function SalesTab() {
   const [to, setTo] = useState(() => iso(new Date()));
   const [status, setStatus] = useState("");
   const [open, setOpen] = useState<string | null>(null);
+  const [mode, setMode] = useState<"orders" | "products">("orders");
 
   const q = useQuery({
     queryKey: ["admin-orders", from, to, status],
@@ -71,9 +72,16 @@ function SalesTab() {
         <Stat label="Средний чек" value={formatPrice(summary.avg, "es")} />
       </div>
 
+      <div className="inline-flex rounded-sm border p-0.5">
+        {([["orders", "Список заказов"], ["products", "По товарам"]] as const).map(([k, l]) => (
+          <button key={k} type="button" onClick={() => setMode(k)} className={`rounded-sm px-3 py-1.5 text-sm ${mode === k ? "bg-primary text-primary-foreground" : "hover:bg-accent"}`}>{l}</button>
+        ))}
+      </div>
+
       {q.isLoading && <p className="text-sm text-muted-foreground">Загрузка…</p>}
       {q.isError && <p className="text-sm text-destructive">Не удалось загрузить заказы.</p>}
-      {q.data && (
+      {q.data && mode === "products" && <ByProduct orders={q.data} />}
+      {q.data && mode === "orders" && (
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="text-left text-muted-foreground">
@@ -122,6 +130,59 @@ function SalesTab() {
           </table>
         </div>
       )}
+    </div>
+  );
+}
+
+type OrderLite = { status: string; items: { product_id: string | null; product_name: string; quantity: number; unit_price_cents: number }[] };
+
+function ByProduct({ orders }: { orders: OrderLite[] }) {
+  const costs = useQuery({
+    queryKey: ["admin-costs"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("product_costs").select("product_id, cost_cents");
+      if (error) throw error;
+      return Object.fromEntries(data.map((x) => [x.product_id, x.cost_cents])) as Record<string, number>;
+    },
+  });
+  const rows = useMemo(() => {
+    const m = new Map<string, { name: string; qty: number; revenue: number; supplier: number }>();
+    for (const o of orders) {
+      if (!PAID.includes(o.status)) continue;
+      for (const i of o.items) {
+        const key = i.product_id ?? i.product_name;
+        const r = m.get(key) ?? { name: i.product_name, qty: 0, revenue: 0, supplier: 0 };
+        r.qty += i.quantity;
+        r.revenue += i.unit_price_cents * i.quantity;
+        r.supplier += i.quantity * (i.product_id ? costs.data?.[i.product_id] ?? 0 : 0);
+        m.set(key, r);
+      }
+    }
+    return [...m.values()].sort((a, b) => b.revenue - a.revenue);
+  }, [orders, costs.data]);
+  const t = rows.reduce((a, r) => ({ qty: a.qty + r.qty, revenue: a.revenue + r.revenue, supplier: a.supplier + r.supplier }), { qty: 0, revenue: 0, supplier: 0 });
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full text-sm">
+        <thead className="text-left text-muted-foreground">
+          <tr className="border-b"><th className="py-2 pr-3">Товар</th><th className="pr-3">Продано</th><th className="pr-3">Выручка</th><th className="pr-3">К поставщику</th><th>Прибыль</th></tr>
+        </thead>
+        <tbody>
+          {rows.length === 0 && <tr><td colSpan={5} className="py-6 text-center text-muted-foreground">Оплаченных продаж за период нет</td></tr>}
+          {rows.map((r) => (
+            <tr key={r.name} className="border-b">
+              <td className="py-2 pr-3">{r.name}</td><td className="pr-3">{r.qty}</td><td className="pr-3">{formatPrice(r.revenue, "es")}</td>
+              <td className="pr-3">{formatPrice(r.supplier, "es")}</td><td>{formatPrice(r.revenue - r.supplier, "es")}</td>
+            </tr>
+          ))}
+          {rows.length > 0 && (
+            <tr className="border-t-2 bg-accent/40 font-semibold">
+              <td className="py-2 pr-3">Итого</td><td className="pr-3">{t.qty}</td><td className="pr-3">{formatPrice(t.revenue, "es")}</td>
+              <td className="pr-3">{formatPrice(t.supplier, "es")}</td><td>{formatPrice(t.revenue - t.supplier, "es")}</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
     </div>
   );
 }
