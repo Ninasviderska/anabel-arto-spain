@@ -18,6 +18,7 @@ import { Route as LangIndexRouteImport } from './routes/$lang/index'
 import { Route as LangAvisoLegalRouteImport } from './routes/$lang/aviso-legal'
 import { Route as LangCarritoRouteImport } from './routes/$lang/carrito'
 import { Route as LangCatalogoRouteImport } from './routes/$lang/catalogo'
+import { Route as LangEstadoPedidoRouteImport } from './routes/$lang/estado-pedido'
 import { Route as LangGuiaDeTallasRouteImport } from './routes/$lang/guia-de-tallas'
 import { Route as LangPoliticaDeCookiesRouteImport } from './routes/$lang/politica-de-cookies'
 import { Route as LangPoliticaDeDevolucionesRouteImport } from './routes/$lang/politica-de-devoluciones'
@@ -80,6 +81,11 @@ const LangCarritoRoute = LangCarritoRouteImport.update({
 const LangCatalogoRoute = LangCatalogoRouteImport.update({
   id: '/catalogo',
   path: '/catalogo',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangEstadoPedidoRoute = LangEstadoPedidoRouteImport.update({
+  id: '/estado-pedido',
+  path: '/estado-pedido',
   getParentRoute: () => LangRoute,
 } as any)
 const LangGuiaDeTallasRoute = LangGuiaDeTallasRouteImport.update({
@@ -188,6 +194,7 @@ export interface FileRoutesByFullPath {
   '/$lang/aviso-legal': typeof LangAvisoLegalRoute
   '/$lang/carrito': typeof LangCarritoRoute
   '/$lang/catalogo': typeof LangCatalogoRoute
+  '/$lang/estado-pedido': typeof LangEstadoPedidoRoute
   '/$lang/guia-de-tallas': typeof LangGuiaDeTallasRoute
   '/$lang/politica-de-cookies': typeof LangPoliticaDeCookiesRoute
   '/$lang/politica-de-devoluciones': typeof LangPoliticaDeDevolucionesRoute
@@ -215,6 +222,7 @@ export interface FileRoutesByTo {
   '/$lang/aviso-legal': typeof LangAvisoLegalRoute
   '/$lang/carrito': typeof LangCarritoRoute
   '/$lang/catalogo': typeof LangCatalogoRoute
+  '/$lang/estado-pedido': typeof LangEstadoPedidoRoute
   '/$lang/guia-de-tallas': typeof LangGuiaDeTallasRoute
   '/$lang/politica-de-cookies': typeof LangPoliticaDeCookiesRoute
   '/$lang/politica-de-devoluciones': typeof LangPoliticaDeDevolucionesRoute
@@ -245,6 +253,7 @@ export interface FileRoutesById {
   '/$lang/aviso-legal': typeof LangAvisoLegalRoute
   '/$lang/carrito': typeof LangCarritoRoute
   '/$lang/catalogo': typeof LangCatalogoRoute
+  '/$lang/estado-pedido': typeof LangEstadoPedidoRoute
   '/$lang/guia-de-tallas': typeof LangGuiaDeTallasRoute
   '/$lang/politica-de-cookies': typeof LangPoliticaDeCookiesRoute
   '/$lang/politica-de-devoluciones': typeof LangPoliticaDeDevolucionesRoute
@@ -276,6 +285,7 @@ export interface FileRouteTypes {
     | '/$lang/aviso-legal'
     | '/$lang/carrito'
     | '/$lang/catalogo'
+    | '/$lang/estado-pedido'
     | '/$lang/guia-de-tallas'
     | '/$lang/politica-de-cookies'
     | '/$lang/politica-de-devoluciones'
@@ -303,6 +313,7 @@ export interface FileRouteTypes {
     | '/$lang/aviso-legal'
     | '/$lang/carrito'
     | '/$lang/catalogo'
+    | '/$lang/estado-pedido'
     | '/$lang/guia-de-tallas'
     | '/$lang/politica-de-cookies'
     | '/$lang/politica-de-devoluciones'
@@ -332,6 +343,7 @@ export interface FileRouteTypes {
     | '/$lang/aviso-legal'
     | '/$lang/carrito'
     | '/$lang/catalogo'
+    | '/$lang/estado-pedido'
     | '/$lang/guia-de-tallas'
     | '/$lang/politica-de-cookies'
     | '/$lang/politica-de-devoluciones'
@@ -427,6 +439,13 @@ declare module '@tanstack/react-router' {
       path: '/catalogo'
       fullPath: '/$lang/catalogo'
       preLoaderRoute: typeof LangCatalogoRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/estado-pedido': {
+      id: '/$lang/estado-pedido'
+      path: '/estado-pedido'
+      fullPath: '/$lang/estado-pedido'
+      preLoaderRoute: typeof LangEstadoPedidoRouteImport
       parentRoute: typeof LangRoute
     }
     '/$lang/guia-de-tallas': {
@@ -580,6 +599,7 @@ interface LangRouteChildren {
   LangAvisoLegalRoute: typeof LangAvisoLegalRoute
   LangCarritoRoute: typeof LangCarritoRoute
   LangCatalogoRoute: typeof LangCatalogoRoute
+  LangEstadoPedidoRoute: typeof LangEstadoPedidoRoute
   LangGuiaDeTallasRoute: typeof LangGuiaDeTallasRoute
   LangPoliticaDeCookiesRoute: typeof LangPoliticaDeCookiesRoute
   LangPoliticaDeDevolucionesRoute: typeof LangPoliticaDeDevolucionesRoute
@@ -598,6 +618,7 @@ const LangRouteChildren: LangRouteChildren = {
   LangAvisoLegalRoute: LangAvisoLegalRoute,
   LangCarritoRoute: LangCarritoRoute,
   LangCatalogoRoute: LangCatalogoRoute,
+  LangEstadoPedidoRoute: LangEstadoPedidoRoute,
   LangGuiaDeTallasRoute: LangGuiaDeTallasRoute,
   LangPoliticaDeCookiesRoute: LangPoliticaDeCookiesRoute,
   LangPoliticaDeDevolucionesRoute: LangPoliticaDeDevolucionesRoute,

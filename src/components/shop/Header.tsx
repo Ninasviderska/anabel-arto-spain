@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ChevronDown, Menu, ShoppingBag, X } from "lucide-react";
 import { useState } from "react";
 import { Logo } from "@/components/Logo";
+import { SearchDialog } from "@/components/shop/SearchDialog";
 import { useI18n } from "@/i18n";
 import { useCart } from "@/lib/cart";
 import type { Category } from "@/lib/catalog.types";
@@ -60,10 +61,12 @@ export function Header({ categories }: { categories: Category[] }) {
           </DropdownMenu>
         </nav>
 
+        <div className="-mr-2 flex items-center">
+        <SearchDialog />
         <Link
           to="/$lang/carrito"
           params={{ lang: locale }}
-          className="relative -mr-2 inline-flex h-10 w-10 items-center justify-center text-foreground"
+          className="relative inline-flex h-10 w-10 items-center justify-center text-foreground"
           aria-label={d.nav.cart}
         >
           <ShoppingBag className="size-5" strokeWidth={1.4} />
@@ -73,6 +76,7 @@ export function Header({ categories }: { categories: Category[] }) {
             </span>
           )}
         </Link>
+        </div>
       </div>
 
       {open && (

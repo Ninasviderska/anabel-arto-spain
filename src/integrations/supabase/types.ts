@@ -529,6 +529,10 @@ export type Database = {
           stripe_session_id: string
         }[]
       }
+      get_order_status_public: {
+        Args: { _email: string; _order_number: string }
+        Returns: Json
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
