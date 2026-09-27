@@ -32,6 +32,10 @@ export function displaySize(size: string, type: SizeType): string {
   return size;
 }
 
-export function manufacturerSizeLabel(size: string): string {
-  return `Fabricante: ${size}`;
+/** Converts a stored manufacturer size ("40", "B 75", "U") to the Spanish size shown to people. */
+export function formatSizeEs(rawSize: string): string {
+  const raw = rawSize.trim();
+  if (parseBraSize(raw)) return displaySize(raw, "bra");
+  if (/^\d+$/.test(raw)) return displaySize(raw, "numeric");
+  return raw;
 }

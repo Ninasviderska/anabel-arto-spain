@@ -1,3 +1,4 @@
+import { formatSizeEs } from "./sizes";
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { isMainlandShippingAddress } from "./shipping";
@@ -82,7 +83,7 @@ export const createOrder = createServerFn({ method: "POST" })
       price_data: {
         currency: "eur",
         unit_amount: l.unit_price_cents,
-        product_data: { name: `${l.product_name} · ${l.color_name} · ${l.size}` },
+        product_data: { name: `${l.product_name} · ${l.color_name} · ${formatSizeEs(l.size)}` },
       },
     }));
     if (shipping > 0) {
