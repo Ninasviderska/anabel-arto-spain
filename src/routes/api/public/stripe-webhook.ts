@@ -1,21 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { verifyStripeSignature } from "@/lib/stripe.server";
-
-async function cancelOrder(orderId: string) {
-  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-  // Only transition pending orders, so stock is released exactly once.
-  const { data: updated } = await supabaseAdmin
-    .from("orders")
-    .update({ status: "cancelled" })
-    .eq("id", orderId)
-    .eq("status", "pending_payment")
-    .select("id");
-  if (!updated?.length) return;
-  const { data: items } = await supabaseAdmin.from("order_items").select("variant_id, quantity").eq("order_id", orderId);
-  for (const it of items ?? []) {
-    if (it.variant_id) await supabaseAdmin.rpc("release_variant_stock", { _variant_id: it.variant_id, _qty: it.quantity });
-  }
-}
+import { cancelPendingOrder, markOrderPaid } from "@/lib/order-payments.server";
 
 export const Route = createFileRoute("/api/public/stripe-webhook")({
   server: {
@@ -33,16 +18,9 @@ export const Route = createFileRoute("/api/public/stripe-webhook")({
         if (!orderId) return new Response("ok");
 
         if (event.type === "checkout.session.completed" && obj.payment_status === "paid") {
-          const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-          await supabaseAdmin
-            .from("orders")
-            .update({ status: "paid", stripe_payment_intent_id: obj.payment_intent ?? null, stripe_session_id: obj.id })
-            .eq("id", orderId)
-            .eq("status", "pending_payment");
+          await markOrderPaid(orderId, obj.id, obj.payment_intent ?? null);
         } else if (event.type === "checkout.session.expired" || event.type === "payment_intent.payment_failed") {
-          // A failed attempt on Checkout still lets the customer retry until the session expires;
-          // we cancel only on expiry for sessions, but payment_intent.payment_failed is honoured as requested.
-          await cancelOrder(orderId);
+          await cancelPendingOrder(orderId);
         }
         return new Response("ok");
       },
