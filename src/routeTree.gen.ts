@@ -27,6 +27,7 @@ import { Route as LangPedidoIndexRouteImport } from './routes/$lang/pedido/index
 import { Route as LangPedidoGraciasRouteImport } from './routes/$lang/pedido/gracias'
 import { Route as LangRopaInteriorIndexRouteImport } from './routes/$lang/ropa-interior/index'
 import { Route as ApiPublicAssistantRouteImport } from './routes/api/public/assistant'
+import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe-webhook'
 import { Route as LangRopaInteriorCategoryIndexRouteImport } from './routes/$lang/ropa-interior/$category/index'
 import { Route as LangRopaInteriorCategoryProductRouteImport } from './routes/$lang/ropa-interior/$category/$product'
 
@@ -123,6 +124,11 @@ const ApiPublicAssistantRoute = ApiPublicAssistantRouteImport.update({
   path: '/api/public/assistant',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicStripeWebhookRoute = ApiPublicStripeWebhookRouteImport.update({
+  id: '/api/public/stripe-webhook',
+  path: '/api/public/stripe-webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LangRopaInteriorCategoryIndexRoute =
   LangRopaInteriorCategoryIndexRouteImport.update({
     id: '/ropa-interior/$category/',
@@ -153,6 +159,7 @@ export interface FileRoutesByFullPath {
   '/$lang/': typeof LangIndexRoute
   '/$lang/pedido/gracias': typeof LangPedidoGraciasRoute
   '/api/public/assistant': typeof ApiPublicAssistantRoute
+  '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/$lang/pedido/': typeof LangPedidoIndexRoute
   '/$lang/ropa-interior/': typeof LangRopaInteriorIndexRoute
   '/$lang/ropa-interior/$category/$product': typeof LangRopaInteriorCategoryProductRoute
@@ -174,6 +181,7 @@ export interface FileRoutesByTo {
   '/$lang': typeof LangIndexRoute
   '/$lang/pedido/gracias': typeof LangPedidoGraciasRoute
   '/api/public/assistant': typeof ApiPublicAssistantRoute
+  '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/$lang/pedido': typeof LangPedidoIndexRoute
   '/$lang/ropa-interior': typeof LangRopaInteriorIndexRoute
   '/$lang/ropa-interior/$category/$product': typeof LangRopaInteriorCategoryProductRoute
@@ -197,6 +205,7 @@ export interface FileRoutesById {
   '/$lang/': typeof LangIndexRoute
   '/$lang/pedido/gracias': typeof LangPedidoGraciasRoute
   '/api/public/assistant': typeof ApiPublicAssistantRoute
+  '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/$lang/pedido/': typeof LangPedidoIndexRoute
   '/$lang/ropa-interior/': typeof LangRopaInteriorIndexRoute
   '/$lang/ropa-interior/$category/$product': typeof LangRopaInteriorCategoryProductRoute
@@ -221,6 +230,7 @@ export interface FileRouteTypes {
     | '/$lang/'
     | '/$lang/pedido/gracias'
     | '/api/public/assistant'
+    | '/api/public/stripe-webhook'
     | '/$lang/pedido/'
     | '/$lang/ropa-interior/'
     | '/$lang/ropa-interior/$category/$product'
@@ -242,6 +252,7 @@ export interface FileRouteTypes {
     | '/$lang'
     | '/$lang/pedido/gracias'
     | '/api/public/assistant'
+    | '/api/public/stripe-webhook'
     | '/$lang/pedido'
     | '/$lang/ropa-interior'
     | '/$lang/ropa-interior/$category/$product'
@@ -264,6 +275,7 @@ export interface FileRouteTypes {
     | '/$lang/'
     | '/$lang/pedido/gracias'
     | '/api/public/assistant'
+    | '/api/public/stripe-webhook'
     | '/$lang/pedido/'
     | '/$lang/ropa-interior/'
     | '/$lang/ropa-interior/$category/$product'
@@ -276,6 +288,7 @@ export interface RootRouteChildren {
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ApiPublicAssistantRoute: typeof ApiPublicAssistantRoute
+  ApiPublicStripeWebhookRoute: typeof ApiPublicStripeWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -406,6 +419,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicAssistantRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/stripe-webhook': {
+      id: '/api/public/stripe-webhook'
+      path: '/api/public/stripe-webhook'
+      fullPath: '/api/public/stripe-webhook'
+      preLoaderRoute: typeof ApiPublicStripeWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/$lang/ropa-interior/$category/': {
       id: '/$lang/ropa-interior/$category/'
       path: '/ropa-interior/$category'
@@ -467,6 +487,7 @@ const rootRouteChildren: RootRouteChildren = {
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ApiPublicAssistantRoute: ApiPublicAssistantRoute,
+  ApiPublicStripeWebhookRoute: ApiPublicStripeWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

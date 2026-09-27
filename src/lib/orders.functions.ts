@@ -119,7 +119,39 @@ export const createOrder = createServerFn({ method: "POST" })
       throw new Error(itemsError.message);
     }
 
-    // TODO(stripe): once Lovable payments are enabled, create a Stripe Checkout Session here
-    // with `lines`, store its id in orders.stripe_session_id and return session.url.
-    return { orderId: order.id, orderNumber: order.order_number, totalCents: total, paymentUrl: null };
+    const { stripeRequest } = await import("./stripe.server");
+    const { getRequestHeader } = await import("@tanstack/react-start/server");
+    const origin = getRequestHeader("origin") ?? "https://anabelarto.es";
+    const lang = encodeURIComponent(data.locale);
+    const lineItems: Record<string, unknown>[] = lines.map((l) => ({
+      quantity: l.quantity,
+      price_data: {
+        currency: "eur",
+        unit_amount: l.unit_price_cents,
+        product_data: { name: `${l.product_name} · ${l.color_name} · ${l.size}` },
+      },
+    }));
+    if (shipping > 0) {
+      lineItems.push({ quantity: 1, price_data: { currency: "eur", unit_amount: shipping, product_data: { name: "Envío GLS (España peninsular)" } } });
+    }
+    try {
+      const session = await stripeRequest<{ id: string; url: string }>("POST", "/checkout/sessions", {
+        mode: "payment",
+        line_items: Object.fromEntries(lineItems.map((li, i) => [i, li])),
+        customer_email: c.email,
+        client_reference_id: order.order_number,
+        locale: "es",
+        metadata: { order_id: order.id, order_number: order.order_number },
+        payment_intent_data: { metadata: { order_id: order.id, order_number: order.order_number } },
+        expires_at: Math.floor(Date.now() / 1000) + 45 * 60,
+        success_url: `${origin}/${lang}/pedido/gracias?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${origin}/${lang}/pedido`,
+      });
+      await supabaseAdmin.from("orders").update({ stripe_session_id: session.id }).eq("id", order.id);
+      return { orderId: order.id, orderNumber: order.order_number, totalCents: total, paymentUrl: session.url };
+    } catch (err) {
+      for (const previous of reserved) await supabaseAdmin.rpc("release_variant_stock", { _variant_id: previous.id, _qty: previous.quantity });
+      await supabaseAdmin.from("orders").update({ status: "cancelled" }).eq("id", order.id);
+      throw err;
+    }
   });

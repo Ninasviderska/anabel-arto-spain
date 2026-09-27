@@ -1,12 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { z } from "zod";
 import { Heart } from "lucide-react";
+import { useEffect } from "react";
+import { useCart } from "@/lib/cart";
 import { getDictionary, useI18n } from "@/i18n";
 import { pageMeta } from "@/lib/seo";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/$lang/pedido/gracias")({
-  validateSearch: (s) => z.object({ n: z.string().optional() }).parse(s),
+  validateSearch: (s) => z.object({ n: z.string().optional(), session_id: z.string().optional() }).parse(s),
   head: ({ params }) => {
     const d = getDictionary("es");
     return {
@@ -23,7 +25,12 @@ export const Route = createFileRoute("/$lang/pedido/gracias")({
 
 function ThanksPage() {
   const { locale, d } = useI18n();
-  const { n } = Route.useSearch();
+  const { n, session_id } = Route.useSearch();
+  const cart = useCart();
+  useEffect(() => {
+    if (session_id && cart.hydrated) cart.clear();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session_id, cart.hydrated]);
 
   return (
     <div className="container-shop flex min-h-[60vh] items-center justify-center py-20">
