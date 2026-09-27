@@ -79,7 +79,7 @@ function ChangePassword() {
   const [open, setOpen] = useState(false);
   const [pw, setPw] = useState("");
   const [saving, setSaving] = useState(false);
-  const save = async () => {
+  const save = async (): Promise<unknown> => {
     if (pw.length < 10) return toast.error("Минимум 10 символов");
     setSaving(true);
     const { error } = await supabase.auth.updateUser({ password: pw });

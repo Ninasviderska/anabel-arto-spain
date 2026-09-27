@@ -80,7 +80,7 @@ function CategoryForm({ cat }: { cat: Cat }) {
   const qc = useQueryClient();
   const [f, setF] = useState({ name: cat.name, description: cat.description ?? "", seo_text: cat.seo_text ?? "" });
   const [saving, setSaving] = useState(false);
-  const save = async () => {
+  const save = async (): Promise<unknown> => {
     if (!f.name.trim()) return toast.error("Название не может быть пустым");
     setSaving(true);
     const { error } = await supabase.from("categories").update({ name: f.name.trim(), description: f.description || null, seo_text: f.seo_text || null }).eq("id", cat.id);
@@ -107,7 +107,7 @@ function ProductForm({ prod }: { prod: Prod }) {
     seo_description: prod.seo_description ?? "", seo_text: prod.seo_text ?? "", price: (prod.price_cents / 100).toFixed(2),
   });
   const [saving, setSaving] = useState(false);
-  const save = async () => {
+  const save = async (): Promise<unknown> => {
     const cents = Math.round(Number(f.price.replace(",", ".")) * 100);
     if (!f.name.trim()) return toast.error("Название не может быть пустым");
     if (!Number.isFinite(cents) || cents <= 0) return toast.error("Неверная цена");
