@@ -485,6 +485,52 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      attach_order_session: {
+        Args: { _order_id: string; _secret: string; _session_id: string }
+        Returns: undefined
+      }
+      cancel_pending_order: {
+        Args: { _order_id: string; _secret: string }
+        Returns: boolean
+      }
+      create_order: {
+        Args: { _customer: Json; _items: Json; _locale: string }
+        Returns: Json
+      }
+      get_order_payment_ref: {
+        Args: { _order_id: string; _secret: string }
+        Returns: {
+          order_number: string
+          stripe_session_id: string
+        }[]
+      }
+      list_stale_orders: {
+        Args: { _max_age_minutes: number; _secret: string }
+        Returns: {
+          id: string
+          stripe_session_id: string
+        }[]
+      }
+      lookup_order_status: {
+        Args: { _email: string; _order_number: string }
+        Returns: {
+          created_at: string
+          order_number: string
+          status: string
+          total_cents: number
+          tracking_number: string
+          tracking_url: string
+        }[]
+      }
+      mark_order_paid: {
+        Args: {
+          _order_id: string
+          _payment_intent_id: string
+          _secret: string
+          _session_id: string
+        }
+        Returns: boolean
+      }
       release_variant_stock: {
         Args: { _qty: number; _variant_id: string }
         Returns: undefined
