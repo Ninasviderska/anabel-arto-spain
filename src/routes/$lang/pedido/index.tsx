@@ -72,11 +72,11 @@ function CheckoutPage() {
           items: cart.items.map((i) => ({ variantId: i.variantId, quantity: i.quantity })),
         },
       });
-      cart.clear();
       if (result.paymentUrl) {
         window.location.href = result.paymentUrl;
         return;
       }
+      cart.clear();
       navigate({ to: "/$lang/pedido/gracias", params: { lang: locale }, search: { n: result.orderNumber } });
     } catch (err) {
       console.error(err);

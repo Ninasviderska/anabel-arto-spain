@@ -6,7 +6,7 @@ import { pageMeta } from "@/lib/seo";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/$lang/pedido/gracias")({
-  validateSearch: (s) => z.object({ n: z.string().optional() }).parse(s),
+  validateSearch: (s) => z.object({ n: z.string().optional(), session_id: z.string().optional() }).parse(s),
   head: ({ params }) => {
     const d = getDictionary("es");
     return {
