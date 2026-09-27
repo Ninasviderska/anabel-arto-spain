@@ -1,4 +1,4 @@
-import { createFileRoute, Link, Outlet, redirect, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, redirect, useLocation, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -40,7 +40,7 @@ const tabs = [
 
 function AdminLayout() {
   const navigate = useNavigate();
-  const isLogin = typeof window !== "undefined" && window.location.pathname.startsWith("/admin/login");
+  const isLogin = useLocation({ select: (l) => l.pathname.startsWith("/admin/login") });
   if (isLogin) return <Outlet />;
   const logout = async () => {
     await supabase.auth.signOut();

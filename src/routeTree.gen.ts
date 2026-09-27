@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LangRouteImport } from './routes/$lang'
+import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as LangIndexRouteImport } from './routes/$lang/index'
@@ -23,6 +24,10 @@ import { Route as LangPoliticaDeDevolucionesRouteImport } from './routes/$lang/p
 import { Route as LangPoliticaDePrivacidadRouteImport } from './routes/$lang/politica-de-privacidad'
 import { Route as LangSobreNosotrosRouteImport } from './routes/$lang/sobre-nosotros'
 import { Route as LangTerminosYCondicionesRouteImport } from './routes/$lang/terminos-y-condiciones'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as AdminCatalogRouteImport } from './routes/admin/catalog'
+import { Route as AdminLoginRouteImport } from './routes/admin/login'
+import { Route as AdminStockRouteImport } from './routes/admin/stock'
 import { Route as LangPedidoIndexRouteImport } from './routes/$lang/pedido/index'
 import { Route as LangPedidoGraciasRouteImport } from './routes/$lang/pedido/gracias'
 import { Route as LangRopaInteriorIndexRouteImport } from './routes/$lang/ropa-interior/index'
@@ -40,6 +45,11 @@ const IndexRoute = IndexRouteImport.update({
 const LangRoute = LangRouteImport.update({
   id: '/$lang',
   path: '/$lang',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRouteRoute = AdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
@@ -105,6 +115,26 @@ const LangTerminosYCondicionesRoute =
     path: '/terminos-y-condiciones',
     getParentRoute: () => LangRoute,
   } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminCatalogRoute = AdminCatalogRouteImport.update({
+  id: '/catalog',
+  path: '/catalog',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminStockRoute = AdminStockRouteImport.update({
+  id: '/stock',
+  path: '/stock',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const LangPedidoIndexRoute = LangPedidoIndexRouteImport.update({
   id: '/pedido/',
   path: '/pedido/',
@@ -151,6 +181,7 @@ const ApiPublicCronReleaseStaleOrdersRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteRouteWithChildren
   '/$lang': typeof LangRouteWithChildren
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -163,7 +194,11 @@ export interface FileRoutesByFullPath {
   '/$lang/politica-de-privacidad': typeof LangPoliticaDePrivacidadRoute
   '/$lang/sobre-nosotros': typeof LangSobreNosotrosRoute
   '/$lang/terminos-y-condiciones': typeof LangTerminosYCondicionesRoute
+  '/admin/catalog': typeof AdminCatalogRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/stock': typeof AdminStockRoute
   '/$lang/': typeof LangIndexRoute
+  '/admin/': typeof AdminIndexRoute
   '/$lang/pedido/gracias': typeof LangPedidoGraciasRoute
   '/api/public/assistant': typeof ApiPublicAssistantRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
@@ -186,7 +221,11 @@ export interface FileRoutesByTo {
   '/$lang/politica-de-privacidad': typeof LangPoliticaDePrivacidadRoute
   '/$lang/sobre-nosotros': typeof LangSobreNosotrosRoute
   '/$lang/terminos-y-condiciones': typeof LangTerminosYCondicionesRoute
+  '/admin/catalog': typeof AdminCatalogRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/stock': typeof AdminStockRoute
   '/$lang': typeof LangIndexRoute
+  '/admin': typeof AdminIndexRoute
   '/$lang/pedido/gracias': typeof LangPedidoGraciasRoute
   '/api/public/assistant': typeof ApiPublicAssistantRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
@@ -199,6 +238,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteRouteWithChildren
   '/$lang': typeof LangRouteWithChildren
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -211,7 +251,11 @@ export interface FileRoutesById {
   '/$lang/politica-de-privacidad': typeof LangPoliticaDePrivacidadRoute
   '/$lang/sobre-nosotros': typeof LangSobreNosotrosRoute
   '/$lang/terminos-y-condiciones': typeof LangTerminosYCondicionesRoute
+  '/admin/catalog': typeof AdminCatalogRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/stock': typeof AdminStockRoute
   '/$lang/': typeof LangIndexRoute
+  '/admin/': typeof AdminIndexRoute
   '/$lang/pedido/gracias': typeof LangPedidoGraciasRoute
   '/api/public/assistant': typeof ApiPublicAssistantRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
@@ -225,6 +269,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/$lang'
     | '/robots.txt'
     | '/sitemap.xml'
@@ -237,7 +282,11 @@ export interface FileRouteTypes {
     | '/$lang/politica-de-privacidad'
     | '/$lang/sobre-nosotros'
     | '/$lang/terminos-y-condiciones'
+    | '/admin/catalog'
+    | '/admin/login'
+    | '/admin/stock'
     | '/$lang/'
+    | '/admin/'
     | '/$lang/pedido/gracias'
     | '/api/public/assistant'
     | '/api/public/stripe-webhook'
@@ -260,7 +309,11 @@ export interface FileRouteTypes {
     | '/$lang/politica-de-privacidad'
     | '/$lang/sobre-nosotros'
     | '/$lang/terminos-y-condiciones'
+    | '/admin/catalog'
+    | '/admin/login'
+    | '/admin/stock'
     | '/$lang'
+    | '/admin'
     | '/$lang/pedido/gracias'
     | '/api/public/assistant'
     | '/api/public/stripe-webhook'
@@ -272,6 +325,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/$lang'
     | '/robots.txt'
     | '/sitemap.xml'
@@ -284,7 +338,11 @@ export interface FileRouteTypes {
     | '/$lang/politica-de-privacidad'
     | '/$lang/sobre-nosotros'
     | '/$lang/terminos-y-condiciones'
+    | '/admin/catalog'
+    | '/admin/login'
+    | '/admin/stock'
     | '/$lang/'
+    | '/admin/'
     | '/$lang/pedido/gracias'
     | '/api/public/assistant'
     | '/api/public/stripe-webhook'
@@ -297,6 +355,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRouteRoute: typeof AdminRouteRouteWithChildren
   LangRoute: typeof LangRouteWithChildren
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -319,6 +378,13 @@ declare module '@tanstack/react-router' {
       path: '/$lang'
       fullPath: '/$lang'
       preLoaderRoute: typeof LangRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/robots.txt': {
@@ -405,6 +471,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangTerminosYCondicionesRouteImport
       parentRoute: typeof LangRoute
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/catalog': {
+      id: '/admin/catalog'
+      path: '/catalog'
+      fullPath: '/admin/catalog'
+      preLoaderRoute: typeof AdminCatalogRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/stock': {
+      id: '/admin/stock'
+      path: '/stock'
+      fullPath: '/admin/stock'
+      preLoaderRoute: typeof AdminStockRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/$lang/pedido/': {
       id: '/$lang/pedido/'
       path: '/pedido'
@@ -464,6 +558,24 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AdminRouteRouteChildren {
+  AdminCatalogRoute: typeof AdminCatalogRoute
+  AdminLoginRoute: typeof AdminLoginRoute
+  AdminStockRoute: typeof AdminStockRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminCatalogRoute: AdminCatalogRoute,
+  AdminLoginRoute: AdminLoginRoute,
+  AdminStockRoute: AdminStockRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
+  AdminRouteRouteChildren,
+)
+
 interface LangRouteChildren {
   LangAvisoLegalRoute: typeof LangAvisoLegalRoute
   LangCarritoRoute: typeof LangCarritoRoute
@@ -504,6 +616,7 @@ const LangRouteWithChildren = LangRoute._addFileChildren(LangRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRouteRoute: AdminRouteRouteWithChildren,
   LangRoute: LangRouteWithChildren,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
