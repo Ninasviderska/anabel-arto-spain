@@ -19,7 +19,7 @@ export async function stripeRequest<T = any>(method: "GET" | "POST", path: strin
   const res = await fetch(`https://api.stripe.com/v1${path}`, {
     method,
     headers: { Authorization: `Bearer ${key()}`, "Content-Type": "application/x-www-form-urlencoded" },
-    body: body ? encode(body).join("&") : undefined,
+    body: body ? encode(body).join("&") : null,
   });
   const json = await res.json();
   if (!res.ok) {
