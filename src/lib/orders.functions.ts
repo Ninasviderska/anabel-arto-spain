@@ -46,85 +46,35 @@ export const createOrder = createServerFn({ method: "POST" })
     } catch (err) {
       console.error("[createOrder] stale sweep failed", err);
     }
-    const publicDb = getPublicClient();
-    const variantIds = data.items.map((i) => i.variantId);
-    const { data: variants, error } = await publicDb
-      .from("product_variants")
-      .select("*, color:product_colors(name), product:products(id, name, price_cents, is_active, images:product_images(url, color_id, sort_order))")
-      .in("id", variantIds);
-    if (error) throw new Error(error.message);
-    if (!variants || variants.length !== variantIds.length) throw new Error("VARIANT_NOT_FOUND");
-
-    const lines = data.items.map((item) => {
-      const v = variants.find((x) => x.id === item.variantId);
-      if (!v) throw new Error("VARIANT_NOT_FOUND");
-      if (!v.product?.is_active || !isVariantAvailable(v)) throw new Error("VARIANT_UNAVAILABLE");
-      const unit = v.price_override_cents ?? v.product.price_cents;
-      const image =
-        v.product.images.find((img) => img.color_id === v.color_id) ?? v.product.images[0];
-      return {
-        variant_id: v.id,
-        product_id: v.product.id,
-        product_name: v.product.name,
-        color_name: v.color?.name ?? "",
-        size: v.size,
-        variant_sku: v.variant_sku,
-        image_url: image?.url ?? null,
-        unit_price_cents: unit,
-        quantity: item.quantity,
-      };
-    });
-
-    const subtotal = lines.reduce((s, l) => s + l.unit_price_cents * l.quantity, 0);
-    const shipping = shippingFor(subtotal);
-    const total = subtotal + shipping;
-
-    // Orders are not writable by anonymous visitors (no RLS policy); the checkout flow
-    // is the only writer and runs with the privileged server client.
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    // Prices, shipping and stock reservation are computed atomically inside the database.
+    const { rpc, attachOrderSession, cancelPendingOrder } = await import("./order-payments.server");
     const c = data.customer;
-    const reserved: { id: string; quantity: number }[] = [];
-    for (const line of lines) {
-      const { data: ok, error: reserveError } = await supabaseAdmin.rpc("reserve_variant_stock", { _variant_id: line.variant_id, _qty: line.quantity });
-      if (reserveError || !ok) {
-        for (const previous of reserved) await supabaseAdmin.rpc("release_variant_stock", { _variant_id: previous.id, _qty: previous.quantity });
-        throw new Error("VARIANT_UNAVAILABLE");
-      }
-      reserved.push({ id: line.variant_id, quantity: line.quantity });
+    let created: {
+      order_id: string;
+      order_number: string;
+      shipping_cents: number;
+      total_cents: number;
+      lines: { product_name: string; color_name: string; size: string; unit_price_cents: number; quantity: number }[];
+    };
+    try {
+      created = await rpc("create_order", {
+        _locale: data.locale,
+        _customer: {
+          name: c.name, email: c.email, phone: c.phone, address1: c.address1, address2: c.address2 || "",
+          postalCode: c.postalCode, city: c.city, province: c.province, notes: c.notes || "",
+        },
+        _items: data.items,
+      });
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "";
+      if (msg.includes("MAINLAND_ONLY")) throw new Error("MAINLAND_ONLY");
+      if (msg.includes("VARIANT_UNAVAILABLE")) throw new Error("VARIANT_UNAVAILABLE");
+      throw new Error("ORDER_FAILED");
     }
-    const { data: order, error: orderError } = await supabaseAdmin
-      .from("orders")
-      .insert({
-        locale: data.locale,
-        customer_name: c.name,
-        customer_email: c.email,
-        customer_phone: c.phone,
-        address_line1: c.address1,
-        address_line2: c.address2 || null,
-        postal_code: c.postalCode,
-        city: c.city,
-        province: c.province,
-        country: "ES",
-        notes: c.notes || null,
-        subtotal_cents: subtotal,
-        shipping_cents: shipping,
-        total_cents: total,
-      })
-      .select("id, order_number")
-      .single();
-    if (orderError || !order) {
-      for (const previous of reserved) await supabaseAdmin.rpc("release_variant_stock", { _variant_id: previous.id, _qty: previous.quantity });
-      throw new Error(orderError?.message ?? "ORDER_FAILED");
-    }
-
-    const { error: itemsError } = await supabaseAdmin
-      .from("order_items")
-      .insert(lines.map((l) => ({ ...l, order_id: order.id })));
-    if (itemsError) {
-      for (const previous of reserved) await supabaseAdmin.rpc("release_variant_stock", { _variant_id: previous.id, _qty: previous.quantity });
-      await supabaseAdmin.from("orders").delete().eq("id", order.id);
-      throw new Error(itemsError.message);
-    }
+    const order = { id: created.order_id, order_number: created.order_number };
+    const lines = created.lines;
+    const shipping = created.shipping_cents;
+    const total = created.total_cents;
 
     const { stripeRequest } = await import("./stripe.server");
     const { getRequestHeader } = await import("@tanstack/react-start/server");
