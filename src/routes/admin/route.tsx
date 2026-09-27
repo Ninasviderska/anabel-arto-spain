@@ -88,6 +88,7 @@ function ChangePassword() {
     toast.success("Пароль изменён");
     setPw("");
     setOpen(false);
+    return null;
   };
   return (
     <Dialog open={open} onOpenChange={setOpen}>

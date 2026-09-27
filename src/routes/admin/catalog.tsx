@@ -88,6 +88,7 @@ function CategoryForm({ cat }: { cat: Cat }) {
     if (error) return toast.error("Не удалось сохранить");
     toast.success("Категория сохранена");
     qc.invalidateQueries({ queryKey: ["admin-catalog"] });
+    return null;
   };
   return (
     <div className="space-y-4">
@@ -120,6 +121,7 @@ function ProductForm({ prod }: { prod: Prod }) {
     if (error) return toast.error("Не удалось сохранить");
     toast.success("Товар сохранён");
     qc.invalidateQueries({ queryKey: ["admin-catalog"] });
+    return null;
     qc.invalidateQueries({ queryKey: ["admin-stock"] });
   };
   return (
