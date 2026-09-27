@@ -153,6 +153,7 @@ export type Database = {
           province: string
           shipping_cents: number
           status: Database["public"]["Enums"]["order_status"]
+          stock_reserved: boolean
           stripe_payment_intent_id: string | null
           stripe_session_id: string | null
           subtotal_cents: number
@@ -179,6 +180,7 @@ export type Database = {
           province: string
           shipping_cents: number
           status?: Database["public"]["Enums"]["order_status"]
+          stock_reserved?: boolean
           stripe_payment_intent_id?: string | null
           stripe_session_id?: string | null
           subtotal_cents: number
@@ -205,6 +207,7 @@ export type Database = {
           province?: string
           shipping_cents?: number
           status?: Database["public"]["Enums"]["order_status"]
+          stock_reserved?: boolean
           stripe_payment_intent_id?: string | null
           stripe_session_id?: string | null
           subtotal_cents?: number
@@ -495,6 +498,10 @@ export type Database = {
       }
       create_order: {
         Args: { _customer: Json; _items: Json; _locale: string }
+        Returns: Json
+      }
+      get_order_for_email: {
+        Args: { _order_id: string; _secret: string }
         Returns: Json
       }
       get_order_payment_ref: {

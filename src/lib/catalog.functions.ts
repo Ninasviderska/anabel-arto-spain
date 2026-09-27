@@ -46,6 +46,25 @@ export const getProductBySlug = createServerFn({ method: "GET" })
     return row ? sortProduct(row as unknown as Product) : null;
   });
 
+/** Real-time availability for cart lines: variantId -> units available (0 = sold out / inactive). */
+export const checkCartAvailability = createServerFn({ method: "POST" })
+  .inputValidator((input: { variantIds: string[] }) =>
+    z.object({ variantIds: z.array(z.string().uuid()).max(50) }).parse(input),
+  )
+  .handler(async ({ data }): Promise<Record<string, number>> => {
+    const result: Record<string, number> = Object.fromEntries(data.variantIds.map((id) => [id, 0]));
+    if (!data.variantIds.length) return result;
+    const { data: rows, error } = await getPublicClient()
+      .from("product_variants")
+      .select("id, stock, is_active, product:products!inner(is_active)")
+      .in("id", data.variantIds)
+      .eq("is_active", true)
+      .eq("products.is_active", true);
+    if (error) throw new Error(error.message);
+    for (const r of rows ?? []) result[r.id] = r.stock ?? 0;
+    return result;
+  });
+
 /** Absolute origin of the current request — used for og:image / JSON-LD URLs. */
 export const getSiteOrigin = createServerFn({ method: "GET" }).handler(async () => {
   const req = getRequest();

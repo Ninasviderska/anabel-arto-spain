@@ -18,7 +18,11 @@ export const Route = createFileRoute("/api/public/stripe-webhook")({
         if (!orderId) return new Response("ok");
 
         if (event.type === "checkout.session.completed" && obj.payment_status === "paid") {
-          await markOrderPaid(orderId, obj.id, obj.payment_intent ?? null);
+          // Stock is deducted inside mark_order_paid; email only on the first transition to paid.
+          if (await markOrderPaid(orderId, obj.id, obj.payment_intent ?? null)) {
+            const { sendOrderConfirmationEmail } = await import("@/lib/email.server");
+            await sendOrderConfirmationEmail(orderId);
+          }
         } else if (event.type === "checkout.session.expired" || event.type === "payment_intent.payment_failed") {
           await cancelPendingOrder(orderId);
         }

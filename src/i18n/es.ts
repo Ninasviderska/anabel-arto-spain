@@ -114,6 +114,13 @@ export const es = {
     quantity: "Cantidad",
     items: "{count} artículos",
     itemsOne: "1 artículo",
+    expiryNotice: "Tu carrito se vaciará en 24 horas si no completas el pago.",
+    unavailable: "Este artículo ya no está disponible.",
+    onlyLeft: "Solo quedan {count} unidades de este artículo; reduce la cantidad.",
+    seeSimilar: "Ver otros productos de esta categoría →",
+    checking: "Comprobando disponibilidad…",
+    fixUnavailable: "Elimina o ajusta los artículos no disponibles para continuar.",
+    checkError: "No hemos podido comprobar la disponibilidad. Recarga la página.",
   },
   checkout: {
     title: "Finalizar pedido",

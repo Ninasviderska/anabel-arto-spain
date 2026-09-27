@@ -65,7 +65,10 @@ export async function releaseStaleOrders(maxAgeMinutes = 60) {
           `/checkout/sessions/${encodeURIComponent(o.stripe_session_id)}`,
         );
         if (s.payment_status === "paid") {
-          await markOrderPaid(o.id, o.stripe_session_id, s.payment_intent);
+          if (await markOrderPaid(o.id, o.stripe_session_id, s.payment_intent)) {
+            const { sendOrderConfirmationEmail } = await import("./email.server");
+            await sendOrderConfirmationEmail(o.id);
+          }
           continue;
         }
         if (s.status === "open") await stripeRequest("POST", `/checkout/sessions/${encodeURIComponent(o.stripe_session_id)}/expire`);
