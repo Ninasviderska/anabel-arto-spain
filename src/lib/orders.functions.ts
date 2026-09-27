@@ -39,6 +39,13 @@ export const createOrder = createServerFn({ method: "POST" })
   .inputValidator((input: CheckoutInput) => checkoutSchema.parse(input))
   .handler(async ({ data }): Promise<CheckoutResult> => {
     if (!isMainlandShippingAddress(data.customer.province, data.customer.postalCode)) throw new Error("MAINLAND_ONLY");
+    // Safety net: free stock from orders left pending > 60 min (in case a webhook was missed).
+    try {
+      const { releaseStaleOrders } = await import("./order-payments.server");
+      await releaseStaleOrders(60);
+    } catch (err) {
+      console.error("[createOrder] stale sweep failed", err);
+    }
     const publicDb = getPublicClient();
     const variantIds = data.items.map((i) => i.variantId);
     const { data: variants, error } = await publicDb
