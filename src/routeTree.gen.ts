@@ -30,6 +30,7 @@ import { Route as ApiPublicAssistantRouteImport } from './routes/api/public/assi
 import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe-webhook'
 import { Route as LangRopaInteriorCategoryIndexRouteImport } from './routes/$lang/ropa-interior/$category/index'
 import { Route as LangRopaInteriorCategoryProductRouteImport } from './routes/$lang/ropa-interior/$category/$product'
+import { Route as ApiPublicCronReleaseStaleOrdersRouteImport } from './routes/api/public/cron/release-stale-orders'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -141,6 +142,12 @@ const LangRopaInteriorCategoryProductRoute =
     path: '/ropa-interior/$category/$product',
     getParentRoute: () => LangRoute,
   } as any)
+const ApiPublicCronReleaseStaleOrdersRoute =
+  ApiPublicCronReleaseStaleOrdersRouteImport.update({
+    id: '/api/public/cron/release-stale-orders',
+    path: '/api/public/cron/release-stale-orders',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -163,6 +170,7 @@ export interface FileRoutesByFullPath {
   '/$lang/pedido/': typeof LangPedidoIndexRoute
   '/$lang/ropa-interior/': typeof LangRopaInteriorIndexRoute
   '/$lang/ropa-interior/$category/$product': typeof LangRopaInteriorCategoryProductRoute
+  '/api/public/cron/release-stale-orders': typeof ApiPublicCronReleaseStaleOrdersRoute
   '/$lang/ropa-interior/$category/': typeof LangRopaInteriorCategoryIndexRoute
 }
 export interface FileRoutesByTo {
@@ -185,6 +193,7 @@ export interface FileRoutesByTo {
   '/$lang/pedido': typeof LangPedidoIndexRoute
   '/$lang/ropa-interior': typeof LangRopaInteriorIndexRoute
   '/$lang/ropa-interior/$category/$product': typeof LangRopaInteriorCategoryProductRoute
+  '/api/public/cron/release-stale-orders': typeof ApiPublicCronReleaseStaleOrdersRoute
   '/$lang/ropa-interior/$category': typeof LangRopaInteriorCategoryIndexRoute
 }
 export interface FileRoutesById {
@@ -209,6 +218,7 @@ export interface FileRoutesById {
   '/$lang/pedido/': typeof LangPedidoIndexRoute
   '/$lang/ropa-interior/': typeof LangRopaInteriorIndexRoute
   '/$lang/ropa-interior/$category/$product': typeof LangRopaInteriorCategoryProductRoute
+  '/api/public/cron/release-stale-orders': typeof ApiPublicCronReleaseStaleOrdersRoute
   '/$lang/ropa-interior/$category/': typeof LangRopaInteriorCategoryIndexRoute
 }
 export interface FileRouteTypes {
@@ -234,6 +244,7 @@ export interface FileRouteTypes {
     | '/$lang/pedido/'
     | '/$lang/ropa-interior/'
     | '/$lang/ropa-interior/$category/$product'
+    | '/api/public/cron/release-stale-orders'
     | '/$lang/ropa-interior/$category/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -256,6 +267,7 @@ export interface FileRouteTypes {
     | '/$lang/pedido'
     | '/$lang/ropa-interior'
     | '/$lang/ropa-interior/$category/$product'
+    | '/api/public/cron/release-stale-orders'
     | '/$lang/ropa-interior/$category'
   id:
     | '__root__'
@@ -279,6 +291,7 @@ export interface FileRouteTypes {
     | '/$lang/pedido/'
     | '/$lang/ropa-interior/'
     | '/$lang/ropa-interior/$category/$product'
+    | '/api/public/cron/release-stale-orders'
     | '/$lang/ropa-interior/$category/'
   fileRoutesById: FileRoutesById
 }
@@ -289,6 +302,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ApiPublicAssistantRoute: typeof ApiPublicAssistantRoute
   ApiPublicStripeWebhookRoute: typeof ApiPublicStripeWebhookRoute
+  ApiPublicCronReleaseStaleOrdersRoute: typeof ApiPublicCronReleaseStaleOrdersRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -440,6 +454,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangRopaInteriorCategoryProductRouteImport
       parentRoute: typeof LangRoute
     }
+    '/api/public/cron/release-stale-orders': {
+      id: '/api/public/cron/release-stale-orders'
+      path: '/api/public/cron/release-stale-orders'
+      fullPath: '/api/public/cron/release-stale-orders'
+      preLoaderRoute: typeof ApiPublicCronReleaseStaleOrdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -488,6 +509,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ApiPublicAssistantRoute: ApiPublicAssistantRoute,
   ApiPublicStripeWebhookRoute: ApiPublicStripeWebhookRoute,
+  ApiPublicCronReleaseStaleOrdersRoute: ApiPublicCronReleaseStaleOrdersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
