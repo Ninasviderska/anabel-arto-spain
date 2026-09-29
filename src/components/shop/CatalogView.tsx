@@ -254,7 +254,7 @@ export function CatalogView({
           )}
           {seoText && (
             <div className="mt-12 max-w-3xl border-t pt-8 text-sm leading-relaxed text-muted-foreground lg:mt-16 lg:pt-10">
-              <p>{seoText}</p>
+              <p><LinkedText text={seoText} /></p>
             </div>
           )}
         </section>
