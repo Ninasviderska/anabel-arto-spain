@@ -92,7 +92,7 @@ function EstadoPedidoPage() {
             <p>
               <span className="eyebrow mr-3">Seguimiento</span>
               {order.tracking_url ? (
-                <a href={order.tracking_url} target="_blank" rel="noreferrer" className="link-underline">{order.tracking_number}</a>
+                <a href={order.tracking_url} target="_blank" rel="nofollow noreferrer" className="link-underline">{order.tracking_number}</a>
               ) : order.tracking_number}
             </p>
           )}
