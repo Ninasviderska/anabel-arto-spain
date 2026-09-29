@@ -527,6 +527,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_change_own_password: {
+        Args: { _new_password: string }
+        Returns: undefined
+      }
       attach_order_session: {
         Args: { _order_id: string; _secret: string; _session_id: string }
         Returns: undefined
