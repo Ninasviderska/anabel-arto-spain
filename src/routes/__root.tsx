@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { defaultLocale } from "../i18n/config";
 import { es } from "../i18n/es";
+import { initGtag, trackPageView } from "../lib/analytics";
 
 function NotFoundComponent() {
   return (
@@ -120,6 +121,15 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const router = useRouter();
+
+  useEffect(() => {
+    initGtag();
+    const unsub = router.subscribe("onResolved", ({ toLocation }) => {
+      trackPageView(`${toLocation.pathname}${window.location.search}`);
+    });
+    return unsub;
+  }, [router]);
 
   useEffect(() => {
     const onCopy = (e: ClipboardEvent) => {
