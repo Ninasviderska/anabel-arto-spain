@@ -22,7 +22,7 @@ function parseText(text: string): ReactNode[] {
     nodes.push(
       <Link
         key={`${href}-${index}`}
-        to={href}
+        to={href!}
         className="underline underline-offset-2 transition-colors hover:text-foreground"
       >
         {label}
