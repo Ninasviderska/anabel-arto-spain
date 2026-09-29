@@ -10,24 +10,31 @@ const searchSchema = z.object({
   categoria: z.string().optional(),
   color: z.string().optional(),
   talla: z.string().optional(),
+  page: z.coerce.number().int().min(2).optional().catch(undefined),
 });
 
 export const Route = createFileRoute("/$lang/catalogo")({
   validateSearch: (s) => searchSchema.parse(s),
-  loader: ({ context }) =>
-    Promise.all([
+  loaderDeps: ({ search }) => ({ page: search.page }),
+  loader: async ({ context, deps }) => {
+    await Promise.all([
       context.queryClient.ensureQueryData(categoriesQuery()),
       context.queryClient.ensureQueryData(productsQuery()),
-    ]),
-  head: ({ params }) => {
+    ]);
+    return { page: deps.page };
+  },
+  head: ({ params, loaderData }) => {
     const d = getDictionary("es");
+    const page = loaderData?.page;
+    const path = `/${params.lang}/catalogo${page ? `?page=${page}` : ""}`;
+    const suffix = page ? ` — Página ${page}` : "";
     return {
       meta: pageMeta({
-        title: `${d.catalog.title} — ${d.brand.name}`,
+        title: `${d.catalog.title}${suffix} — ${d.brand.name}`,
         description: d.catalog.metaDescription,
-        path: `/${params.lang}/catalogo`,
+        path,
       }),
-      links: [{ rel: "canonical", href: `/${params.lang}/catalogo` }],
+      links: [{ rel: "canonical", href: path }],
     };
   },
   component: CatalogPage,
@@ -48,12 +55,14 @@ function CatalogPage() {
       filters={{ category: search.categoria, color: search.color, size: search.talla }}
       onFiltersChange={(f) =>
         navigate({
-          search: { categoria: f.category, color: f.color, talla: f.size },
+          search: { categoria: f.category, color: f.color, talla: f.size, page: undefined },
           replace: true,
           resetScroll: false,
         })
       }
       showCategoryFilter
+      page={search.page ?? 1}
+      onPageChange={(n) => navigate({ search: (s) => ({ ...s, page: n > 1 ? n : undefined }) })}
     />
   );
 }
