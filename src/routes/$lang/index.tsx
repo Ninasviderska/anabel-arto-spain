@@ -12,6 +12,7 @@ import { canonical, jsonLdScript, organizationJsonLd, pageMeta } from "@/lib/seo
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/shop/ProductCard";
 import { SectionHeading } from "@/components/shop/SectionHeading";
+import { LinkedText } from "@/components/shop/RichText";
 
 export const Route = createFileRoute("/$lang/")({
   loader: async ({ context }) => {
@@ -208,7 +209,7 @@ function HomePage() {
           <p className="eyebrow mb-8 text-center md:mb-10">{d.home.seoEyebrow}</p>
           <div className="grid gap-6 text-sm leading-relaxed text-muted-foreground md:grid-cols-2 md:gap-12 lg:gap-16 md:text-[0.95rem]">
             {(["seoText1", "seoText2"] as const).map((k) => (
-              <p key={k} className={alignClass(h.align(k))}>{h.text(k)}</p>
+              <p key={k} className={alignClass(h.align(k))}><LinkedText text={h.text(k)} /></p>
             ))}
           </div>
         </div>
