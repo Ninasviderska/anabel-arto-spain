@@ -68,7 +68,7 @@ function ThanksPage() {
           <AlertCircle className="mx-auto mb-6 size-8 text-destructive" strokeWidth={1.4} />
           <h1 className="font-display text-4xl">No hemos podido confirmar el pago</h1>
           <p className="mt-5 text-muted-foreground">
-            Tu pedido no se ha completado. Puedes volver a intentarlo o escribirnos a orders@anabelarto.es.
+            Tu pedido no se ha completado. Puedes volver a intentarlo o escribirnos a info@anabelarto.es.
           </p>
           <Button asChild variant="hero" className="mt-8">
             <Link to="/$lang/pedido" params={{ lang: locale }}>

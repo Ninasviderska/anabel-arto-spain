@@ -74,8 +74,8 @@ export function AssistantWidget() {
       const reply =
         json.reply ||
         (json.error === "not_configured"
-          ? "La asistente aún no está disponible. Escríbenos a orders@anabelarto.es y te ayudamos encantadas."
-          : "Ahora mismo no puedo responder. Inténtalo de nuevo en un momento o escríbenos a orders@anabelarto.es.");
+          ? "La asistente aún no está disponible. Escríbenos a info@anabelarto.es y te ayudamos encantadas."
+          : "Ahora mismo no puedo responder. Inténtalo de nuevo en un momento o escríbenos a info@anabelarto.es.");
       setMessages((m) => [...m, { role: "assistant", content: reply }]);
     } catch {
       setMessages((m) => [...m, { role: "assistant", content: "Ha habido un problema de conexión. Inténtalo de nuevo, por favor." }]);
