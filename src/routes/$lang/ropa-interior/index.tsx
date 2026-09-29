@@ -1,13 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { categoriesQuery, productsQuery } from "@/lib/catalog.queries";
-import { pageMeta } from "@/lib/seo";
+import { pageMeta, canonical } from "@/lib/seo";
 import { ProductCard } from "@/components/shop/ProductCard";
 import { CATEGORY_IMAGES } from "@/lib/category-images";
 
 export const Route = createFileRoute("/$lang/ropa-interior/")({
   loader: ({ context }) => Promise.all([context.queryClient.ensureQueryData(categoriesQuery()), context.queryClient.ensureQueryData(productsQuery())]),
-  head: ({ params }) => ({ meta: pageMeta({ title: "Ropa Interior Femenina | Comprar Lencería Anabel Arto en España", description: "Compra ropa interior femenina Anabel Arto a buen precio. Calidad europea, últimas unidades y envío GLS a Madrid, Barcelona y la España peninsular.", path: `/${params.lang}/ropa-interior` }), links: [{ rel: "canonical", href: `/${params.lang}/ropa-interior` }] }),
+  head: ({ params }) => ({ meta: pageMeta({ title: "Ropa Interior Femenina | Comprar Lencería Anabel Arto en España", description: "Compra ropa interior femenina Anabel Arto a buen precio. Calidad europea, últimas unidades y envío GLS a Madrid, Barcelona y la España peninsular.", path: `/${params.lang}/ropa-interior` }), links: [canonical(`/${params.lang}/ropa-interior`)] }),
   component: RopaInteriorPage,
 });
 

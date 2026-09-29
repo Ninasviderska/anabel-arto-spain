@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { pageMeta } from "@/lib/seo";
+import { pageMeta, canonical } from "@/lib/seo";
 import { braBandRows, numericSizeRows } from "@/lib/sizes";
 
 export const Route = createFileRoute("/$lang/guia-de-tallas")({
@@ -10,7 +10,7 @@ export const Route = createFileRoute("/$lang/guia-de-tallas")({
         "Convierte tu talla de ropa interior y sujetador del sistema ucraniano (RU/UA) a la talla española FR/ES, IT, UK, US y EU. Encuentra tu talla ideal en Anabel Arto.",
       path: `/${params.lang}/guia-de-tallas`,
     }),
-    links: [{ rel: "canonical", href: `/${params.lang}/guia-de-tallas` }],
+    links: [canonical(`/${params.lang}/guia-de-tallas`)],
   }),
   component: SizeGuidePage,
 });

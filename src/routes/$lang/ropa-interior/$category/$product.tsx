@@ -9,7 +9,7 @@ import { isVariantAvailable, primaryImage } from "@/lib/catalog.types";
 import { useCart } from "@/lib/cart";
 import { discountPercent, formatPrice } from "@/lib/format";
 import { shopConfig } from "@/lib/shop-config";
-import { breadcrumbJsonLd, jsonLdScript, pageMeta, productJsonLd } from "@/lib/seo";
+import { breadcrumbJsonLd, jsonLdScript, pageMeta, canonical, productJsonLd } from "@/lib/seo";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Breadcrumbs } from "@/components/shop/Breadcrumbs";
@@ -51,7 +51,7 @@ export const Route = createFileRoute("/$lang/ropa-interior/$category/$product")(
         { property: "product:price:amount", content: (product.price_cents / 100).toFixed(2) },
         { property: "product:price:currency", content: "EUR" },
       ],
-      links: [{ rel: "canonical", href: path }],
+      links: [canonical(path)],
       scripts: [
         jsonLdScript(productJsonLd(base, product, path)),
         jsonLdScript(

@@ -4,7 +4,7 @@ import { z } from "zod";
 import { getDictionary } from "@/i18n";
 import { categoriesQuery, originQuery, productsQuery } from "@/lib/catalog.queries";
 import { shopConfig } from "@/lib/shop-config";
-import { breadcrumbJsonLd, jsonLdScript, pageMeta } from "@/lib/seo";
+import { breadcrumbJsonLd, jsonLdScript, pageMeta, canonical } from "@/lib/seo";
 import { CatalogView } from "@/components/shop/CatalogView";
 import { CATEGORY_IMAGES } from "@/lib/category-images";
 
@@ -43,7 +43,7 @@ export const Route = createFileRoute("/$lang/ropa-interior/$category/")({
         path: selfPath,
         image: category.image_url ? `${origin}${category.image_url}` : undefined,
       }),
-      links: [{ rel: "canonical", href: selfPath }],
+      links: [canonical(selfPath)],
       scripts: [
         jsonLdScript(
           breadcrumbJsonLd(origin ?? shopConfig.siteUrl, [

@@ -1,6 +1,6 @@
 import { fmt, useI18n, type LegalSlug } from "@/i18n";
 import { getDictionary } from "@/i18n";
-import { pageMeta } from "@/lib/seo";
+import { pageMeta, canonical } from "@/lib/seo";
 
 export function legalHead(slug: LegalSlug, lang: string) {
   const d = getDictionary("es");
@@ -12,7 +12,7 @@ export function legalHead(slug: LegalSlug, lang: string) {
       description: page.description,
       path: `/${lang}/${slug}`,
     }),
-    links: [{ rel: "canonical", href: `/${lang}/${slug}` }],
+    links: [canonical(`/${lang}/${slug}`)],
   };
 }
 

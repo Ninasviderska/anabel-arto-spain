@@ -1,12 +1,12 @@
 import { createFileRoute, notFound, Outlet } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { useMemo } from "react";
+import { lazy, Suspense, useMemo } from "react";
 import { getDictionary, I18nContext, isLocale, type Locale } from "@/i18n";
 import { CartProvider } from "@/lib/cart";
 import { categoriesQuery } from "@/lib/catalog.queries";
 import { Header } from "@/components/shop/Header";
 import { Footer } from "@/components/shop/Footer";
-import { AssistantWidget } from "@/components/shop/AssistantWidget";
+const AssistantWidget = lazy(() => import("@/components/shop/AssistantWidget").then((m) => ({ default: m.AssistantWidget })));
 
 export const Route = createFileRoute("/$lang")({
   beforeLoad: ({ params }) => {
@@ -32,7 +32,7 @@ function LangLayout() {
           </main>
           <Footer categories={categories} />
         </div>
-        <AssistantWidget />
+        <Suspense fallback={null}><AssistantWidget /></Suspense>
       </CartProvider>
     </I18nContext.Provider>
   );
