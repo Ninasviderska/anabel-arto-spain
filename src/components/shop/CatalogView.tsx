@@ -4,6 +4,7 @@ import { fmt, useI18n } from "@/i18n";
 import { isVariantAvailable, type Category, type Product } from "@/lib/catalog.types";
 import { ProductCard } from "./ProductCard";
 import { Breadcrumbs, type Crumb } from "./Breadcrumbs";
+import { LinkedText } from "./RichText";
 import { displaySize } from "@/lib/sizes";
 
 export type CatalogFilters = {
@@ -253,7 +254,7 @@ export function CatalogView({
           )}
           {seoText && (
             <div className="mt-12 max-w-3xl border-t pt-8 text-sm leading-relaxed text-muted-foreground lg:mt-16 lg:pt-10">
-              <p>{seoText}</p>
+              <p><LinkedText text={seoText} /></p>
             </div>
           )}
         </section>
