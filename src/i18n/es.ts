@@ -166,7 +166,7 @@ export const es = {
     contactText: "Showroom en España · Atención por correo",
     rights: "Todos los derechos reservados.",
     madeIn: "Lencería diseñada en Ucrania · Enviada desde España",
-    placeholderNif: "[Nombre del autónomo · NIF · Dirección — pendiente]",
+    placeholderNif: "Nina Sviderska (autónoma) · NIF Y7172672-K · Calle Antonio Castillo 3, 1º C, 13600 Alcázar de San Juan (Ciudad Real)",
   },
   legal: {
     updated: "Última actualización: {date}",
@@ -179,7 +179,7 @@ export const es = {
         sections: [
           {
             heading: "1. Datos identificativos",
-            body: "En cumplimiento de la Ley 34/2002 de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE), se informa de que el titular de este sitio web es [NOMBRE DEL TITULAR], con NIF [NIF] y domicilio en [DIRECCIÓN], España. Correo de contacto: [EMAIL].",
+            body: "En cumplimiento de la Ley 34/2002 de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE), se informa de que el titular de este sitio web es Nina Sviderska (autónoma), con NIF Y7172672-K y domicilio en Calle Antonio Castillo 3, 1º C, 13600 Alcázar de San Juan (Ciudad Real), España. Correo de contacto: info@anabelarto.es. Teléfono de contacto: +34 689 464 024.",
           },
           {
             heading: "2. Objeto",
@@ -197,7 +197,7 @@ export const es = {
         sections: [
           {
             heading: "1. Responsable del tratamiento",
-            body: "[NOMBRE DEL TITULAR], NIF [NIF], [DIRECCIÓN]. Contacto: [EMAIL].",
+            body: "Nina Sviderska (autónoma), NIF Y7172672-K, Calle Antonio Castillo 3, 1º C, 13600 Alcázar de San Juan (Ciudad Real), España. Contacto: info@anabelarto.es.",
           },
           {
             heading: "2. Finalidad",
@@ -209,7 +209,7 @@ export const es = {
           },
           {
             heading: "4. Derechos",
-            body: "Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad escribiendo a [EMAIL]. También puedes reclamar ante la Agencia Española de Protección de Datos.",
+            body: "Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad escribiendo a info@anabelarto.es. También puedes reclamar ante la Agencia Española de Protección de Datos.",
           },
         ],
       },
@@ -263,7 +263,7 @@ export const es = {
           },
           {
             heading: "3. Procedimiento",
-            body: "Escríbenos a [EMAIL] indicando tu número de pedido. Te facilitaremos las instrucciones y la dirección de devolución. El reembolso se realizará en un plazo máximo de 14 días desde la recepción de la prenda.",
+            body: "Escríbenos a info@anabelarto.es indicando tu número de pedido. Te facilitaremos las instrucciones y la dirección de devolución. El reembolso se realizará en un plazo máximo de 14 días desde la recepción de la prenda.",
           },
         ],
       },

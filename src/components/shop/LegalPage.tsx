@@ -24,9 +24,6 @@ export function LegalPage({ slug }: { slug: LegalSlug }) {
       <p className="eyebrow">{d.footer.legal}</p>
       <h1 className="mt-3 font-display text-4xl md:text-5xl">{page.title}</h1>
       <p className="mt-3 text-xs text-muted-foreground">{fmt(d.legal.updated, { date: "2026" })}</p>
-      <p className="mt-8 rounded-sm border border-gold/40 bg-cream-deep p-4 text-sm text-muted-foreground">
-        {d.legal.placeholderNotice}
-      </p>
       <div className="mt-10 space-y-8">
         {page.sections.map((s) => (
           <section key={s.heading}>
