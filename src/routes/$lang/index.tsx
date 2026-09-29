@@ -1,4 +1,3 @@
-import heroAsset from "@/assets/banners/hero_camisones-8057-6097.jpg.asset.json";
 import storyAsset from "@/assets/banners/story-la-casa_sujetadores-7017-010.jpg.asset.json";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -9,7 +8,7 @@ import { CATEGORY_IMAGES } from "@/lib/category-images";
 import { alignClass, resolveHome } from "@/lib/home-content";
 import { formatPrice } from "@/lib/format";
 import { shopConfig } from "@/lib/shop-config";
-import { jsonLdScript, organizationJsonLd, pageMeta } from "@/lib/seo";
+import { canonical, jsonLdScript, organizationJsonLd, pageMeta } from "@/lib/seo";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/shop/ProductCard";
 import { SectionHeading } from "@/components/shop/SectionHeading";
