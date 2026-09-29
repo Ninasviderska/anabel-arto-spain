@@ -1,12 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { shopConfig } from "@/lib/shop-config";
 
 export const Route = createFileRoute("/robots.txt")({
   server: {
     handlers: {
-      GET: ({ request }) => {
-        const url = new URL(request.url);
-        const fwd = url.hostname === "localhost" ? request.headers.get("x-forwarded-host") : null;
-        const origin = fwd ? `https://${fwd}` : url.origin;
+      GET: () => {
+        const origin = shopConfig.siteUrl;
         const body = `User-agent: *
 Allow: /
 Disallow: /*/carrito

@@ -1,5 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 import { getCategories, getProductBySlug, getProducts, getSiteOrigin } from "./catalog.functions";
+import { getHomeContent } from "./storefront.functions";
 
 export const categoriesQuery = () =>
   queryOptions({ queryKey: ["categories"], queryFn: () => getCategories(), staleTime: 5 * 60_000 });
@@ -20,3 +21,6 @@ export const productQuery = (slug: string) =>
 
 export const originQuery = () =>
   queryOptions({ queryKey: ["origin"], queryFn: () => getSiteOrigin(), staleTime: Infinity });
+
+export const homeContentQuery = () =>
+  queryOptions({ queryKey: ["home-content"], queryFn: () => getHomeContent(), staleTime: 60_000 });

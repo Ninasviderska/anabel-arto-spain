@@ -1,19 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { shopConfig } from "@/lib/shop-config";
 import { getPublicClient } from "@/lib/supabase-public.server";
 import { locales } from "@/i18n/config";
-import { legalSlugs } from "@/i18n";
-
-function originFrom(request: Request) {
-  const url = new URL(request.url);
-  const fwd = url.hostname === "localhost" ? request.headers.get("x-forwarded-host") : null;
-  return fwd ? `https://${fwd}` : url.origin;
-}
 
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
-      GET: async ({ request }) => {
-        const origin = originFrom(request);
+      GET: async () => {
+        const origin = shopConfig.siteUrl;
         const db = getPublicClient();
         const [{ data: categories }, { data: products }] = await Promise.all([
           db.from("categories").select("slug").eq("is_active", true).order("sort_order"),
@@ -33,7 +27,8 @@ export const Route = createFileRoute("/sitemap.xml")({
             const cat = (p.category as { slug: string } | null)?.slug;
             if (cat) urls.push({ loc: `${origin}/${lang}/ropa-interior/${cat}/${p.slug}`, lastmod: p.updated_at, priority: "0.7" });
           }
-          for (const slug of legalSlugs) urls.push({ loc: `${origin}/${lang}/${slug}`, priority: "0.3" });
+          urls.push({ loc: `${origin}/${lang}/sobre-nosotros`, priority: "0.5" });
+          urls.push({ loc: `${origin}/${lang}/guia-de-tallas`, priority: "0.5" });
         }
 
         const xml = `<?xml version="1.0" encoding="UTF-8"?>

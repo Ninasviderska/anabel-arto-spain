@@ -70,6 +70,27 @@ export type Database = {
           },
         ]
       }
+      home_content: {
+        Row: {
+          align: string | null
+          content: string
+          key: string
+          updated_at: string
+        }
+        Insert: {
+          align?: string | null
+          content: string
+          key: string
+          updated_at?: string
+        }
+        Update: {
+          align?: string | null
+          content?: string
+          key?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       order_items: {
         Row: {
           color_name: string

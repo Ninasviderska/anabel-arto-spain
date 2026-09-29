@@ -4,8 +4,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowRight, Gem, Package, RotateCcw, ShieldCheck } from "lucide-react";
 import { fmt, getDictionary, useI18n } from "@/i18n";
-import { categoriesQuery, originQuery, productsQuery } from "@/lib/catalog.queries";
+import { categoriesQuery, homeContentQuery, originQuery, productsQuery } from "@/lib/catalog.queries";
 import { CATEGORY_IMAGES } from "@/lib/category-images";
+import { alignClass, resolveHome } from "@/lib/home-content";
 import { formatPrice } from "@/lib/format";
 import { shopConfig } from "@/lib/shop-config";
 import { jsonLdScript, organizationJsonLd, pageMeta } from "@/lib/seo";
@@ -19,6 +20,7 @@ export const Route = createFileRoute("/$lang/")({
       context.queryClient.ensureQueryData(originQuery()),
       context.queryClient.ensureQueryData(categoriesQuery()),
       context.queryClient.ensureQueryData(productsQuery({ featured: true })),
+      context.queryClient.ensureQueryData(homeContentQuery()),
     ]);
     return { origin };
   },
@@ -45,6 +47,8 @@ function HomePage() {
   const { locale, d } = useI18n();
   const { data: categories } = useSuspenseQuery(categoriesQuery());
   const { data: featured } = useSuspenseQuery(productsQuery({ featured: true }));
+  const { data: homeRows } = useSuspenseQuery(homeContentQuery());
+  const h = resolveHome(homeRows);
   const threshold = formatPrice(shopConfig.freeShippingThresholdCents, locale);
 
   return (
@@ -63,12 +67,12 @@ function HomePage() {
         <div className="hero-veil absolute inset-0" aria-hidden />
         <div className="container-shop relative flex min-h-[32rem] items-center py-24 md:min-h-[40rem] lg:min-h-[44rem]">
           <div className="max-w-xl animate-fade-up">
-            <p className="eyebrow mb-6">{d.home.heroEyebrow}</p>
-            <h1 className="font-display text-5xl leading-[1.02] text-foreground md:text-7xl">
-              {d.home.heroTitle}
+            <p className="eyebrow mb-6">{h.text("heroEyebrow")}</p>
+            <h1 className={`font-display text-5xl leading-[1.02] text-foreground md:text-7xl ${alignClass(h.align("heroTitle"))}`}>
+              {h.text("heroTitle")}
             </h1>
-            <p className="mt-6 max-w-md text-base leading-relaxed text-foreground/75 md:text-lg">
-              {d.home.heroText}
+            <p className={`mt-6 max-w-md text-base leading-relaxed text-foreground/75 md:text-lg ${alignClass(h.align("heroText"))}`}>
+              {h.text("heroText")}
             </p>
             <div className="mt-10 flex flex-wrap gap-3">
               <Button asChild variant="hero" size="lg">
@@ -88,7 +92,7 @@ function HomePage() {
 
       {/* Categories */}
       <section className="container-shop py-20 md:py-28">
-        <SectionHeading eyebrow={d.home.categoriesEyebrow} title={d.home.categoriesTitle} />
+        <SectionHeading eyebrow={d.home.categoriesEyebrow} title={h.text("categoriesTitle")} align={h.align("categoriesTitle") === "center" ? "center" : "left"} titleClassName={alignClass(h.align("categoriesTitle"))} />
         <ul className="grid grid-cols-2 gap-4 md:grid-cols-5 md:gap-5">
           {categories.filter((c) => c.parent_id).map((c) => (
             <li key={c.id}>
@@ -187,9 +191,9 @@ function HomePage() {
           <div className="flex flex-col justify-center gap-8 px-8 py-14 md:px-14 md:py-20">
           <div>
             <p className="eyebrow mb-4 text-primary-foreground/70">{d.home.storyEyebrow}</p>
-            <h2 className="font-display text-4xl leading-tight md:text-5xl">{d.home.storyTitle}</h2>
+            <h2 className={`font-display text-4xl leading-tight md:text-5xl ${alignClass(h.align("storyTitle"))}`}>{h.text("storyTitle")}</h2>
           </div>
-          <p className="text-base leading-relaxed text-primary-foreground/85 md:text-lg">{d.home.storyText}</p>
+          <p className={`text-base leading-relaxed text-primary-foreground/85 md:text-lg ${alignClass(h.align("storyText"))}`}>{h.text("storyText")}</p>
           </div>
         </div>
       </section>
@@ -199,8 +203,8 @@ function HomePage() {
         <div className="container-shop px-6">
           <p className="eyebrow mb-8 text-center md:mb-10">{d.home.seoEyebrow}</p>
           <div className="grid gap-6 text-sm leading-relaxed text-muted-foreground md:grid-cols-2 md:gap-12 lg:gap-16 md:text-[0.95rem]">
-            {d.home.seoText.map((paragraph, i) => (
-              <p key={i}>{paragraph}</p>
+            {(["seoText1", "seoText2"] as const).map((k) => (
+              <p key={k} className={alignClass(h.align(k))}>{h.text(k)}</p>
             ))}
           </div>
         </div>
