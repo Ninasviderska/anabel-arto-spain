@@ -144,7 +144,7 @@ function ProductPage() {
                       i === activeImage ? "border-primary" : "border-transparent"
                     }`}
                   >
-                    <img src={img.url} alt={`${product.name} — ${product.colors.find((c) => c.id === img.color_id)?.name ?? ""} — foto ${i + 1}`} width={128} height={160} loading="lazy" className="h-full w-full object-cover" />
+                    <img src={img.url} alt={`${product.name} — ${product.colors.find((c) => c.id === img.color_id)?.name ?? ""} — foto ${i + 1}`} width={128} height={160} loading="lazy" className="h-full w-full object-cover object-top" />
                   </button>
                 </li>
               ))}
@@ -161,7 +161,7 @@ function ProductPage() {
                 fetchPriority="high"
                 decoding="async"
                 sizes="(min-width: 1024px) 55vw, 100vw"
-                className="h-full w-full object-cover animate-in fade-in duration-500"
+                className="h-full w-full object-cover object-top animate-in fade-in duration-500"
               />
             )}
           </div>
