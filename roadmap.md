@@ -8,3 +8,5 @@
 - [x] Add unique route, category, and 21-product SEO metadata/text
 
 - [x] Complete all six approved items in order (plan approved)
+- [x] Move admin password changes behind a live-user and admin-role server check; restore password visibility toggle
+- [x] Top-align product-card, gallery and thumbnail photos; verify representative products

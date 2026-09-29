@@ -1,7 +1,10 @@
 import { createFileRoute, Link, Outlet, redirect, useLocation, useNavigate } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { changeAdminPassword } from "@/lib/admin-password.functions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -77,26 +80,40 @@ function AdminLayout() {
 }
 
 function ChangePassword() {
+  const changePassword = useServerFn(changeAdminPassword);
   const [open, setOpen] = useState(false);
   const [pw, setPw] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [saving, setSaving] = useState(false);
-  const save = async (): Promise<unknown> => {
-    if (pw.length < 10) return toast.error("Минимум 10 символов");
+  const save = async () => {
+    if (pw.length < 10) {
+      toast.error("Минимум 10 символов");
+      return;
+    }
     setSaving(true);
-    const { error } = await supabase.auth.updateUser({ password: pw });
-    setSaving(false);
-    if (error) return toast.error(`Не удалось сменить пароль: ${error.message}`);
-    toast.success("Пароль изменён");
-    setPw("");
-    setOpen(false);
-    return null;
+    try {
+      await changePassword({ data: { password: pw } });
+      toast.success("Пароль изменён");
+      setPw("");
+      setShowPassword(false);
+      setOpen(false);
+    } catch {
+      toast.error("Не удалось сменить пароль. Попробуйте ещё раз или проверьте настройку сервера.");
+    } finally {
+      setSaving(false);
+    }
   };
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild><Button variant="outline" size="sm">Сменить пароль</Button></DialogTrigger>
       <DialogContent>
         <DialogHeader><DialogTitle>Новый пароль</DialogTitle></DialogHeader>
-        <Input type="password" value={pw} onChange={(e) => setPw(e.target.value)} autoComplete="new-password" placeholder="Минимум 10 символов" />
+        <div className="relative">
+          <Input type={showPassword ? "text" : "password"} value={pw} onChange={(e) => setPw(e.target.value)} autoComplete="new-password" placeholder="Минимум 10 символов" className="pr-11" />
+          <Button type="button" variant="ghost" size="icon" onClick={() => setShowPassword((value) => !value)} aria-label={showPassword ? "Скрыть пароль" : "Показать пароль"} title={showPassword ? "Скрыть пароль" : "Показать пароль"} className="absolute right-1 top-1/2 size-8 -translate-y-1/2">
+            {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+          </Button>
+        </div>
         <Button onClick={save} disabled={saving}>Сохранить</Button>
       </DialogContent>
     </Dialog>
