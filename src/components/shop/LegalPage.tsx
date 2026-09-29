@@ -12,7 +12,7 @@ export function legalHead(slug: LegalSlug, lang: string) {
       description: page.description,
       path: `/${lang}/${slug}`,
     }),
-    links: [{ rel: "canonical", href: `/${lang}/${slug}` }],
+    links: [canonical(`/${lang}/${slug}`)],
   };
 }
 

@@ -19,7 +19,7 @@ export const Route = createFileRoute("/$lang/estado-pedido")({
         noindex: true,
       }),
     ],
-    links: [{ rel: "canonical", href: `/${params.lang}/estado-pedido` }],
+    links: [canonical(`/${params.lang}/estado-pedido`)],
   }),
   component: EstadoPedidoPage,
 });

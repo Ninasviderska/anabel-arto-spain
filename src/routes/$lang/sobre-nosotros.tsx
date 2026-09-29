@@ -13,7 +13,7 @@ export const Route = createFileRoute("/$lang/sobre-nosotros")({
         "La historia de Anabel Arto: lencería femenina de diseño europeo confeccionada en Ucrania desde 1998, disponible online en España.",
       path: `/${params.lang}/sobre-nosotros`,
     }),
-    links: [{ rel: "canonical", href: `/${params.lang}/sobre-nosotros` }],
+    links: [canonical(`/${params.lang}/sobre-nosotros`)],
   }),
   component: SobreNosotrosPage,
 });
