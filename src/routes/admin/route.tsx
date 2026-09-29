@@ -1,10 +1,8 @@
 import { createFileRoute, Link, Outlet, redirect, useLocation, useNavigate } from "@tanstack/react-router";
-import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { changeAdminPassword } from "@/lib/admin-password.functions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -80,7 +78,6 @@ function AdminLayout() {
 }
 
 function ChangePassword() {
-  const changePassword = useServerFn(changeAdminPassword);
   const [open, setOpen] = useState(false);
   const [pw, setPw] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -92,13 +89,23 @@ function ChangePassword() {
     }
     setSaving(true);
     try {
-      await changePassword({ data: { password: pw } });
+      const { error } = await supabase.rpc("admin_change_own_password", { _new_password: pw });
+      if (error) {
+        if (error.message.includes("PASSWORD_TOO_SHORT")) {
+          toast.error("Минимум 10 символов");
+        } else if (error.message.includes("FORBIDDEN")) {
+          toast.error("Недостаточно прав");
+        } else {
+          toast.error(`Не удалось сменить пароль: ${error.message}`);
+        }
+        return;
+      }
       toast.success("Пароль изменён");
       setPw("");
       setShowPassword(false);
       setOpen(false);
-    } catch {
-      toast.error("Не удалось сменить пароль. Попробуйте ещё раз или проверьте настройку сервера.");
+    } catch (e) {
+      toast.error(`Не удалось сменить пароль: ${e instanceof Error ? e.message : "неизвестная ошибка"}`);
     } finally {
       setSaving(false);
     }
