@@ -33,18 +33,7 @@ export const Route = createFileRoute("/$lang/")({
         path: `/${params.lang}`,
         image: "/images/hero/hero-camisones-1600.webp",
       }),
-      links: [
-        canonical(`/${params.lang}`),
-        {
-          rel: "preload",
-          as: "image",
-          type: "image/webp",
-          href: "/images/hero/hero-camisones-1024.webp",
-          imageSrcSet: HERO_SRCSET,
-          imageSizes: "100vw",
-          fetchPriority: "high",
-        },
-      ],
+      links: [canonical(`/${params.lang}`)],
       scripts: [jsonLdScript(organizationJsonLd(origin))],
     };
   },
