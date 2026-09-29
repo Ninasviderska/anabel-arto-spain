@@ -1,0 +1,19 @@
+# Anabel Arto España
+
+> Tienda online de lencería femenina de diseño europeo (encaje, tul, satén), confeccionada en Ucrania. Liquidación de colección con envío a la España peninsular.
+
+## Páginas principales
+- Catálogo completo: https://anabelarto.es/es/catalogo
+- Sujetadores: https://anabelarto.es/es/ropa-interior/sujetadores
+- Braguitas: https://anabelarto.es/es/ropa-interior/braguitas
+- Camisones: https://anabelarto.es/es/ropa-interior/camisones
+- Picardías: https://anabelarto.es/es/ropa-interior/picardías
+- Batas: https://anabelarto.es/es/ropa-interior/batas
+- Guía de tallas: https://anabelarto.es/es/guia-de-tallas
+- Sobre nosotros: https://anabelarto.es/es/sobre-nosotros
+
+## Información de la tienda
+- Envíos: solo a la España peninsular (no Baleares, Canarias, Ceuta ni Melilla)
+- Devoluciones: el artículo debe conservar el precinto/etiqueta higiénica intacta, sin usar
+- Contacto: info@anabelarto.es
+- Sitemap: https://anabelarto.es/sitemap.xml
