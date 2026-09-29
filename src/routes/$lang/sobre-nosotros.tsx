@@ -1,7 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { pageMeta } from "@/lib/seo";
+import { homeContentQuery } from "@/lib/catalog.queries";
+import { alignClass, resolveHome } from "@/lib/home-content";
 
 export const Route = createFileRoute("/$lang/sobre-nosotros")({
+  loader: ({ context }) => context.queryClient.ensureQueryData(homeContentQuery()),
   head: ({ params }) => ({
     meta: pageMeta({
       title: "Sobre nosotros — Anabel Arto",
@@ -15,12 +19,18 @@ export const Route = createFileRoute("/$lang/sobre-nosotros")({
 });
 
 function SobreNosotrosPage() {
+  const { data: rows } = useSuspenseQuery(homeContentQuery());
+  const h = resolveHome(rows);
   return (
     <article className="container-shop max-w-3xl py-14 md:py-20">
       <p className="eyebrow">Empresa</p>
-      <h1 className="mt-3 font-display text-4xl md:text-5xl">Sobre nosotros</h1>
+      <h1 className={`mt-3 font-display text-4xl md:text-5xl ${alignClass(h.align("aboutTitle"))}`}>{h.text("aboutTitle")}</h1>
       <div className="mt-10 space-y-8">
-        <p className="text-sm leading-relaxed text-foreground/80 md:text-base">Contenido en preparación.</p>
+        {(["aboutText1", "aboutText2"] as const).map((k) => (
+          <p key={k} className={`whitespace-pre-line text-sm leading-relaxed text-foreground/80 md:text-base ${alignClass(h.align(k))}`}>
+            {h.text(k)}
+          </p>
+        ))}
       </div>
     </article>
   );
