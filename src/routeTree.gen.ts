@@ -27,6 +27,7 @@ import { Route as LangSobreNosotrosRouteImport } from './routes/$lang/sobre-noso
 import { Route as LangTerminosYCondicionesRouteImport } from './routes/$lang/terminos-y-condiciones'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminCatalogRouteImport } from './routes/admin/catalog'
+import { Route as AdminHomeRouteImport } from './routes/admin/home'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as AdminStockRouteImport } from './routes/admin/stock'
 import { Route as LangPedidoIndexRouteImport } from './routes/$lang/pedido/index'
@@ -131,6 +132,11 @@ const AdminCatalogRoute = AdminCatalogRouteImport.update({
   path: '/catalog',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminHomeRoute = AdminHomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -202,6 +208,7 @@ export interface FileRoutesByFullPath {
   '/$lang/sobre-nosotros': typeof LangSobreNosotrosRoute
   '/$lang/terminos-y-condiciones': typeof LangTerminosYCondicionesRoute
   '/admin/catalog': typeof AdminCatalogRoute
+  '/admin/home': typeof AdminHomeRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/stock': typeof AdminStockRoute
   '/$lang/': typeof LangIndexRoute
@@ -230,6 +237,7 @@ export interface FileRoutesByTo {
   '/$lang/sobre-nosotros': typeof LangSobreNosotrosRoute
   '/$lang/terminos-y-condiciones': typeof LangTerminosYCondicionesRoute
   '/admin/catalog': typeof AdminCatalogRoute
+  '/admin/home': typeof AdminHomeRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/stock': typeof AdminStockRoute
   '/$lang': typeof LangIndexRoute
@@ -261,6 +269,7 @@ export interface FileRoutesById {
   '/$lang/sobre-nosotros': typeof LangSobreNosotrosRoute
   '/$lang/terminos-y-condiciones': typeof LangTerminosYCondicionesRoute
   '/admin/catalog': typeof AdminCatalogRoute
+  '/admin/home': typeof AdminHomeRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/stock': typeof AdminStockRoute
   '/$lang/': typeof LangIndexRoute
@@ -293,6 +302,7 @@ export interface FileRouteTypes {
     | '/$lang/sobre-nosotros'
     | '/$lang/terminos-y-condiciones'
     | '/admin/catalog'
+    | '/admin/home'
     | '/admin/login'
     | '/admin/stock'
     | '/$lang/'
@@ -321,6 +331,7 @@ export interface FileRouteTypes {
     | '/$lang/sobre-nosotros'
     | '/$lang/terminos-y-condiciones'
     | '/admin/catalog'
+    | '/admin/home'
     | '/admin/login'
     | '/admin/stock'
     | '/$lang'
@@ -351,6 +362,7 @@ export interface FileRouteTypes {
     | '/$lang/sobre-nosotros'
     | '/$lang/terminos-y-condiciones'
     | '/admin/catalog'
+    | '/admin/home'
     | '/admin/login'
     | '/admin/stock'
     | '/$lang/'
@@ -504,6 +516,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminCatalogRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/home': {
+      id: '/admin/home'
+      path: '/home'
+      fullPath: '/admin/home'
+      preLoaderRoute: typeof AdminHomeRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/login': {
       id: '/admin/login'
       path: '/login'
@@ -579,6 +598,7 @@ declare module '@tanstack/react-router' {
 
 interface AdminRouteRouteChildren {
   AdminCatalogRoute: typeof AdminCatalogRoute
+  AdminHomeRoute: typeof AdminHomeRoute
   AdminLoginRoute: typeof AdminLoginRoute
   AdminStockRoute: typeof AdminStockRoute
   AdminIndexRoute: typeof AdminIndexRoute
@@ -586,6 +606,7 @@ interface AdminRouteRouteChildren {
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminCatalogRoute: AdminCatalogRoute,
+  AdminHomeRoute: AdminHomeRoute,
   AdminLoginRoute: AdminLoginRoute,
   AdminStockRoute: AdminStockRoute,
   AdminIndexRoute: AdminIndexRoute,
