@@ -8,6 +8,7 @@ export function legalHead(slug: LegalSlug, lang: string) {
   return {
     meta: pageMeta({
       title: `${page.title} — ${d.brand.name}`,
+      noindex: true,
       description: page.description,
       path: `/${lang}/${slug}`,
     }),

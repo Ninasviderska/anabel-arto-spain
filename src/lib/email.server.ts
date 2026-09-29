@@ -30,7 +30,7 @@ function renderConfirmation(o: OrderEmailData): { subject: string; html: string;
 <tr><td style="padding:4px 0;color:#8a7a80">Envío GLS</td><td style="text-align:right">${o.shipping_cents === 0 ? "Gratis" : eur(o.shipping_cents)}</td></tr>
 <tr><td style="padding:8px 0;font-weight:bold">Total</td><td style="text-align:right;font-weight:bold">${eur(o.total_cents)}</td></tr></table>
 <p style="font-size:15px;line-height:1.6">Te enviaremos un segundo correo cuando tu pedido esté preparado para el envío, con los datos de seguimiento.</p>
-<p style="font-size:14px;color:#8a7a80;line-height:1.6">¿Alguna duda? Escríbenos a orders@anabelarto.es indicando tu número de pedido.</p>
+<p style="font-size:14px;color:#8a7a80;line-height:1.6">¿Alguna duda? Escríbenos a info@anabelarto.es indicando tu número de pedido.</p>
 </div></body></html>`;
   const text = [
     `Hola ${o.customer_name},`,
@@ -39,7 +39,7 @@ function renderConfirmation(o: OrderEmailData): { subject: string; html: string;
     `Envío: ${o.shipping_cents === 0 ? "Gratis" : eur(o.shipping_cents)}`,
     `Total: ${eur(o.total_cents)}`,
     "Te enviaremos un segundo correo cuando tu pedido esté preparado para el envío.",
-    "Dudas: orders@anabelarto.es",
+    "Dudas: info@anabelarto.es",
   ].join("\n");
   return { subject: `Pedido ${o.order_number} confirmado — Anabel Arto`, html, text };
 }

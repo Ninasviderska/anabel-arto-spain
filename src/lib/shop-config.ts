@@ -12,7 +12,7 @@ export const shopConfig = {
   shippingCountries: ["ES"] as const,
   contactEmail: "info@anabelarto.es",
   /** Escalation address used by the shopping assistant for order questions. */
-  ordersEmail: "orders@anabelarto.es",
+  ordersEmail: "info@anabelarto.es",
   /** Placeholder stock behaviour: variants with stock === null are considered in stock. */
   treatNullStockAsAvailable: true,
 } as const;

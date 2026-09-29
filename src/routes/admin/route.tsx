@@ -36,6 +36,7 @@ const tabs = [
   { to: "/admin", label: "Продажи" },
   { to: "/admin/stock", label: "Остатки" },
   { to: "/admin/catalog", label: "Каталог" },
+  { to: "/admin/home", label: "Главная" },
 ] as const;
 
 function AdminLayout() {

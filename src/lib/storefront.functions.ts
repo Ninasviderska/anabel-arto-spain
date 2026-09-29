@@ -67,3 +67,8 @@ export const checkOrderStatus = createServerFn({ method: "POST" })
     if (error) throw new Error("lookup_failed");
     return (r as OrderStatusResult | null) ?? null;
   });
+
+export const getHomeContent = createServerFn({ method: "GET" }).handler(async () => {
+  const { data } = await getPublicClient().from("home_content").select("key, content, align");
+  return (data ?? []) as { key: string; content: string; align: string | null }[];
+});
