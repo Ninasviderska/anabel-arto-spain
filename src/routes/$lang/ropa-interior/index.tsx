@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { categoriesQuery, productsQuery } from "@/lib/catalog.queries";
-import { pageMeta } from "@/lib/seo";
+import { pageMeta, canonical } from "@/lib/seo";
 import { ProductCard } from "@/components/shop/ProductCard";
 import { CATEGORY_IMAGES } from "@/lib/category-images";
 

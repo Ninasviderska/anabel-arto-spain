@@ -3,7 +3,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { z } from "zod";
 import { getDictionary } from "@/i18n";
 import { categoriesQuery, productsQuery } from "@/lib/catalog.queries";
-import { pageMeta } from "@/lib/seo";
+import { pageMeta, canonical } from "@/lib/seo";
 import { CatalogView } from "@/components/shop/CatalogView";
 
 const searchSchema = z.object({
@@ -34,7 +34,7 @@ export const Route = createFileRoute("/$lang/catalogo")({
         description: d.catalog.metaDescription,
         path,
       }),
-      links: [{ rel: "canonical", href: path }],
+      links: [canonical(path)],
     };
   },
   component: CatalogPage,

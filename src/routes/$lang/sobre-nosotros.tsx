@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { pageMeta } from "@/lib/seo";
+import { pageMeta, canonical } from "@/lib/seo";
 import { homeContentQuery } from "@/lib/catalog.queries";
 import { alignClass, resolveHome } from "@/lib/home-content";
 

@@ -32,14 +32,28 @@ export const Route = createFileRoute("/$lang/")({
         title: "Anabel Arto España | Comprar Ropa Interior Femenina Online al Mejor Precio",
         description: d.brand.description,
         path: `/${params.lang}`,
-        image: `${origin}${heroAsset.url}`,
+        image: "/images/hero/hero-camisones-1600.webp",
       }),
-      links: [{ rel: "canonical", href: `/${params.lang}` }],
+      links: [
+        canonical(`/${params.lang}`),
+        {
+          rel: "preload",
+          as: "image",
+          type: "image/webp",
+          href: "/images/hero/hero-camisones-1024.webp",
+          imageSrcSet: HERO_SRCSET,
+          imageSizes: "100vw",
+          fetchPriority: "high",
+        },
+      ],
       scripts: [jsonLdScript(organizationJsonLd(origin))],
     };
   },
   component: HomePage,
 });
+
+const HERO_SRCSET =
+  "/images/hero/hero-camisones-640.webp 640w, /images/hero/hero-camisones-1024.webp 1024w, /images/hero/hero-camisones-1600.webp 1600w";
 
 const benefitIcons = [Package, Gem, ShieldCheck, RotateCcw];
 
@@ -56,12 +70,14 @@ function HomePage() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-cream-deep">
         <img
-          src={heroAsset.url}
+          src="/images/hero/hero-camisones-1024.webp"
+          srcSet={HERO_SRCSET}
+          sizes="100vw"
           alt="Camisón 8057-6097 de Anabel Arto"
           width={1317}
           height={1920}
           fetchPriority="high"
-          decoding="async"
+          loading="eager"
           className="absolute inset-0 h-full w-full object-cover object-[right_20%] md:object-[80%_20%]"
         />
         <div className="hero-veil absolute inset-0" aria-hidden />

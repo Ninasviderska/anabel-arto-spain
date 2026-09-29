@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { pageMeta } from "@/lib/seo";
+import { pageMeta, canonical } from "@/lib/seo";
 import { braBandRows, numericSizeRows } from "@/lib/sizes";
 
 export const Route = createFileRoute("/$lang/guia-de-tallas")({

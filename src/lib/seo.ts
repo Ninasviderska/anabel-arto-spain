@@ -3,6 +3,17 @@ import type { Product } from "./catalog.types";
 
 type Meta = Record<string, string>;
 
+/** Always returns an absolute https URL on the production domain. */
+export function absUrl(pathOrUrl: string): string {
+  if (/^https?:\/\//.test(pathOrUrl)) return pathOrUrl;
+  return `${shopConfig.siteUrl}${pathOrUrl.startsWith("/") ? "" : "/"}${pathOrUrl}`;
+}
+
+export function canonical(path: string) {
+  return { rel: "canonical", href: absUrl(path) };
+}
+
+
 export function pageMeta(opts: {
   title: string;
   description: string;
@@ -17,7 +28,7 @@ export function pageMeta(opts: {
     { property: "og:title", content: opts.title },
     { property: "og:description", content: opts.description },
     { property: "og:type", content: opts.type ?? "website" },
-    { property: "og:url", content: opts.path },
+    { property: "og:url", content: absUrl(opts.path) },
     { property: "og:site_name", content: shopConfig.brandName },
     { property: "og:locale", content: "es_ES" },
     { name: "twitter:card", content: "summary_large_image" },
@@ -25,7 +36,8 @@ export function pageMeta(opts: {
     { name: "twitter:description", content: opts.description },
   ];
   if (opts.image) {
-    meta.push({ property: "og:image", content: opts.image }, { name: "twitter:image", content: opts.image });
+    const img = absUrl(opts.image.replace(/^https?:\/\/[^/]+(?=\/)/, (m) => (m.includes("localhost") || m.startsWith("http:") ? "" : m)));
+    meta.push({ property: "og:image", content: img }, { name: "twitter:image", content: img });
   }
   if (opts.noindex) meta.push({ name: "robots", content: "noindex, nofollow" });
   return meta;

@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
-import { pageMeta } from "@/lib/seo";
+import { pageMeta, canonical } from "@/lib/seo";
 import { formatPrice } from "@/lib/format";
 import { formatSizeEs } from "@/lib/sizes";
 import { checkOrderStatus, type OrderStatusResult } from "@/lib/storefront.functions";
