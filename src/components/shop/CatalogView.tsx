@@ -4,6 +4,7 @@ import { fmt, useI18n } from "@/i18n";
 import { isVariantAvailable, type Category, type Product } from "@/lib/catalog.types";
 import { ProductCard } from "./ProductCard";
 import { Breadcrumbs, type Crumb } from "./Breadcrumbs";
+import { LinkedText } from "./RichText";
 import { displaySize } from "@/lib/sizes";
 
 export type CatalogFilters = {
