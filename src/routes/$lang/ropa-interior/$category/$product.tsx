@@ -144,7 +144,7 @@ function ProductPage() {
                       i === activeImage ? "border-primary" : "border-transparent"
                     }`}
                   >
-                    <img src={img.url} alt="" width={128} height={160} loading="lazy" className="h-full w-full object-cover" />
+                    <img src={img.url} alt={`${product.name} — ${product.colors.find((c) => c.id === img.color_id)?.name ?? ""} — foto ${i + 1}`} width={128} height={160} loading="lazy" className="h-full w-full object-cover" />
                   </button>
                 </li>
               ))}

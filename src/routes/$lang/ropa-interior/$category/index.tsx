@@ -10,11 +10,14 @@ import { CATEGORY_IMAGES } from "@/lib/category-images";
 
 const BANNERS = CATEGORY_IMAGES;
 
-const searchSchema = z.object({ color: z.string().optional(), talla: z.string().optional() });
+const searchSchema = z.object({ color: z.string().optional(), talla: z.string().optional(),
+  page: z.coerce.number().int().min(2).optional().catch(undefined),
+});
 
 export const Route = createFileRoute("/$lang/ropa-interior/$category/")({
   validateSearch: (s) => searchSchema.parse(s),
-  loader: async ({ context, params }) => {
+  loaderDeps: ({ search }) => ({ page: search.page }),
+  loader: async ({ context, params, deps }) => {
     const [categories, origin] = await Promise.all([
       context.queryClient.ensureQueryData(categoriesQuery()),
       context.queryClient.ensureQueryData(originQuery()),
@@ -22,23 +25,25 @@ export const Route = createFileRoute("/$lang/ropa-interior/$category/")({
     ]);
     const category = categories.find((c) => c.slug === params.category);
     if (!category) throw notFound();
-    return { category, origin };
+    return { category, origin, page: deps.page };
   },
   head: ({ params, loaderData }) => {
     const d = getDictionary("es");
     if (!loaderData) {
       return { meta: [{ title: d.common.notFoundTitle }, { name: "robots", content: "noindex" }] };
     }
-    const { category, origin } = loaderData;
+    const { category, origin, page } = loaderData;
     const path = `/${params.lang}/ropa-interior/${category.slug}`;
+    const selfPath = page ? `${path}?page=${page}` : path;
+    const baseTitle = category.seo_title ?? `${category.name} — ${d.brand.name}`;
     return {
       meta: pageMeta({
-        title: category.seo_title ?? `${category.name} — ${d.brand.name}`,
+        title: page ? `${baseTitle} — Página ${page}` : baseTitle,
         description: category.seo_description ?? category.description ?? d.catalog.metaDescription,
-        path,
+        path: selfPath,
         image: category.image_url ? `${origin}${category.image_url}` : undefined,
       }),
-      links: [{ rel: "canonical", href: path }],
+      links: [{ rel: "canonical", href: selfPath }],
       scripts: [
         jsonLdScript(
           breadcrumbJsonLd(origin ?? shopConfig.siteUrl, [
@@ -80,8 +85,10 @@ function CategoryPage() {
       ]}
       filters={{ category: slug, color: search.color, size: search.talla }}
       onFiltersChange={(f) =>
-        navigate({ search: { color: f.color, talla: f.size }, replace: true, resetScroll: false })
+        navigate({ search: { color: f.color, talla: f.size, page: undefined }, replace: true, resetScroll: false })
       }
+      page={search.page ?? 1}
+      onPageChange={(n) => navigate({ search: (s) => ({ ...s, page: n > 1 ? n : undefined }) })}
     />
   );
 }

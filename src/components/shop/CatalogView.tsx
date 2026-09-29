@@ -26,7 +26,11 @@ type Props = {
   bannerPosition?: string;
   bannerZoom?: boolean;
   crumbs?: Crumb[];
+  page?: number;
+  onPageChange?: (page: number) => void;
 };
+
+export const PAGE_SIZE = 12;
 
 function sortSizes(sizes: string[]): string[] {
   return [...sizes].sort((a, b) => {
@@ -51,6 +55,8 @@ export function CatalogView({
   bannerPosition = "center 30%",
   bannerZoom = false,
   crumbs,
+  page = 1,
+  onPageChange,
 }: Props) {
   const { d } = useI18n();
 
@@ -91,6 +97,10 @@ export function CatalogView({
       }),
     [scoped, filters.color, filters.size],
   );
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const current = Math.min(Math.max(1, page), totalPages);
+  const paged = filtered.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE);
 
   const hasFilters = Boolean(filters.color || filters.size || (showCategoryFilter && filters.category));
   const set = (patch: Partial<CatalogFilters>) => onFiltersChange({ ...filters, ...patch });
@@ -218,10 +228,28 @@ export function CatalogView({
             <p className="rounded-sm bg-cream-deep p-10 text-center text-sm text-muted-foreground">{d.catalog.empty}</p>
           ) : (
             <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 lg:gap-x-6">
-              {filtered.map((p, i) => (
+              {paged.map((p, i) => (
                 <ProductCard key={p.id} product={p} priority={i < 3} />
               ))}
             </div>
+          )}
+          {totalPages > 1 && onPageChange && (
+            <nav aria-label="Paginación" className="mt-12 flex flex-wrap items-center justify-center gap-2">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
+                <button
+                  key={n}
+                  type="button"
+                  aria-current={n === current ? "page" : undefined}
+                  className={`${pill(n === current)} min-w-9`}
+                  onClick={() => {
+                    onPageChange(n);
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }}
+                >
+                  {n}
+                </button>
+              ))}
+            </nav>
           )}
           {seoText && (
             <div className="mt-12 max-w-3xl border-t pt-8 text-sm leading-relaxed text-muted-foreground lg:mt-16 lg:pt-10">

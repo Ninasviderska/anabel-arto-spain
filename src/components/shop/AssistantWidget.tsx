@@ -19,7 +19,7 @@ function RichText({ text }: { text: string }) {
         /^\/es\//.test(p) ? (
           <Link key={i} to={p} className="underline underline-offset-2">{p.includes("guia-de-tallas") ? "Guía de tallas" : "Ver producto"}</Link>
         ) : /^https?:\/\//.test(p) ? (
-          <a key={i} href={p} target="_blank" rel="noreferrer" className="underline underline-offset-2">{p}</a>
+          <a key={i} href={p} target="_blank" rel="nofollow noreferrer" className="underline underline-offset-2">{p}</a>
         ) : (
           <span key={i}>{p}</span>
         ),

@@ -3,7 +3,8 @@ import { getDictionary } from "@/i18n";
 export type Align = "left" | "center" | "right";
 export type HomeBlockKey =
   | "heroEyebrow" | "heroTitle" | "heroText" | "categoriesTitle"
-  | "storyTitle" | "storyText" | "seoText1" | "seoText2";
+  | "storyTitle" | "storyText" | "seoText1" | "seoText2"
+  | "aboutTitle" | "aboutText1" | "aboutText2";
 
 /** Editable home blocks. `alignable` = headings/paragraphs that support text alignment. */
 export const HOME_BLOCKS: { key: HomeBlockKey; label: string; alignable: boolean; multiline: boolean }[] = [
@@ -15,6 +16,9 @@ export const HOME_BLOCKS: { key: HomeBlockKey; label: string; alignable: boolean
   { key: "storyText", label: "«La casa» — текст", alignable: true, multiline: true },
   { key: "seoText1", label: "«Nuestra historia» — абзац 1", alignable: true, multiline: true },
   { key: "seoText2", label: "«Nuestra historia» — абзац 2", alignable: true, multiline: true },
+  { key: "aboutTitle", label: "Sobre nosotros — заголовок", alignable: true, multiline: false },
+  { key: "aboutText1", label: "Sobre nosotros — абзац 1", alignable: true, multiline: true },
+  { key: "aboutText2", label: "Sobre nosotros — абзац 2", alignable: true, multiline: true },
 ];
 
 export function homeDefaults(): Record<HomeBlockKey, string> {
@@ -28,6 +32,11 @@ export function homeDefaults(): Record<HomeBlockKey, string> {
     storyText: h.storyText,
     seoText1: h.seoText[0] ?? "",
     seoText2: h.seoText[1] ?? "",
+    aboutTitle: "Sobre nosotros",
+    aboutText1:
+      "Anabel Arto es una casa de lencería femenina de diseño europeo. Cada prenda se confecciona en nuestro taller de Ucrania con encajes, tules y tejidos seleccionados, cuidando el patronaje y los acabados como en la alta costura.",
+    aboutText2:
+      "Hoy ofrecemos en España la liquidación de nuestra colección a través de nuestro showroom: piezas de calidad europea en existencias limitadas, a precios especiales y con envío a toda la España peninsular.",
   };
 }
 

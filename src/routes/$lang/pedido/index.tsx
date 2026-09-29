@@ -175,7 +175,7 @@ function CheckoutPage() {
             {cart.items.map((item) => (
               <li key={item.variantId} className="flex gap-3 text-sm">
                 {item.imageUrl && (
-                  <img src={item.imageUrl} alt="" width={56} height={70} loading="lazy" className="aspect-[4/5] w-14 rounded-sm object-cover" />
+                  <img src={item.imageUrl} alt={item.name} width={56} height={70} loading="lazy" className="aspect-[4/5] w-14 rounded-sm object-cover" />
                 )}
                 <div className="flex-1">
                   <p className="font-display text-base leading-tight">{item.name}</p>
