@@ -93,7 +93,14 @@ function EstadoPedidoPage() {
               <span className="eyebrow mr-3">Seguimiento</span>
               {order.tracking_url ? (
                 <a href={order.tracking_url} target="_blank" rel="nofollow noreferrer" className="link-underline">{order.tracking_number}</a>
-              ) : order.tracking_number}
+              ) : (
+                <>
+                  {order.tracking_number}
+                  {" — puedes consultar el estado de tu envío en "}
+                  <a href="https://www.inpost.es/seguimiento-del-envio/" target="_blank" rel="nofollow noreferrer" className="link-underline">inpost.es/seguimiento-del-envio</a>
+                  {" introduciendo este número."}
+                </>
+              )}
             </p>
           )}
           <ul className="divide-y divide-border">
