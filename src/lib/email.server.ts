@@ -14,6 +14,7 @@ type OrderEmailData = {
 const eur = (c: number) => new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" }).format(c / 100);
 const esc = (s: string) => s.replace(/[&<>"']/g, (ch) => `&#${ch.charCodeAt(0)};`);
 
+const INPOST_TRACKING_URL = "https://www.inpost.es/seguimiento-del-envio/";
 const RETURNS_URL = "https://anabelarto.es/es/politica-de-devoluciones";
 const RETURNS_HTML = `<p style="font-size:13px;color:#8a7a80;line-height:1.6">Por motivos de higiene, solo podemos aceptar devoluciones de ropa interior con la etiqueta higiénica intacta y sin usar, dentro de los 14 días naturales desde la recepción del pedido. Más información en nuestra <a href="${RETURNS_URL}" style="color:#4a1942">Política de devoluciones</a>.</p>`;
 const RETURNS_TEXT = `Por motivos de higiene, solo podemos aceptar devoluciones de ropa interior con la etiqueta higiénica intacta y sin usar, dentro de los 14 días naturales desde la recepción del pedido. Más información en nuestra Política de devoluciones (${RETURNS_URL}).`;
@@ -95,6 +96,7 @@ function renderShipped(o: ShippedEmailData): { subject: string; html: string; te
 <p style="font-size:16px">Hola ${esc(o.customer_name)},</p>
 <p style="font-size:15px;line-height:1.6">¡Buenas noticias! Tu pedido <strong>${esc(o.order_number)}</strong> ha sido enviado y ya está de camino.</p>
 <p style="font-size:15px;line-height:1.6">Número de seguimiento: <strong>${esc(o.tracking_number)}</strong></p>
+<p style="font-size:15px;line-height:1.6">Puedes consultar el estado de tu envío en <a href="${INPOST_TRACKING_URL}" style="color:#4a1942">inpost.es/seguimiento-del-envio</a> introduciendo este número.</p>
 <p style="font-size:15px;line-height:1.6">La entrega estimada es de 3 a 5 días laborables. ¡Esperamos que lo disfrutes!</p>
 ${RETURNS_HTML}
 <p style="font-size:14px;color:#8a7a80;line-height:1.6">¿Alguna duda? Escríbenos a info@anabelarto.es indicando tu número de pedido.</p>
@@ -103,6 +105,7 @@ ${RETURNS_HTML}
     `Hola ${o.customer_name},`,
     `¡Buenas noticias! Tu pedido ${o.order_number} ha sido enviado y ya está de camino.`,
     `Número de seguimiento: ${o.tracking_number}`,
+    `Puedes consultar el estado de tu envío en inpost.es/seguimiento-del-envio (${INPOST_TRACKING_URL}) introduciendo este número.`,
     "La entrega estimada es de 3 a 5 días laborables.",
     "",
     RETURNS_TEXT,
