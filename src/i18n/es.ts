@@ -241,7 +241,7 @@ export const es = {
           },
           {
             heading: "2. Envío",
-            body: "Realizamos envíos a la España peninsular. No enviamos a Baleares, Canarias, Ceuta ni Melilla. El coste provisional es de 4,95 €, gratis desde 60 €, y la entrega estimada es de 3 a 5 días laborables.",
+            body: "Realizamos envíos a la España peninsular. No enviamos a Baleares, Canarias, Ceuta ni Melilla. El coste de envío es de 6,90 €, gratis a partir de 60 €, y la entrega estimada es de 3 a 5 días laborables.",
           },
           {
             heading: "3. Disponibilidad",
@@ -262,8 +262,8 @@ export const es = {
             body: "Por motivos de higiene, solo aceptamos devoluciones de ropa interior con la etiqueta higiénica intacta y sin usar. Conserva también todas las etiquetas originales hasta decidir que te quedas con la prenda.",
           },
           {
-            heading: "3. Procedimiento",
-            body: "Escríbenos a info@anabelarto.es indicando tu número de pedido. Te facilitaremos las instrucciones y la dirección de devolución. El reembolso se realizará en un plazo máximo de 14 días desde la recepción de la prenda.",
+            heading: "3. Procedimiento y dirección de devolución",
+            body: "Escríbenos a info@anabelarto.es indicando tu número de pedido para iniciar la devolución. El envío de vuelta corre por cuenta del cliente: puedes utilizar el medio que prefieras (mensajería, Correos, un punto InPost, etc.) y enviar la prenda a:\nAnabel Arto\nC/ Tte. Gral. José de Querol Lombardero, 4 — Portal 02, Viv. 413\n28024 Madrid, España\nUna vez recibida la prenda y comprobado que la etiqueta higiénica está intacta, te reembolsaremos el importe del producto (sin incluir el coste de envío original) en un plazo máximo de 14 días.",
           },
         ],
       },

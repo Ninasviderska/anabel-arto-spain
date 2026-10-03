@@ -29,7 +29,7 @@ export function LegalPage({ slug }: { slug: LegalSlug }) {
         {page.sections.map((s) => (
           <section key={s.heading}>
             <h2 className="font-display text-2xl">{s.heading}</h2>
-            <p className="mt-3 text-sm leading-relaxed text-foreground/80 md:text-base">{s.body}</p>
+            <p className="mt-3 whitespace-pre-line text-sm leading-relaxed text-foreground/80 md:text-base">{s.body}</p>
           </section>
         ))}
       </div>
