@@ -87,7 +87,7 @@ export const createOrder = createServerFn({ method: "POST" })
       },
     }));
     if (shipping > 0) {
-      lineItems.push({ quantity: 1, price_data: { currency: "eur", unit_amount: shipping, product_data: { name: "Envío GLS (España peninsular)" } } });
+      lineItems.push({ quantity: 1, price_data: { currency: "eur", unit_amount: shipping, product_data: { name: "Envío (España peninsular)" } } });
     }
     try {
       const session = await stripeRequest<{ id: string; url: string }>("POST", "/checkout/sessions", {

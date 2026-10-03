@@ -1,5 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { toast } from "sonner";
+import { sendShippedEmail } from "@/lib/shipping-email.functions";
+import { Button } from "@/components/ui/button";
 import { Fragment, useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { formatPrice } from "@/lib/format";
@@ -85,10 +89,10 @@ function SalesTab() {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="text-left text-muted-foreground">
-              <tr className="border-b"><th className="py-2 pr-3">№</th><th className="pr-3">Дата</th><th className="pr-3">Email</th><th className="pr-3">Сумма</th><th className="pr-3">Статус</th><th>Позиций</th></tr>
+              <tr className="border-b"><th className="py-2 pr-3">№</th><th className="pr-3">Дата</th><th className="pr-3">Email</th><th className="pr-3">Сумма</th><th className="pr-3">Статус</th><th className="pr-3">Позиций</th><th>Трек-номер</th></tr>
             </thead>
             <tbody>
-              {q.data.length === 0 && <tr><td colSpan={6} className="py-6 text-center text-muted-foreground">Заказов нет</td></tr>}
+              {q.data.length === 0 && <tr><td colSpan={7} className="py-6 text-center text-muted-foreground">Заказов нет</td></tr>}
               {q.data.map((o) => (
                 <Fragment key={o.id}>
                   <tr className="cursor-pointer border-b hover:bg-accent/50" onClick={() => setOpen(open === o.id ? null : o.id)}>
@@ -97,11 +101,14 @@ function SalesTab() {
                     <td className="pr-3">{o.customer_email}</td>
                     <td className="pr-3">{formatPrice(o.total_cents, "es")}</td>
                     <td className="pr-3">{STATUS[o.status] ?? o.status}</td>
-                    <td>{o.items.reduce((s, i) => s + i.quantity, 0)}</td>
+                    <td className="pr-3">{o.items.reduce((s, i) => s + i.quantity, 0)}</td>
+                    <td onClick={(e) => e.stopPropagation()}>
+                      {TRACKABLE.includes(o.status) ? <TrackingCell order={o} /> : <span className="text-muted-foreground">—</span>}
+                    </td>
                   </tr>
                   {open === o.id && (
                     <tr className="border-b bg-cream-deep/60">
-                      <td colSpan={6} className="p-4">
+                      <td colSpan={7} className="p-4">
                         <div className="grid gap-6 md:grid-cols-[2fr_1fr]">
                           <table className="w-full text-sm">
                             <thead className="text-left text-muted-foreground"><tr><th>Товар</th><th>Цвет</th><th>Размер</th><th>Кол-во</th><th>Цена</th></tr></thead>
@@ -183,6 +190,56 @@ function ByProduct({ orders }: { orders: OrderLite[] }) {
           )}
         </tbody>
       </table>
+    </div>
+  );
+}
+
+const TRACKABLE = ["paid", "shipped", "delivered"];
+
+function TrackingCell({ order }: { order: { id: string; status: string; tracking_number: string | null } }) {
+  const qc = useQueryClient();
+  const send = useServerFn(sendShippedEmail);
+  const saved = order.tracking_number ?? "";
+  const [value, setValue] = useState(saved);
+  const [busy, setBusy] = useState(false);
+  const dirty = value.trim() !== saved;
+
+  async function save(): Promise<boolean> {
+    if (!dirty) return true;
+    const { error } = await supabase.from("orders").update({ tracking_number: value.trim() || null }).eq("id", order.id);
+    if (error) { toast.error(`Не удалось сохранить трек-номер: ${error.message}`); return false; }
+    toast.success("Трек-номер сохранён");
+    await qc.invalidateQueries({ queryKey: ["admin-orders"] });
+    return true;
+  }
+
+  async function ship() {
+    if (!value.trim()) return;
+    setBusy(true);
+    try {
+      if (!(await save())) return;
+      if (order.status === "paid") {
+        const { error } = await supabase.from("orders").update({ status: "shipped" }).eq("id", order.id);
+        if (error) { toast.error(`Не удалось сменить статус: ${error.message}`); return; }
+      }
+      const r = await send({ data: { orderId: order.id } });
+      if (r.sent) toast.success("Письмо об отправке отправлено клиенту");
+      else toast.error(r.reason === "SMTP_NOT_CONFIGURED" ? "Почта (SMTP) не настроена — письмо не отправлено" : `Письмо не отправлено: ${r.reason ?? ""}`);
+    } catch (e) {
+      toast.error(`Ошибка: ${e instanceof Error ? e.message : String(e)}`);
+    } finally {
+      setBusy(false);
+      await qc.invalidateQueries({ queryKey: ["admin-orders"] });
+    }
+  }
+
+  const empty = !value.trim();
+  return (
+    <div className="flex items-center gap-2">
+      <Input value={value} onChange={(e) => setValue(e.target.value)} onBlur={() => void save()} placeholder="Трек-номер" className={`h-8 w-40 ${dirty ? "border-primary" : ""}`} />
+      <Button size="sm" variant={order.status === "shipped" ? "outline" : "default"} disabled={empty || busy} title={empty ? "Сначала впишите трек-номер" : undefined} onClick={() => void ship()}>
+        {busy ? "…" : order.status === "paid" ? "Отправлено" : "Отправить письмо повторно"}
+      </Button>
     </div>
   );
 }

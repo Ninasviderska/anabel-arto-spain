@@ -3,7 +3,7 @@ export const es = {
     name: "Anabel Arto",
     tagline: "Lencería femenina de calidad europea",
     description:
-      "Ropa interior femenina Anabel Arto de confección europea, ahora a precios de liquidación. Envío GLS a la España peninsular.",
+      "Ropa interior femenina Anabel Arto de confección europea, ahora a precios de liquidación. Envío a la España peninsular.",
   },
   nav: {
     home: "Inicio",
@@ -30,7 +30,7 @@ export const es = {
     benefitsEyebrow: "Por qué Anabel Arto",
     benefits: [
       {
-        title: "Envío GLS peninsular",
+        title: "Envío peninsular",
         text: "Entrega estimada en 3–5 días laborables. Gratis a partir de {threshold}.",
       },
       {
@@ -69,7 +69,7 @@ export const es = {
     empty: "No hay prendas que coincidan con los filtros seleccionados.",
     all: "Todas",
     metaDescription:
-      "Compra ropa interior femenina Anabel Arto al mejor precio: sujetadores, braguitas, picardías, camisones y batas con envío GLS a la España peninsular.",
+      "Compra ropa interior femenina Anabel Arto al mejor precio: sujetadores, braguitas, picardías, camisones y batas con envío a la España peninsular.",
   },
   product: {
     color: "Color",
@@ -86,7 +86,7 @@ export const es = {
       "Lavar a mano en agua fría con jabón neutro. No usar secadora ni lejía. Secar en horizontal a la sombra.",
     shipping: "Envío y devoluciones",
     shippingText:
-      "Envío GLS a la España peninsular por {shipping}, gratis a partir de {threshold}. Entrega estimada en 3–5 días laborables.",
+      "Envío a la España peninsular por {shipping}, gratis a partir de {threshold}. Entrega estimada en 3–5 días laborables.",
     ivaIncluded: "IVA incluido",
     save: "Ahorras {percent} %",
     oneSize: "Talla única",
@@ -241,7 +241,7 @@ export const es = {
           },
           {
             heading: "2. Envío",
-            body: "Realizamos envíos con GLS únicamente a la España peninsular. No enviamos a Baleares, Canarias, Ceuta ni Melilla. El coste provisional es de 4,95 €, gratis desde 60 €, y la entrega estimada es de 3 a 5 días laborables.",
+            body: "Realizamos envíos a la España peninsular. No enviamos a Baleares, Canarias, Ceuta ni Melilla. El coste provisional es de 4,95 €, gratis desde 60 €, y la entrega estimada es de 3 a 5 días laborables.",
           },
           {
             heading: "3. Disponibilidad",
