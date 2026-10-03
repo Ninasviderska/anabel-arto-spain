@@ -7,7 +7,7 @@ export const shopConfig = {
   /** Production domain (used for JSON-LD / sitemap when no request origin is available). */
   siteUrl: "https://anabelarto.es",
   currency: "EUR",
-  shippingCents: 495,
+  shippingCents: 690,
   freeShippingThresholdCents: 6000,
   shippingCountries: ["ES"] as const,
   contactEmail: "info@anabelarto.es",
