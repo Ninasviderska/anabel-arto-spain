@@ -172,7 +172,19 @@ function ProductPage() {
           <p className="eyebrow">{product.category.name}</p>
           <h1 className="mt-3 font-display text-4xl leading-tight md:text-5xl">{product.name}</h1>
           {product.short_description && (
-            <p className="mt-3 text-base text-muted-foreground">{product.short_description}</p>
+            <p className="mt-3 text-base text-muted-foreground">
+              {(() => {
+                const m = product.short_description!.match(/^(Con push-up\.|Sin push-up\.)\s*/);
+                return m ? (
+                  <>
+                    <strong className="font-medium text-foreground">{m[1]}</strong>{" "}
+                    {product.short_description!.slice(m[0].length)}
+                  </>
+                ) : (
+                  product.short_description
+                );
+              })()}
+            </p>
           )}
 
           <div className="mt-6 flex flex-wrap items-baseline gap-3">
