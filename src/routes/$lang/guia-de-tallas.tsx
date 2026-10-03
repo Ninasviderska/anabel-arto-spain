@@ -7,7 +7,7 @@ export const Route = createFileRoute("/$lang/guia-de-tallas")({
     meta: pageMeta({
       title: "Guía de tallas de lencería femenina — Anabel Arto España",
       description:
-        "Convierte tu talla de ropa interior y sujetador del sistema ucraniano (RU/UA) a la talla española FR/ES, IT, UK, US y EU. Encuentra tu talla ideal en Anabel Arto.",
+        "Convierte tu talla de ropa interior y sujetador del sistema europeo (DE/EU) a la talla española FR/ES, IT, UK, US y RU/UA. Encuentra tu talla ideal en Anabel Arto.",
       path: `/${params.lang}/guia-de-tallas`,
     }),
     links: [canonical(`/${params.lang}/guia-de-tallas`)],
@@ -46,7 +46,7 @@ function SizeGuidePage() {
       <p className="eyebrow">Ayuda</p>
       <h1 className="mt-3 font-display text-4xl md:text-5xl">Guía de tallas</h1>
       <p className="mt-6 max-w-2xl text-base leading-relaxed text-foreground/80">
-        Nuestras prendas llevan la etiqueta con la talla del fabricante (sistema ucraniano, RU/UA). Esta guía te ayuda a
+        Nuestras prendas llevan la etiqueta con la talla del fabricante (sistema europeo, DE/EU). Esta guía te ayuda a
         encontrar la equivalencia con la talla española y europea que ya conoces. En la tienda mostramos siempre la talla
         FR/ES como referencia principal. Si aún tienes dudas, pregunta a nuestra asistente en el chat: estará encantada de ayudarte.
       </p>
@@ -56,8 +56,8 @@ function SizeGuidePage() {
         <p className="mt-2 text-sm text-muted-foreground">Braguitas, picardías, camisones y batas.</p>
         <div className="mt-5">
           <Table
-            headers={["RU/UA", "FR/ES", "IT", "UK", "US", "INT", "DE/EU"]}
-            rows={numericSizeRows.map((r) => [r.maker, r.es, r.it, r.uk, r.us, r.intl, r.de])}
+            headers={["DE/EU", "FR/ES", "IT", "UK", "US", "INT", "RU/UA"]}
+            rows={numericSizeRows.map((r) => [r.de, r.es, r.it, r.uk, r.us, r.intl, r.maker])}
             highlight={1}
           />
         </div>
