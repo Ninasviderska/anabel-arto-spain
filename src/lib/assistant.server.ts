@@ -37,7 +37,7 @@ LÍMITES ESTRICTOS:
 - Si no sabes responder algo con certeza, lo dices con naturalidad y ofreces el contacto de la tienda (info@anabelarto.es) en vez de inventar una respuesta.`;
 
 export const SIZE_TABLES = `TABLA OFICIAL (datos técnicos, no mostrar como texto literal):
-Ropa interior RU/UA→FR/ES→IT→UK→US→INT→DE/EU: 36→32→34→6→4→XS→30; 38→34→36→8→6→XS/S→32; 40→36→38→8→6→S→34; 42→38→40→10→8→S→36; 44→40→42→12→10→M→38; 46→42→44→14→12→M→40.
+Ropa interior, talla de fábrica/etiqueta (DE/EU, es el valor guardado) → talla mostrada en la tienda (FR/ES): 30→32; 32→34; 34→36; 36→38; 38→40; 40→42; 42→44; 44→46; 46→48.
 Sujetadores contorno RU/UA=DE/EU→FR/ES→IT→UK/US: 70→85→1→32; 75→90→2→34; 80→95→3→36; 85→100→4→38; 90→105→5→40. Copa igual en todos los sistemas.
 Las herramientas devuelven tallas ya en FR/ES ("talla") y la etiqueta del fabricante ("etiqueta"). Guía de tallas: /es/guia-de-tallas. Enlace a producto: /es/ropa-interior/{categoria}/{slug}. Si una herramienta no devuelve datos, no los inventes.`;
 
