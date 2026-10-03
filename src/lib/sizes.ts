@@ -7,6 +7,9 @@ export const numericSizeRows = [
   { maker: "42", es: "38", it: "40", uk: "10", us: "8", intl: "S", de: "36" },
   { maker: "44", es: "40", it: "42", uk: "12", us: "10", intl: "M", de: "38" },
   { maker: "46", es: "42", it: "44", uk: "14", us: "12", intl: "M", de: "40" },
+  { maker: "48", es: "44", it: "46", uk: "16", us: "14", intl: "L", de: "42" },
+  { maker: "50", es: "46", it: "48", uk: "16", us: "14", intl: "L", de: "44" },
+  { maker: "52", es: "48", it: "50", uk: "18", us: "16", intl: "XL", de: "46" },
 ] as const;
 
 export const braBandRows = [
@@ -28,7 +31,7 @@ export function displaySize(size: string, type: SizeType): string {
     const band = braBandRows.find((row) => row.maker === parsed?.band)?.es;
     return parsed && band ? `${parsed.cup} ${band}` : size;
   }
-  if (type === "numeric") return numericSizeRows.find((row) => row.maker === size)?.es ?? size;
+  if (type === "numeric") return numericSizeRows.find((row) => row.de === size)?.es ?? size;
   return size;
 }
 
